@@ -3,6 +3,7 @@ app_title = "Optima Hr"
 app_publisher = "IT Systematic Company"
 app_description = "App For Customization of Hr"
 app_email = "sales@itsystematic.com"
+required_apps = ["frappe", "erpnext", "hrms"]
 app_license = "mit"
 
 # Apps
@@ -129,9 +130,10 @@ app_license = "mit"
 # ---------------
 # Override standard doctype classes
 
-# override_doctype_class = {
-# 	"ToDo": "custom_app.overrides.CustomToDo"
-# }
+override_doctype_class = {
+# 	"ToDo": "custom_app.overrides.CustomToDo",
+    "Additional Salary": "optima_hr.override.doctype_class.additional_salary.CustomAdditionalSalary",
+}
 
 # Document Events
 # ---------------
