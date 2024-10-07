@@ -132,7 +132,7 @@ app_license = "mit"
 
 override_doctype_class = {
 # 	"ToDo": "custom_app.overrides.CustomToDo",
-    "Additional Salary": "optima_hr.override.doctype_class.additional_salary.CustomAdditionalSalary",
+    "Additional Salary": "optima_hr.optima_hr.override.doctype_class.additional_salary.CustomAdditionalSalary",
 }
 
 # Document Events
