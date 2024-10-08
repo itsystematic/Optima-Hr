@@ -1,0 +1,68 @@
+{
+ "actions": [],
+ "allow_rename": 1,
+ "creation": "2024-10-08 10:54:53.837710",
+ "doctype": "DocType",
+ "engine": "InnoDB",
+ "field_order": [
+  "gratuity_setting_tab",
+  "allow_to_edit_start_work_date",
+  "allow_to_edit_total_salary",
+  "salary_allowance",
+  "tab_2_tab"
+ ],
+ "fields": [
+  {
+   "fieldname": "tab_2_tab",
+   "fieldtype": "Tab Break",
+   "label": "Tab 2"
+  },
+  {
+   "fieldname": "gratuity_setting_tab",
+   "fieldtype": "Tab Break",
+   "label": "End of service benefits"
+  },
+  {
+   "fieldname": "salary_allowance",
+   "fieldtype": "Table",
+   "label": "Salary Allowance",
+   "options": "Optima Salary Component"
+  },
+  {
+   "default": "0",
+   "fieldname": "allow_to_edit_total_salary",
+   "fieldtype": "Check",
+   "label": "Allow To Edit Total Salary"
+  },
+  {
+   "default": "0",
+   "fieldname": "allow_to_edit_start_work_date",
+   "fieldtype": "Check",
+   "label": "Allow To Edit Start Work Date"
+  }
+ ],
+ "index_web_pages_for_search": 1,
+ "links": [],
+ "modified": "2024-10-08 11:31:15.657731",
+ "modified_by": "Administrator",
+ "module": "Optima Hr",
+ "name": "Optima HR Setting",
+ "owner": "Administrator",
+ "permissions": [
+  {
+   "create": 1,
+   "delete": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "System Manager",
+   "share": 1,
+   "write": 1
+  }
+ ],
+ "sort_field": "modified",
+ "sort_order": "DESC",
+ "states": []
+}
