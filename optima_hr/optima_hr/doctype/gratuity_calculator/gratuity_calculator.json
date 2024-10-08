@@ -1,0 +1,346 @@
+{
+    "actions": [],
+    "allow_rename": 1,
+    "autoname": "Gra-.###",
+    "creation": "2024-10-06 13:43:05.386486",
+    "doctype": "DocType",
+    "editable_grid": 1,
+    "engine": "InnoDB",
+    "field_order": [
+        "posting_date",
+        "column_break_ygv1m",
+        "company",
+        "section_break_aspcy",
+        "gratuity_type",
+        "column_break_2",
+        "labor_law",
+        "section_break_erolv",
+        "description",
+        "section_break_2",
+        "employee",
+        "start_work_date",
+        "total_work_days",
+        "column_break_6",
+        "designation",
+        "end_work_date",
+        "total_work_years",
+        "section_break_10",
+        "last_salary_slab_amount",
+        "column_break_12",
+        "salary_allowance",
+        "column_break_14",
+        "total_salary",
+        "section_break_22",
+        "last_working_days",
+        "leave_encashment_days",
+        "return_paid_leave_days",
+        "column_break_18",
+        "last_working_days_salary",
+        "leave_encashment_amount",
+        "return_paid_leave_amount",
+        "section_break_16",
+        "fly_ticket",
+        "column_break_20",
+        "return_loans",
+        "section_break_26",
+        "calculate",
+        "total_gratuity_amount",
+        "column_break_28",
+        "amended_from"
+    ],
+    "fields": [
+        {
+            "default": "Today",
+            "fieldname": "posting_date",
+            "fieldtype": "Date",
+            "label": "Posting Date"
+        },
+        {
+            "fieldname": "column_break_ygv1m",
+            "fieldtype": "Column Break"
+        },
+        {
+            "bold": 1,
+            "fieldname": "company",
+            "fieldtype": "Link",
+            "label": "Company",
+            "options": "Company",
+            "remember_last_selected_value": 1,
+            "reqd": 1
+        },
+        {
+            "fieldname": "section_break_aspcy",
+            "fieldtype": "Section Break"
+        },
+        {
+            "fieldname": "gratuity_type",
+            "fieldtype": "Select",
+            "label": "Gratuity Type",
+            "options": "Leave\nResignation"
+        },
+        {
+            "fieldname": "column_break_2",
+            "fieldtype": "Column Break"
+        },
+        {
+            "depends_on": "eval:doc.gratuity_type ==\"Resignation\"",
+            "fieldname": "labor_law",
+            "fieldtype": "Link",
+            "in_list_view": 1,
+            "label": "Labor Law",
+            "mandatory_depends_on": "eval:doc.gratuity_type ==\"Resignation\"",
+            "options": "Labor Low"
+        },
+        {
+            "depends_on": "eval:doc.gratuity_type ==\"Resignation\"",
+            "fieldname": "section_break_erolv",
+            "fieldtype": "Section Break"
+        },
+        {
+            "fetch_from": "labor_law.description",
+            "fieldname": "description",
+            "fieldtype": "Text Editor",
+            "label": "Description",
+            "read_only": 1
+        },
+        {
+            "fieldname": "section_break_2",
+            "fieldtype": "Section Break"
+        },
+        {
+            "fieldname": "employee",
+            "fieldtype": "Link",
+            "label": "Employee",
+            "options": "Employee"
+        },
+        {
+            "fieldname": "start_work_date",
+            "fieldtype": "Date",
+            "label": "Start Work Date"
+        },
+        {
+            "fieldname": "total_work_days",
+            "fieldtype": "Int",
+            "label": "Total Work Days",
+            "read_only": 1
+        },
+        {
+            "fieldname": "column_break_6",
+            "fieldtype": "Column Break"
+        },
+        {
+            "fetch_from": "employee.designation",
+            "fetch_if_empty": 1,
+            "fieldname": "designation",
+            "fieldtype": "Data",
+            "label": "Designation",
+            "read_only": 1
+        },
+        {
+            "fetch_from": "employee.relieving_date",
+            "fieldname": "end_work_date",
+            "fieldtype": "Date",
+            "label": "End Work Date"
+        },
+        {
+            "fieldname": "total_work_years",
+            "fieldtype": "Int",
+            "label": "Total Work years",
+            "read_only": 1
+        },
+        {
+            "fieldname": "section_break_10",
+            "fieldtype": "Section Break"
+        },
+        {
+            "fieldname": "last_salary_slab_amount",
+            "fieldtype": "Float",
+            "label": "Last Salary Slab Amount",
+            "read_only": 1
+        },
+        {
+            "fieldname": "column_break_12",
+            "fieldtype": "Column Break"
+        },
+        {
+            "fieldname": "salary_allowance",
+            "fieldtype": "Float",
+            "label": "Salary Allowance "
+        },
+        {
+            "fieldname": "column_break_14",
+            "fieldtype": "Column Break"
+        },
+        {
+            "fieldname": "total_salary",
+            "fieldtype": "Float",
+            "label": "Total Salary",
+            "read_only": 1
+        },
+        {
+            "fieldname": "section_break_22",
+            "fieldtype": "Section Break"
+        },
+        {
+            "fieldname": "last_working_days",
+            "fieldtype": "Float",
+            "label": "Last working days"
+        },
+        {
+            "fieldname": "leave_encashment_days",
+            "fieldtype": "Float",
+            "label": "Leave Encashment Days"
+        },
+        {
+            "fieldname": "return_paid_leave_days",
+            "fieldtype": "Float",
+            "label": "Return Paid Leave Days"
+        },
+        {
+            "fieldname": "column_break_18",
+            "fieldtype": "Column Break"
+        },
+        {
+            "fieldname": "last_working_days_salary",
+            "fieldtype": "Float",
+            "label": "Last working days salary",
+            "read_only": 1
+        },
+        {
+            "fieldname": "leave_encashment_amount",
+            "fieldtype": "Float",
+            "label": "Leave Encashment Amount",
+            "read_only": 1
+        },
+        {
+            "fieldname": "return_paid_leave_amount",
+            "fieldtype": "Float",
+            "label": "Return Paid Leave Amount",
+            "precision": "3",
+            "read_only": 1
+        },
+        {
+            "fieldname": "section_break_16",
+            "fieldtype": "Section Break"
+        },
+        {
+            "fieldname": "fly_ticket",
+            "fieldtype": "Float",
+            "label": "Fly Ticket"
+        },
+        {
+            "fieldname": "column_break_20",
+            "fieldtype": "Column Break"
+        },
+        {
+            "fieldname": "return_loans",
+            "fieldtype": "Float",
+            "label": "Return Loans"
+        },
+        {
+            "fieldname": "section_break_26",
+            "fieldtype": "Section Break"
+        },
+        {
+            "fieldname": "calculate",
+            "fieldtype": "Button",
+            "label": "Calculate"
+        },
+        {
+            "fieldname": "total_gratuity_amount",
+            "fieldtype": "Float",
+            "label": "Total Gratuity Amount",
+            "precision": "3",
+            "read_only": 1
+        },
+        {
+            "fieldname": "column_break_28",
+            "fieldtype": "Column Break"
+        },
+        {
+            "fieldname": "amended_from",
+            "fieldtype": "Link",
+            "label": "Amended From",
+            "no_copy": 1,
+            "options": "Gratuity Calculator",
+            "print_hide": 1,
+            "read_only": 1
+        },
+        {
+            "fieldname": "amended_from",
+            "fieldtype": "Link",
+            "label": "Amended From",
+            "no_copy": 1,
+            "options": "Gratuity Calculator",
+            "print_hide": 1,
+            "read_only": 1
+        }
+    ],
+    "index_web_pages_for_search": 1,
+    "is_submittable": 1,
+    "links": [],
+    "modified": "2024-10-06 14:26:58.078649",
+    "modified_by": "Administrator",
+    "module": "Optima Hr",
+    "name": "Gratuity Calculator",
+    "naming_rule": "Expression (old style)",
+    "owner": "Administrator",
+    "permissions": [
+        {
+            "create": 1,
+            "delete": 1,
+            "email": 1,
+            "export": 1,
+            "print": 1,
+            "read": 1,
+            "report": 1,
+            "role": "System Manager",
+            "share": 1,
+            "submit": 1,
+            "write": 1
+        },
+        {
+            "create": 1,
+            "delete": 1,
+            "email": 1,
+            "export": 1,
+            "print": 1,
+            "read": 1,
+            "report": 1,
+            "role": "Accounts Manager",
+            "share": 1,
+            "submit": 1,
+            "write": 1
+        },
+        {
+            "create": 1,
+            "delete": 1,
+            "email": 1,
+            "export": 1,
+            "print": 1,
+            "read": 1,
+            "report": 1,
+            "role": "HR User",
+            "share": 1,
+            "submit": 1,
+            "write": 1
+        },
+        {
+            "create": 1,
+            "delete": 1,
+            "email": 1,
+            "export": 1,
+            "print": 1,
+            "read": 1,
+            "report": 1,
+            "role": "HR Manager",
+            "share": 1,
+            "submit": 1,
+            "write": 1
+        }
+    ],
+    "sort_field": "modified",
+    "sort_order": "DESC",
+    "states": [],
+    "track_changes": 1
+}
