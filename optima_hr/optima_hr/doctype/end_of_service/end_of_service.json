@@ -1,0 +1,146 @@
+{
+ "actions": [],
+ "allow_rename": 1,
+ "creation": "2024-10-08 11:32:49.580058",
+ "doctype": "DocType",
+ "engine": "InnoDB",
+ "field_order": [
+  "employee",
+  "designation",
+  "column_break_lejl",
+  "posting_date",
+  "labor_low",
+  "section_break_pvvl",
+  "start_work",
+  "column_break_ftau",
+  "end_work",
+  "section_break_wafv",
+  "base_salary",
+  "column_break_rbip",
+  "allowance",
+  "column_break_bakm",
+  "total_salary",
+  "section_break_6xji",
+  "amended_from"
+ ],
+ "fields": [
+  {
+   "fieldname": "section_break_6xji",
+   "fieldtype": "Section Break"
+  },
+  {
+   "fieldname": "amended_from",
+   "fieldtype": "Link",
+   "label": "Amended From",
+   "no_copy": 1,
+   "options": "End Of Service",
+   "print_hide": 1,
+   "read_only": 1,
+   "search_index": 1
+  },
+  {
+   "fieldname": "employee",
+   "fieldtype": "Link",
+   "label": "Employee",
+   "options": "Employee"
+  },
+  {
+   "fetch_from": "employee.designation",
+   "fieldname": "designation",
+   "fieldtype": "Data",
+   "label": "Designation"
+  },
+  {
+   "fieldname": "column_break_lejl",
+   "fieldtype": "Column Break"
+  },
+  {
+   "default": "Today",
+   "fieldname": "posting_date",
+   "fieldtype": "Date",
+   "label": "Posting Date"
+  },
+  {
+   "fieldname": "section_break_pvvl",
+   "fieldtype": "Section Break"
+  },
+  {
+   "fetch_from": "employee.date_of_joining",
+   "fieldname": "start_work",
+   "fieldtype": "Date",
+   "label": "Start Work"
+  },
+  {
+   "fieldname": "column_break_ftau",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fetch_from": "employee.date_of_birth",
+   "fieldname": "end_work",
+   "fieldtype": "Date",
+   "in_list_view": 1,
+   "label": "End Work",
+   "reqd": 1
+  },
+  {
+   "fieldname": "section_break_wafv",
+   "fieldtype": "Section Break"
+  },
+  {
+   "fieldname": "column_break_rbip",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "allowance",
+   "fieldtype": "Currency",
+   "label": "Allowance"
+  },
+  {
+   "fieldname": "column_break_bakm",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "base_salary",
+   "fieldtype": "Currency",
+   "label": "Base Salary"
+  },
+  {
+   "fieldname": "total_salary",
+   "fieldtype": "Currency",
+   "label": "Total Salary"
+  },
+  {
+   "fieldname": "labor_low",
+   "fieldtype": "Link",
+   "label": "Labor Low",
+   "options": "Labor Low",
+   "reqd": 1
+  }
+ ],
+ "index_web_pages_for_search": 1,
+ "is_submittable": 1,
+ "links": [],
+ "modified": "2024-10-08 12:06:29.843408",
+ "modified_by": "Administrator",
+ "module": "Optima Hr",
+ "name": "End Of Service",
+ "owner": "Administrator",
+ "permissions": [
+  {
+   "create": 1,
+   "delete": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "System Manager",
+   "share": 1,
+   "submit": 1,
+   "write": 1
+  }
+ ],
+ "sort_field": "modified",
+ "sort_order": "DESC",
+ "states": []
+}
