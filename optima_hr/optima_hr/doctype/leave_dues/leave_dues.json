@@ -1,0 +1,295 @@
+{
+    "actions": [],
+    "allow_rename": 1,
+    "autoname": "format:LD-{YY}-{employee_full_name}-{###}",
+    "creation": "2024-04-29 09:25:21.194043",
+    "doctype": "DocType",
+    "engine": "InnoDB",
+    "field_order": [
+        "section_break_az78",
+        "employee",
+        "employee_full_name",
+        "column_break_elcj",
+        "company",
+        "leave_application",
+        "leave_details_section",
+        "leave_start_date",
+        "cost_of_leave_day",
+        "column_break_rvhy",
+        "leave_end_date",
+        "column_break_oxyg",
+        "leave_duration",
+        "column_break_ckqt",
+        "leave_dues_amount",
+        "additional_dues_section",
+        "travel_ticket",
+        "other_dues",
+        "column_break_pbtk",
+        "travel_ticket_amount",
+        "other_dues_amount",
+        "results_section",
+        "expected_start_work",
+        "column_break_qlmx",
+        "total_dues_amount",
+        "section_break_sbxn",
+        "amended_from",
+        "column_break_vexg",
+        "final_status",
+        "reference_tab",
+        "payment_entry",
+        "payment_entry_created"
+    ],
+    "fields": [
+        {
+            "fieldname": "section_break_az78",
+            "fieldtype": "Section Break"
+        },
+        {
+            "fieldname": "amended_from",
+            "fieldtype": "Link",
+            "label": "Amended From",
+            "no_copy": 1,
+            "options": "Leave Dues",
+            "print_hide": 1,
+            "read_only": 1,
+            "search_index": 1
+        },
+        {
+            "fieldname": "employee",
+            "fieldtype": "Link",
+            "in_list_view": 1,
+            "label": "Employee",
+            "options": "Employee",
+            "reqd": 1
+        },
+        {
+            "fieldname": "column_break_elcj",
+            "fieldtype": "Column Break"
+        },
+        {
+            "fieldname": "leave_application",
+            "fieldtype": "Link",
+            "label": "Leave Application",
+            "options": "Leave Application",
+            "read_only": 1,
+            "reqd": 1,
+            "search_index": 1
+        },
+        {
+            "fieldname": "leave_details_section",
+            "fieldtype": "Section Break",
+            "label": "Leave Details"
+        },
+        {
+            "fetch_from": "leave_application.from_date",
+            "fieldname": "leave_start_date",
+            "fieldtype": "Date",
+            "label": "Leave Start Date",
+            "read_only": 1
+        },
+        {
+            "fieldname": "cost_of_leave_day",
+            "fieldtype": "Float",
+            "hidden": 1,
+            "label": "Cost of Leave Day",
+            "read_only": 1
+        },
+        {
+            "fieldname": "column_break_rvhy",
+            "fieldtype": "Column Break"
+        },
+        {
+            "fetch_from": "leave_application.to_date",
+            "fieldname": "leave_end_date",
+            "fieldtype": "Date",
+            "label": "Leave End Date",
+            "read_only": 1
+        },
+        {
+            "fieldname": "column_break_oxyg",
+            "fieldtype": "Column Break"
+        },
+        {
+            "fetch_from": "leave_application.total_leave_days",
+            "fieldname": "leave_duration",
+            "fieldtype": "Float",
+            "label": "Leave Duration",
+            "read_only": 1
+        },
+        {
+            "fieldname": "column_break_ckqt",
+            "fieldtype": "Column Break"
+        },
+        {
+            "fieldname": "leave_dues_amount",
+            "fieldtype": "Float",
+            "label": "Leave Dues Amount",
+            "reqd": 1
+        },
+        {
+            "fieldname": "section_break_sbxn",
+            "fieldtype": "Section Break"
+        },
+        {
+            "fieldname": "column_break_vexg",
+            "fieldtype": "Column Break"
+        },
+        {
+            "fieldname": "company",
+            "fieldtype": "Link",
+            "label": "Company",
+            "options": "Company",
+            "read_only": 1,
+            "reqd": 1
+        },
+        {
+            "fieldname": "additional_dues_section",
+            "fieldtype": "Section Break",
+            "label": "Additional Dues"
+        },
+        {
+            "fieldname": "travel_ticket",
+            "fieldtype": "Link",
+            "label": "Travel Ticket",
+            "options": "Travel Ticket Type"
+        },
+        {
+            "fieldname": "other_dues",
+            "fieldtype": "Link",
+            "label": "Other Dues",
+            "options": "Dues Type"
+        },
+        {
+            "fieldname": "column_break_pbtk",
+            "fieldtype": "Column Break"
+        },
+        {
+            "fetch_from": "travel_ticket.ticket_cost",
+            "fieldname": "travel_ticket_amount",
+            "fieldtype": "Float",
+            "label": "Travel Ticket Amount"
+        },
+        {
+            "fetch_from": "other_dues.cost_amount",
+            "fieldname": "other_dues_amount",
+            "fieldtype": "Float",
+            "label": "Other Dues Amount"
+        },
+        {
+            "fieldname": "results_section",
+            "fieldtype": "Section Break",
+            "label": "Results"
+        },
+        {
+            "fetch_from": "leave_application.to_date",
+            "fieldname": "expected_start_work",
+            "fieldtype": "Date",
+            "label": "Expected Start Work",
+            "read_only": 1
+        },
+        {
+            "fieldname": "column_break_qlmx",
+            "fieldtype": "Column Break"
+        },
+        {
+            "fieldname": "total_dues_amount",
+            "fieldtype": "Float",
+            "label": "Total Dues Amount",
+            "read_only": 1,
+            "reqd": 1
+        },
+        {
+            "fetch_from": "employee.employee_name",
+            "fieldname": "employee_full_name",
+            "fieldtype": "Data",
+            "label": "Employee Full Name",
+            "read_only": 1
+        },
+        {
+            "fieldname": "final_status",
+            "fieldtype": "Select",
+            "hidden": 1,
+            "label": "Final Status",
+            "options": "In\nOut"
+        },
+        {
+            "fieldname": "reference_tab",
+            "fieldtype": "Tab Break",
+            "label": "Reference"
+        },
+        {
+            "fieldname": "payment_entry",
+            "fieldtype": "Link",
+            "label": "Payment Entry",
+            "no_copy": 1,
+            "options": "Payment Entry",
+            "read_only": 1
+        },
+        {
+            "default": "0",
+            "fieldname": "payment_entry_created",
+            "fieldtype": "Check",
+            "label": "Payment Entry Created",
+            "no_copy": 1,
+            "read_only": 1
+        }
+    ],
+    "index_web_pages_for_search": 1,
+    "is_submittable": 1,
+    "links": [
+        {
+            "link_doctype": "Vacation Start Work",
+            "link_fieldname": "applicable_leave_dues"
+        }
+    ],
+    "modified": "2024-08-22 15:56:30.079908",
+    "modified_by": "Administrator",
+    "module": "Optima Hr",
+    "name": "Leave Dues",
+    "naming_rule": "Expression",
+    "owner": "Administrator",
+    "permissions": [
+        {
+            "create": 1,
+            "delete": 1,
+            "email": 1,
+            "export": 1,
+            "print": 1,
+            "read": 1,
+            "report": 1,
+            "role": "System Manager",
+            "share": 1,
+            "submit": 1,
+            "write": 1
+        },
+        {
+            "amend": 1,
+            "cancel": 1,
+            "create": 1,
+            "email": 1,
+            "export": 1,
+            "print": 1,
+            "read": 1,
+            "report": 1,
+            "role": "HR Manager",
+            "share": 1,
+            "submit": 1,
+            "write": 1
+        },
+        {
+            "create": 1,
+            "email": 1,
+            "export": 1,
+            "print": 1,
+            "read": 1,
+            "report": 1,
+            "role": "HR User",
+            "share": 1,
+            "submit": 1,
+            "write": 1
+        }
+    ],
+    "sort_field": "modified",
+    "sort_order": "DESC",
+    "states": []
+}
