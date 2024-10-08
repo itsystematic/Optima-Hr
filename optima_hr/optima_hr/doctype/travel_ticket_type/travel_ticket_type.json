@@ -1,0 +1,66 @@
+{
+    "actions": [],
+    "allow_rename": 1,
+    "autoname": "field:ticket_type",
+    "creation": "2024-04-29 09:52:09.864282",
+    "doctype": "DocType",
+    "engine": "InnoDB",
+    "field_order": [
+        "ticket_cost",
+        "column_break_ulgy",
+        "ticket_type",
+        "section_break_alkq",
+        "description"
+    ],
+    "fields": [
+        {
+            "fieldname": "ticket_type",
+            "fieldtype": "Data",
+            "label": "Ticket Type",
+            "unique": 1
+        },
+        {
+            "fieldname": "column_break_ulgy",
+            "fieldtype": "Column Break"
+        },
+        {
+            "fieldname": "ticket_cost",
+            "fieldtype": "Float",
+            "label": "Ticket Cost"
+        },
+        {
+            "fieldname": "section_break_alkq",
+            "fieldtype": "Section Break"
+        },
+        {
+            "fieldname": "description",
+            "fieldtype": "Long Text",
+            "label": "Description"
+        }
+    ],
+    "index_web_pages_for_search": 1,
+    "links": [],
+    "modified": "2024-04-29 10:01:47.623672",
+    "modified_by": "Administrator",
+    "module": "Optima Hr",
+    "name": "Travel Ticket Type",
+    "naming_rule": "By fieldname",
+    "owner": "Administrator",
+    "permissions": [
+        {
+            "create": 1,
+            "delete": 1,
+            "email": 1,
+            "export": 1,
+            "print": 1,
+            "read": 1,
+            "report": 1,
+            "role": "System Manager",
+            "share": 1,
+            "write": 1
+        }
+    ],
+    "sort_field": "modified",
+    "sort_order": "DESC",
+    "states": []
+}

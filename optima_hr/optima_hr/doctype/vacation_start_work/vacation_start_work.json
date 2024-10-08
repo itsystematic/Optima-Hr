@@ -1,0 +1,145 @@
+{
+    "actions": [],
+    "allow_rename": 1,
+    "autoname": "format:VSW-{full_name}-{start_work_date}",
+    "creation": "2024-06-05 12:00:15.605562",
+    "doctype": "DocType",
+    "engine": "InnoDB",
+    "field_order": [
+        "section_break_7czg",
+        "employee",
+        "vacation_start_date",
+        "full_name",
+        "column_break_upax",
+        "designation",
+        "vacation_end_date",
+        "amended_from",
+        "section_break_aglz",
+        "start_work_date",
+        "references_section",
+        "applicable_leave_dues"
+    ],
+    "fields": [
+        {
+            "fieldname": "section_break_7czg",
+            "fieldtype": "Section Break"
+        },
+        {
+            "fieldname": "amended_from",
+            "fieldtype": "Link",
+            "label": "Amended From",
+            "no_copy": 1,
+            "options": "Vacation Start Work",
+            "print_hide": 1,
+            "read_only": 1,
+            "search_index": 1
+        },
+        {
+            "fieldname": "employee",
+            "fieldtype": "Link",
+            "label": "Employee",
+            "options": "Employee"
+        },
+        {
+            "fieldname": "column_break_upax",
+            "fieldtype": "Column Break"
+        },
+        {
+            "fetch_from": "employee.designation",
+            "fieldname": "designation",
+            "fieldtype": "Data",
+            "label": "Designation"
+        },
+        {
+            "fieldname": "vacation_start_date",
+            "fieldtype": "Date",
+            "in_list_view": 1,
+            "label": "Vacation Start Date",
+            "read_only": 1,
+            "reqd": 1
+        },
+        {
+            "fieldname": "vacation_end_date",
+            "fieldtype": "Date",
+            "in_list_view": 1,
+            "label": "Vacation End Date",
+            "read_only": 1,
+            "reqd": 1
+        },
+        {
+            "fieldname": "section_break_aglz",
+            "fieldtype": "Section Break"
+        },
+        {
+            "fieldname": "start_work_date",
+            "fieldtype": "Date",
+            "label": "Start Work Date"
+        },
+        {
+            "fetch_from": "employee.employee_name",
+            "fieldname": "full_name",
+            "fieldtype": "Data",
+            "hidden": 1,
+            "label": "Full Name",
+            "read_only": 1
+        },
+        {
+            "fieldname": "references_section",
+            "fieldtype": "Section Break",
+            "label": "References"
+        },
+        {
+            "fieldname": "applicable_leave_dues",
+            "fieldtype": "Link",
+            "label": "Applicable Leave Dues",
+            "no_copy": 1,
+            "options": "Leave Dues",
+            "read_only": 1
+        }
+    ],
+    "index_web_pages_for_search": 1,
+    "is_submittable": 1,
+    "links": [],
+    "modified": "2024-07-15 10:44:06.249080",
+    "modified_by": "Administrator",
+    "module": "Optima Hr",
+    "name": "Vacation Start Work",
+    "naming_rule": "Expression",
+    "owner": "Administrator",
+    "permissions": [
+        {
+            "amend": 1,
+            "cancel": 1,
+            "create": 1,
+            "delete": 1,
+            "email": 1,
+            "export": 1,
+            "print": 1,
+            "read": 1,
+            "report": 1,
+            "role": "System Manager",
+            "select": 1,
+            "share": 1,
+            "submit": 1,
+            "write": 1
+        },
+        {
+            "amend": 1,
+            "cancel": 1,
+            "create": 1,
+            "email": 1,
+            "export": 1,
+            "print": 1,
+            "read": 1,
+            "report": 1,
+            "role": "HR Manager",
+            "select": 1,
+            "share": 1,
+            "submit": 1,
+            "write": 1
+        }
+    ],
+    "sort_field": "modified",
+    "sort_order": "DESC",
+    "states": []
+}
