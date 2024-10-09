@@ -9,14 +9,10 @@
   "allow_to_edit_start_work_date",
   "allow_to_edit_total_salary",
   "salary_allowance",
-  "tab_2_tab"
+  "leave_due_settings_tab",
+  "leave_dues_fields"
  ],
  "fields": [
-  {
-   "fieldname": "tab_2_tab",
-   "fieldtype": "Tab Break",
-   "label": "Tab 2"
-  },
   {
    "fieldname": "gratuity_setting_tab",
    "fieldtype": "Tab Break",
@@ -39,11 +35,22 @@
    "fieldname": "allow_to_edit_start_work_date",
    "fieldtype": "Check",
    "label": "Allow To Edit Start Work Date"
+  },
+  {
+   "fieldname": "leave_due_settings_tab",
+   "fieldtype": "Tab Break",
+   "label": "Leave Due Settings"
+  },
+  {
+   "fieldname": "leave_dues_fields",
+   "fieldtype": "Table",
+   "label": "Leave Dues Fields",
+   "options": "Leave Dues Fields"
   }
  ],
  "index_web_pages_for_search": 1,
  "links": [],
- "modified": "2024-10-08 11:31:15.657731",
+ "modified": "2024-10-09 09:56:30.335264",
  "modified_by": "Administrator",
  "module": "Optima Hr",
  "name": "Optima HR Setting",

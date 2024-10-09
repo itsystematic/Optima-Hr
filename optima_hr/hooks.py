@@ -47,7 +47,10 @@ app_license = "mit"
 doctype_js = {
     "Leave Application" : "public/js/leave_application.js"
 }
-# doctype_list_js = {"doctype" : "public/js/doctype_list.js"}
+doctype_list_js = {
+    "Attendance" : "public/js/list/attendance_list.js" ,
+    "Employee" : "public/js/list/employee_list.js" ,
+}
 # doctype_tree_js = {"doctype" : "public/js/doctype_tree.js"}
 # doctype_calendar_js = {"doctype" : "public/js/doctype_calendar.js"}
 
@@ -246,3 +249,6 @@ override_doctype_class = {
 # 	"Logging DocType Name": 30  # days to retain logs
 # }
 
+
+
+after_migrate = "optima_hr.migrate.after_migrate"
