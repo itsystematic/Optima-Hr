@@ -8,14 +8,8 @@ from frappe.model.document import Document
 class OptimaHRSetting(Document):
 	
 
-
 	@frappe.whitelist()
 	def get_fields_of_salary_structure_assignment(self):
 
-		return frappe.get_all("DocField" , {
-			"parent" : "Salary Structure Assignment" ,
-			"fieldtype" : "Currency" 
-			} , 
-			pluck="label" ,
-			order_by="idx"
-		)
+		meta = frappe.get_meta("Salary Structure Assignment", cached=False)
+		return list(map(lambda x : x.get("label") , filter(lambda x : x.get("fieldtype") == "Currency" ,meta.fields) ))

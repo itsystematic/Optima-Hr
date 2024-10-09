@@ -18,19 +18,20 @@ frappe.ui.form.on("Leave Dues", {
                                         method:
                                                 "optima_hr.optima_hr.doctype.leave_dues.leave_dues.create_payment_entry",
                                         args: {
-                                                company: frm.doc.company,
-                                                employee: frm.doc.employee,
-                                                paid_amount: frm.doc.total_dues_amount,
+                                                doc: frm.doc,
                                         },
                                         callback: (r) => {
                                                 if (r.message) {
-                                                        frm.set_value({
-                                                                payment_entry: r.message,
-                                                                payment_entry_created: 1,
-                                                        });
-                                                        frm.save();
-                                                        cur_frm.reload_doc();
-                                                        frappe.set_route("Form", "Payment Entry", r.message);
+                                                        // frm.set_value({
+                                                        //         payment_entry: r.message,
+                                                        //         payment_entry_created: 1,
+                                                        // });
+                                                        // frm.save();
+                                                        // cur_frm.reload_doc();
+                                                        // frappe.set_route("Form", "Payment Entry", r.message);
+                                                        console.log(r.message)
+                                                        var doclist = frappe.model.sync(r.message);
+                                                        frappe.set_route("Form", doclist[0].doctype, doclist[0].name);
                                                 }
                                         },
                                 });
@@ -52,11 +53,8 @@ frappe.ui.form.on("Leave Dues", {
         },
         leave_application(frm) {
                 frappe.call({
-                        method:
-                                "optima_hr.optima_hr.doctype.leave_dues.leave_dues.calculate_day_cost_for_leave_dues",
-                        args: {
-                                doc: frm.doc,
-                        },
+                        method: "calculate_day_cost_for_leave_dues",
+                        doc : frm.doc,
                         callback: function (r) {
                                 if (r.message) {
                                         frm.set_value("leave_dues_amount", r.message);
