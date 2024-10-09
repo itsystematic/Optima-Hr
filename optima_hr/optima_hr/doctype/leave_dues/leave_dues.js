@@ -2,43 +2,43 @@
 // For license information, please see license.txt
 
 frappe.ui.form.on("Leave Dues", {
-
         refresh(frm) {
-                frm.trigger("add_buttons") ;
+                frm.trigger("add_buttons");
         },
 
-
         add_buttons(frm) {
-		if (frm.doc.docstatus === 0 && !frm.is_new() && frm.doc.payment_entry_created == 0) {
-			frm.page.clear_primary_action();
-                        frm.add_custom_button(__("Create Payment Entry"),() => {
+                if (
+                        frm.doc.docstatus === 0 &&
+                        !frm.is_new() &&
+                        frm.doc.payment_entry_created == 0
+                ) {
+                        frm.page.clear_primary_action();
+                        frm.add_custom_button(__("Create Payment Entry"), () => {
                                 frappe.call({
-                                        method : "hr_ksa.hr_ksa.doctype.leave_dues.leave_dues.create_payment_entry" ,
-                                        args : {
-                                                company : frm.doc.company ,
-                                                employee : frm.doc.employee ,
-                                                paid_amount : frm.doc.total_dues_amount ,
-
-                                        } ,
+                                        method:
+                                                "optima_hr.optima_hr.doctype.leave_dues.leave_dues.create_payment_entry",
+                                        args: {
+                                                company: frm.doc.company,
+                                                employee: frm.doc.employee,
+                                                paid_amount: frm.doc.total_dues_amount,
+                                        },
                                         callback: (r) => {
                                                 if (r.message) {
                                                         frm.set_value({
-                                                                "payment_entry" : r.message ,
-                                                                "payment_entry_created" : 1 
+                                                                payment_entry: r.message,
+                                                                payment_entry_created: 1,
                                                         });
                                                         frm.save();
                                                         cur_frm.reload_doc();
                                                         frappe.set_route("Form", "Payment Entry", r.message);
                                                 }
-
-
-                                        }
-                                })
-                        })
-                }  
+                                        },
+                                });
+                        });
+                }
 
                 // if (frm.doc.docstatus == 0 && frm.doc.payment_entry_created == 1 ) {
-                        
+
                 // }
         },
         leave_dues_amount(frm) {
@@ -52,18 +52,17 @@ frappe.ui.form.on("Leave Dues", {
         },
         leave_application(frm) {
                 frappe.call({
-                        method: "optima_hr.optima_hr.doctype.leave_dues.leave_dues.calculate_day_cost_for_leave_dues",
+                        method:
+                                "optima_hr.optima_hr.doctype.leave_dues.leave_dues.calculate_day_cost_for_leave_dues",
                         args: {
                                 doc: frm.doc,
                         },
                         callback: function (r) {
                                 if (r.message) {
                                         frm.set_value("leave_dues_amount", r.message);
-
                                 }
                         },
-                })
-                ;
+                });
         },
 });
 

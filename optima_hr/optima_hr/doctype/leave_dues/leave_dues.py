@@ -47,7 +47,7 @@ class LeaveDues(Document):
         attendance = frappe.qb.DocType("Attendance")
         query = (
             frappe.qb.update(attendance)
-            .set(attendance.custom_is_vacation , submit )
+            .set(attendance.is_vacation , submit )
             .set(attendance.status , status)
             .where(attendance.leave_application == self.leave_application)
         
@@ -58,35 +58,33 @@ class LeaveDues(Document):
         
         frappe.db.set_value("Employee" , self.employee ,{
             "status" : status ,
-            "custom_is_vacationer" : submit
+            "is_vacationer" : submit
         }, update_modified=False)
 
-@frappe.whitelist()
-def calculate_day_cost_for_leave_dues(doc) :
 
+    def get_fields_for_leave_dues(self) :
 
-        setting_check = frappe.db.get_single_value("HR Permission Settings","calculate_cost_of_day")
-        last_doc = frappe.get_last_doc("Salary Structure Assignment" , {
-            "employee" : doc.employee ,
+        label_fields = frappe.db.get_all("Leave Dues Fields"  ,{"company" : self.company }, pluck="field_name")
+        fields = list(map(lambda x : x.get("fieldname") , filter(lambda x : x.get("label") in label_fields ,frappe.get_meta("Salary Structure Assignment").fields) ))
+
+        return fields
+    
+    def get_total_amount_for_salary_structure_assignment(self , fields) :
+        last_doc = frappe.db.get_all("Salary Structure Assignment" , {
+            "employee" : self.employee ,
             "docstatus" : 1,
-        })
+        },fields=fields , order_by="creation desc" , limit=1 , as_list=True)
+        return sum(map(lambda x : x[0]))
 
-        if last_doc :
-            if setting_check == 1 :
-                doc.leave_dues_amount = ((last_doc.base or 0) * (doc.leave_duration or 0) / 30)
-                
-                return doc.leave_dues_amount
-            else:
-                doc.leave_dues_amount = ((last_doc.base or 0) +
-                                    (last_doc.home_allowance or 0) +  
-                                    (last_doc.mobile_allowance or 0) + 
-                                    (last_doc.travel_allowance or 0)) * (doc.leave_duration or 0) / 30
-                return doc.leave_dues_amount
-        else :
-            frappe.throw(_("There is no Salary Structure assigned to {}").format(doc.employee))
+    @frappe.whitelist()
+    def calculate_day_cost_for_leave_dues(self) :
 
-        
-        
+        fields = self.get_fields_for_leave_dues()
+        total_amount = self.get_total_amount_for_salary_structure_assignment(fields)
+        leave_dues_amount = total_amount * (self.leave_duration or 0) / 30
+
+        return leave_dues_amount
+
 
 
 
