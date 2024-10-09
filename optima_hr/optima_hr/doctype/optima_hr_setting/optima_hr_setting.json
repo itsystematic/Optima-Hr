@@ -1,6 +1,7 @@
 {
  "actions": [],
  "allow_rename": 1,
+ "autoname": "field:company",
  "creation": "2024-10-08 10:54:53.837710",
  "doctype": "DocType",
  "engine": "InnoDB",
@@ -8,6 +9,9 @@
   "gratuity_setting_tab",
   "allow_to_edit_start_work_date",
   "allow_to_edit_total_salary",
+  "column_break_odfc",
+  "company",
+  "section_break_uzfw",
   "salary_allowance",
   "leave_due_settings_tab",
   "leave_dues_fields"
@@ -46,14 +50,32 @@
    "fieldtype": "Table",
    "label": "Leave Dues Fields",
    "options": "Leave Dues Fields"
+  },
+  {
+   "fieldname": "company",
+   "fieldtype": "Link",
+   "in_list_view": 1,
+   "label": "Company",
+   "options": "Company",
+   "reqd": 1,
+   "unique": 1
+  },
+  {
+   "fieldname": "column_break_odfc",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "section_break_uzfw",
+   "fieldtype": "Section Break"
   }
  ],
  "index_web_pages_for_search": 1,
  "links": [],
- "modified": "2024-10-09 09:56:30.335264",
+ "modified": "2024-10-09 12:22:21.153803",
  "modified_by": "Administrator",
  "module": "Optima Hr",
  "name": "Optima HR Setting",
+ "naming_rule": "By fieldname",
  "owner": "Administrator",
  "permissions": [
   {
