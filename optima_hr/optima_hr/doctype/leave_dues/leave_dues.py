@@ -64,23 +64,29 @@ class LeaveDues(Document):
 
     def get_fields_for_leave_dues(self) :
 
-        label_fields = frappe.db.get_all("Leave Dues Fields"  ,{"company" : self.company }, pluck="field_name")
+        label_fields = frappe.db.get_all("Leave Dues Fields"  ,{"parent" : self.company }, pluck="field_name")
         fields = list(map(lambda x : x.get("fieldname") , filter(lambda x : x.get("label") in label_fields ,frappe.get_meta("Salary Structure Assignment").fields) ))
 
         return fields
     
-    def get_total_amount_for_salary_structure_assignment(self , fields) :
+    def get_total_amount_for_salary_structure_assignment(self , include_fields) :
+
+        if not include_fields : return 0.00
+
         last_doc = frappe.db.get_all("Salary Structure Assignment" , {
             "employee" : self.employee ,
             "docstatus" : 1,
-        },fields=fields , order_by="creation desc" , limit=1 , as_list=True)
-        return sum(map(lambda x : x[0]))
+        },include_fields , order_by="creation desc" , limit=1 , as_list=True)
+
+        total = sum(map(lambda x : x , last_doc[0])) if last_doc else 0.00
+        return total
 
     @frappe.whitelist()
     def calculate_day_cost_for_leave_dues(self) :
 
         fields = self.get_fields_for_leave_dues()
         total_amount = self.get_total_amount_for_salary_structure_assignment(fields)
+        print(total_amount)
         leave_dues_amount = total_amount * (self.leave_duration or 0) / 30
 
         return leave_dues_amount
@@ -90,23 +96,36 @@ class LeaveDues(Document):
 
 
 @frappe.whitelist()
-def create_payment_entry(company , employee , paid_amount) :
+def create_payment_entry(doc) :
+    import json
+
+    doc = json.loads(doc)
     
-    
-    party_account = get_party_account("Employee" , employee , company)
+    party_account = get_party_account("Employee" , doc.get("employee") , doc.get("company"))
     
     payment_entry = frappe.new_doc("Payment Entry")
     payment_entry.posting_date = getdate()
-    payment_entry.company = company
+    payment_entry.company = doc.get("company")
     payment_entry.payment_type = "Pay"
     payment_entry.party_type = "Employee"
-    payment_entry.party = employee
+    payment_entry.party = doc.get("employee") 
     payment_entry.paid_to = party_account
-    payment_entry.paid_amount = paid_amount
-    payment_entry.received_amount = paid_amount
+    payment_entry.paid_amount = doc.get("total_dues_amount")
+    payment_entry.received_amount = doc.get("paid_amount")
     payment_entry.source_exchange_rate = 1
     payment_entry.target_exchange_rate = 1
-    # payment_entry.validate()
-    payment_entry.save()
+
+    payment_entry.append(
+        "references",
+        {
+            "reference_doctype": doc.get("doctype"),
+            "reference_name": doc.get("name"),
+            "bill_no": doc.get("posting_date"),
+            "due_date": doc.get("posting_date"),
+            "total_amount": doc.get("total_dues_amount"),
+            "outstanding_amount": doc.get("total_dues_amount"),
+            "allocated_amount": doc.get("total_dues_amount"),
+        },
+    )
     
     return payment_entry
