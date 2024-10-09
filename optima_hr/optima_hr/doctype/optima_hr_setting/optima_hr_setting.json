@@ -1,6 +1,7 @@
 {
  "actions": [],
  "allow_rename": 1,
+ "autoname": "field:company",
  "creation": "2024-10-08 10:54:53.837710",
  "doctype": "DocType",
  "engine": "InnoDB",
@@ -9,13 +10,14 @@
   "allow_to_edit_start_work_date",
   "allow_to_edit_total_salary",
   "salary_allowance",
-  "tab_2_tab"
+  "tab_2_tab",
+  "company"
  ],
  "fields": [
   {
    "fieldname": "tab_2_tab",
    "fieldtype": "Tab Break",
-   "label": "Tab 2"
+   "label": "Main Tab"
   },
   {
    "fieldname": "gratuity_setting_tab",
@@ -39,14 +41,24 @@
    "fieldname": "allow_to_edit_start_work_date",
    "fieldtype": "Check",
    "label": "Allow To Edit Start Work Date"
+  },
+  {
+   "fieldname": "company",
+   "fieldtype": "Link",
+   "in_list_view": 1,
+   "label": "Company",
+   "options": "Company",
+   "reqd": 1,
+   "unique": 1
   }
  ],
  "index_web_pages_for_search": 1,
  "links": [],
- "modified": "2024-10-08 11:31:15.657731",
+ "modified": "2024-10-08 14:09:23.083343",
  "modified_by": "Administrator",
  "module": "Optima Hr",
  "name": "Optima HR Setting",
+ "naming_rule": "By fieldname",
  "owner": "Administrator",
  "permissions": [
   {
