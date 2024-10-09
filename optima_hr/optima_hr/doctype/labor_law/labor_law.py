@@ -5,5 +5,5 @@
 from frappe.model.document import Document
 
 
-class LaborLow(Document):
+class LaborLaw(Document):
 	pass

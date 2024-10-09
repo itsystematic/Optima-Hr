@@ -5,5 +5,5 @@
 from frappe.tests.utils import FrappeTestCase
 
 
-class TestLaborLow(FrappeTestCase):
+class TestEndofServiceBenefits(FrappeTestCase):
 	pass

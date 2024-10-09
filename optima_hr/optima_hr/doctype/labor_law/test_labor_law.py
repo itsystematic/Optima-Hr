@@ -5,5 +5,5 @@
 from frappe.tests.utils import FrappeTestCase
 
 
-class TestEndOfService(FrappeTestCase):
+class TestLaborLaw(FrappeTestCase):
 	pass

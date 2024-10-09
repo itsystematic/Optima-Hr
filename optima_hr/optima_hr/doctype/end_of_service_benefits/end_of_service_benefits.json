@@ -7,19 +7,24 @@
  "field_order": [
   "employee",
   "designation",
+  "employee_company",
   "column_break_lejl",
   "posting_date",
-  "labor_low",
+  "labor_law",
   "section_break_pvvl",
-  "start_work",
+  "start_work_date",
   "column_break_ftau",
-  "end_work",
+  "end_work_date",
+  "total_work_days",
+  "total_work_years",
   "section_break_wafv",
   "base_salary",
   "column_break_rbip",
-  "allowance",
+  "salary_allowance",
   "column_break_bakm",
   "total_salary",
+  "section_break_bcge",
+  "final_result",
   "section_break_6xji",
   "amended_from"
  ],
@@ -33,7 +38,7 @@
    "fieldtype": "Link",
    "label": "Amended From",
    "no_copy": 1,
-   "options": "End Of Service",
+   "options": "End of Service Benefits",
    "print_hide": 1,
    "read_only": 1,
    "search_index": 1
@@ -62,38 +67,21 @@
   },
   {
    "fieldname": "section_break_pvvl",
-   "fieldtype": "Section Break"
-  },
-  {
-   "fetch_from": "employee.date_of_joining",
-   "fieldname": "start_work",
-   "fieldtype": "Date",
-   "label": "Start Work"
+   "fieldtype": "Section Break",
+   "label": "Work Period"
   },
   {
    "fieldname": "column_break_ftau",
    "fieldtype": "Column Break"
   },
   {
-   "fetch_from": "employee.date_of_birth",
-   "fieldname": "end_work",
-   "fieldtype": "Date",
-   "in_list_view": 1,
-   "label": "End Work",
-   "reqd": 1
-  },
-  {
    "fieldname": "section_break_wafv",
-   "fieldtype": "Section Break"
+   "fieldtype": "Section Break",
+   "label": "Salary Amounts"
   },
   {
    "fieldname": "column_break_rbip",
    "fieldtype": "Column Break"
-  },
-  {
-   "fieldname": "allowance",
-   "fieldtype": "Currency",
-   "label": "Allowance"
   },
   {
    "fieldname": "column_break_bakm",
@@ -110,20 +98,67 @@
    "label": "Total Salary"
   },
   {
-   "fieldname": "labor_low",
+   "fetch_from": "employee.company",
+   "fieldname": "employee_company",
+   "fieldtype": "Data",
+   "hidden": 1,
+   "label": "Employee Company"
+  },
+  {
+   "fetch_from": "employee.date_of_joining",
+   "fieldname": "start_work_date",
+   "fieldtype": "Date",
+   "label": "Start Work Date"
+  },
+  {
+   "fieldname": "end_work_date",
+   "fieldtype": "Date",
+   "in_list_view": 1,
+   "label": "End Work Date",
+   "reqd": 1
+  },
+  {
+   "fieldname": "total_work_days",
+   "fieldtype": "Int",
+   "label": "Total Work Days"
+  },
+  {
+   "fieldname": "total_work_years",
+   "fieldtype": "Float",
+   "label": "Total Work Years",
+   "precision": "9"
+  },
+  {
+   "fieldname": "salary_allowance",
+   "fieldtype": "Currency",
+   "label": "Salary Allowance"
+  },
+  {
+   "fieldname": "section_break_bcge",
+   "fieldtype": "Section Break",
+   "label": "End of Service Benefits"
+  },
+  {
+   "fieldname": "final_result",
+   "fieldtype": "Float",
+   "label": "Final Result",
+   "read_only": 1
+  },
+  {
+   "fieldname": "labor_law",
    "fieldtype": "Link",
-   "label": "Labor Low",
-   "options": "Labor Low",
+   "label": "Labor Law",
+   "options": "Labor Law",
    "reqd": 1
   }
  ],
  "index_web_pages_for_search": 1,
  "is_submittable": 1,
  "links": [],
- "modified": "2024-10-08 12:06:29.843408",
+ "modified": "2024-10-09 09:27:24.296839",
  "modified_by": "Administrator",
  "module": "Optima Hr",
- "name": "End Of Service",
+ "name": "End of Service Benefits",
  "owner": "Administrator",
  "permissions": [
   {
