@@ -5,6 +5,7 @@ import frappe
 from frappe.model.document import Document
 from frappe.utils.data import date_diff 
 from frappe.utils import getdate
+
 from optima_hr.optima_hr.utils import(
     get_fields_for_leave_dues,
     get_total_amount_for_salary_structure_assignment
