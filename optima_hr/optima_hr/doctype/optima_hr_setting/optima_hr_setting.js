@@ -4,9 +4,6 @@
 frappe.provide("optima_hr_setting");
 
 optima_hr_setting.OptimaHRSetting = class OptimaHRSetting extends frappe.ui.form.Controller {
-    onload() {
-        this.fetch_salary_components();
-    }
 
     refresh() {
         this.get_fields_of_salary_structure_assignment();
@@ -21,7 +18,6 @@ optima_hr_setting.OptimaHRSetting = class OptimaHRSetting extends frappe.ui.form
                 me.frm.fields_dict["leave_dues_fields"].grid.get_docfield("field_name").options = r.message
             }
         })
-        
     }
 
     fetch_salary_components() {
@@ -38,15 +34,6 @@ optima_hr_setting.OptimaHRSetting = class OptimaHRSetting extends frappe.ui.form
                 }
             }
         });
-    }
-
-    populate_salary_allowance_table(salary_components) {
-        this.frm.clear_table('salary_allowance');
-        salary_components.forEach(component => {
-            const new_row = this.frm.add_child('salary_allowance');
-            new_row.salary_component = component.name;
-        });
-        this.frm.refresh_field('salary_allowance');
     }
 }
 

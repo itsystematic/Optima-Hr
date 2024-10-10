@@ -12,7 +12,7 @@
   "column_break_odfc",
   "company",
   "section_break_uzfw",
-  "salary_allowance",
+  "required_allowance",
   "leave_due_settings_tab",
   "leave_dues_fields"
  ],
@@ -21,12 +21,6 @@
    "fieldname": "gratuity_setting_tab",
    "fieldtype": "Tab Break",
    "label": "End of service benefits"
-  },
-  {
-   "fieldname": "salary_allowance",
-   "fieldtype": "Table",
-   "label": "Salary Allowance",
-   "options": "Optima Salary Component"
   },
   {
    "default": "0",
@@ -67,11 +61,17 @@
   {
    "fieldname": "section_break_uzfw",
    "fieldtype": "Section Break"
+  },
+  {
+   "fieldname": "required_allowance",
+   "fieldtype": "Table",
+   "label": "Required Allowance",
+   "options": "Leave Dues Fields"
   }
  ],
  "index_web_pages_for_search": 1,
  "links": [],
- "modified": "2024-10-09 12:22:21.153803",
+ "modified": "2024-10-09 15:46:53.642957",
  "modified_by": "Administrator",
  "module": "Optima Hr",
  "name": "Optima HR Setting",

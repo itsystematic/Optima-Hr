@@ -6,7 +6,10 @@ from frappe import _
 from frappe.utils import getdate
 from frappe.model.document import Document
 from erpnext.accounts.party import get_party_account
-
+from optima_hr.utils import(
+    get_fields_for_leave_dues,
+    get_total_amount_for_salary_structure_assignment
+)
 
 class LeaveDues(Document):
     
@@ -62,30 +65,11 @@ class LeaveDues(Document):
         }, update_modified=False)
 
 
-    def get_fields_for_leave_dues(self) :
-
-        label_fields = frappe.db.get_all("Leave Dues Fields"  ,{"parent" : self.company }, pluck="field_name")
-        fields = list(map(lambda x : x.get("fieldname") , filter(lambda x : x.get("label") in label_fields ,frappe.get_meta("Salary Structure Assignment").fields) ))
-
-        return fields
-    
-    def get_total_amount_for_salary_structure_assignment(self , include_fields) :
-
-        if not include_fields : return 0.00
-
-        last_doc = frappe.db.get_all("Salary Structure Assignment" , {
-            "employee" : self.employee ,
-            "docstatus" : 1,
-        },include_fields , order_by="creation desc" , limit=1 , as_list=True)
-
-        total = sum(map(lambda x : x , last_doc[0])) if last_doc else 0.00
-        return total
-
     @frappe.whitelist()
     def calculate_day_cost_for_leave_dues(self) :
 
-        fields = self.get_fields_for_leave_dues()
-        total_amount = self.get_total_amount_for_salary_structure_assignment(fields)
+        fields = get_fields_for_leave_dues(self.company , "leave_dues_fields")
+        total_amount = get_total_amount_for_salary_structure_assignment(self.employee,fields)
         print(total_amount)
         leave_dues_amount = total_amount * (self.leave_duration or 0) / 30
 
