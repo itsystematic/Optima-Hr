@@ -68,8 +68,8 @@ class EndofServiceBenefits(Document):
 	def calc_total_salary(self):
 		self.total_salary = self.base_salary + self.salary_allowance
  
- 	# def create_payment_entry(self):
-	# 	payment_entry = frappe.new_doc("Payment Entry")
+	def create_payment_entry(self):
+		payment_entry = frappe.new_doc("Payment Entry")
 
 @frappe.whitelist()
 def get_salary_structure_assignment_for_employee(employee):
