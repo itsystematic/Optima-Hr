@@ -3,10 +3,10 @@
 
 import frappe
 from frappe import _
-from frappe.utils import getdate
+from frappe.utils import getdate , flt
 from frappe.model.document import Document
 from erpnext.accounts.party import get_party_account
-
+from frappe.query_builder.functions import Sum
 
 class LeaveDues(Document):
     
@@ -86,10 +86,38 @@ class LeaveDues(Document):
 
         fields = self.get_fields_for_leave_dues()
         total_amount = self.get_total_amount_for_salary_structure_assignment(fields)
-        print(total_amount)
         leave_dues_amount = total_amount * (self.leave_duration or 0) / 30
 
         return leave_dues_amount
+    
+
+    def set_status(self, update=False):
+        
+        if self.paid_amount >= self.total_dues_amount :
+            status = "Paid"
+    
+    def set_total_advance_paid(self) :
+        gle = frappe.qb.DocType("GL Entry")
+
+        paid_amount = (
+            frappe.qb.from_(gle)
+            .select(Sum(gle.debit).as_("paid_amount"))
+            .where(
+                (gle.against_voucher_type == self.doctype)
+                & (gle.against_voucher == self.name)
+                & (gle.party_type == "Employee")
+                & (gle.party == self.employee)
+                & (gle.docstatus == 1)
+                & (gle.is_cancelled == 0)
+            )
+        ).run(as_dict=True)[0].paid_amount or 0
+
+        if paid_amount > flt(self.total_dues_amount):
+            frappe.throw(
+                _("Row {0}# Paid Amount cannot be greater than Total Dues amount"),
+            )
+        self.db_set("paid_amount", paid_amount)
+        # self.set_status(update=True)
 
 
 
@@ -111,9 +139,9 @@ def create_payment_entry(doc) :
     payment_entry.party = doc.get("employee") 
     payment_entry.paid_to = party_account
     payment_entry.paid_amount = doc.get("total_dues_amount")
-    payment_entry.received_amount = doc.get("paid_amount")
-    payment_entry.source_exchange_rate = 1
-    payment_entry.target_exchange_rate = 1
+    payment_entry.received_amount = doc.get("total_dues_amount")
+    # payment_entry.source_exchange_rate = 1
+    # payment_entry.target_exchange_rate = 1
 
     payment_entry.append(
         "references",
@@ -123,9 +151,13 @@ def create_payment_entry(doc) :
             "bill_no": doc.get("posting_date"),
             "due_date": doc.get("posting_date"),
             "total_amount": doc.get("total_dues_amount"),
-            "outstanding_amount": doc.get("total_dues_amount"),
-            "allocated_amount": doc.get("total_dues_amount"),
+            "outstanding_amount":  doc.get("total_dues_amount") - doc.get("paid_amount"),
+            "allocated_amount": doc.get("total_dues_amount") - doc.get('paid_amount'),
         },
     )
+    payment_entry.setup_party_account_field()
+    payment_entry.set_missing_values()
+    payment_entry.set_missing_ref_details()
+    payment_entry.set_amounts()
     
     return payment_entry

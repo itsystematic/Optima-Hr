@@ -136,8 +136,9 @@ doctype_list_js = {
 # Override standard doctype classes
 
 override_doctype_class = {
-# 	"ToDo": "custom_app.overrides.CustomToDo",
+
     "Additional Salary": "optima_hr.optima_hr.override.doctype_class.additional_salary.CustomAdditionalSalary",
+    "Payment Entry": "optima_hr.optima_hr.override.doctype_class.payment_entry.OptimaPaymentEntry",
 }
 
 # Document Events
@@ -249,6 +250,5 @@ override_doctype_class = {
 # 	"Logging DocType Name": 30  # days to retain logs
 # }
 
-
-
 after_migrate = "optima_hr.migrate.after_migrate"
+advance_payment_doctypes = ["Leave Dues"]
