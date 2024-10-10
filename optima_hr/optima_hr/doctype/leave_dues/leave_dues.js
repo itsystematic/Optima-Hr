@@ -8,11 +8,11 @@ frappe.ui.form.on("Leave Dues", {
 
         add_buttons(frm) {
                 if (
-                        frm.doc.docstatus === 0 &&
+                        frm.doc.docstatus === 1 &&
                         !frm.is_new() &&
                         frm.doc.payment_entry_created == 0
                 ) {
-                        frm.page.clear_primary_action();
+                        // frm.page.clear_primary_action();
                         frm.add_custom_button(__("Create Payment Entry"), () => {
                                 frappe.call({
                                         method:
