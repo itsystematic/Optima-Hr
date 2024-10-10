@@ -6,7 +6,7 @@ from frappe import _
 from frappe.utils import getdate
 from frappe.model.document import Document
 from erpnext.accounts.party import get_party_account
-from optima_hr.utils import(
+from optima_hr.optima_hr.utils import(
     get_fields_for_leave_dues,
     get_total_amount_for_salary_structure_assignment
 )
