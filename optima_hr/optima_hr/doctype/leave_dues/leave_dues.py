@@ -71,7 +71,6 @@ class LeaveDues(Document):
 
         fields = get_fields_for_leave_dues(self.company , "leave_dues_fields")
         total_amount = get_total_amount_for_salary_structure_assignment(self.employee,fields)
-        print(total_amount)
         leave_dues_amount = total_amount * (self.leave_duration or 0) / 30
 
         return leave_dues_amount
