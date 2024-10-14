@@ -7,7 +7,7 @@
  "field_order": [
   "employee",
   "designation",
-  "employee_company",
+  "company",
   "column_break_lejl",
   "posting_date",
   "labor_law",
@@ -23,10 +23,21 @@
   "salary_allowance",
   "column_break_bakm",
   "total_salary",
+  "additional_amounts_break",
+  "is_travel_cost",
+  "ticket_type",
+  "ticket_cost",
+  "column_break_rvmr",
+  "last_work_days_salary",
   "section_break_bcge",
   "final_result",
+  "column_break_kbzh",
+  "paid_amount",
   "section_break_6xji",
-  "amended_from"
+  "amended_from",
+  "reference_tab",
+  "payment_entry",
+  "payment_entry_created"
  ],
  "fields": [
   {
@@ -95,14 +106,8 @@
   {
    "fieldname": "total_salary",
    "fieldtype": "Currency",
-   "label": "Total Salary"
-  },
-  {
-   "fetch_from": "employee.company",
-   "fieldname": "employee_company",
-   "fieldtype": "Data",
-   "hidden": 1,
-   "label": "Employee Company"
+   "label": "Total Salary",
+   "read_only": 1
   },
   {
    "fetch_from": "employee.date_of_joining",
@@ -120,11 +125,13 @@
   {
    "fieldname": "total_work_days",
    "fieldtype": "Int",
+   "hidden": 1,
    "label": "Total Work Days"
   },
   {
    "fieldname": "total_work_years",
    "fieldtype": "Float",
+   "hidden": 1,
    "label": "Total Work Years",
    "precision": "9"
   },
@@ -150,12 +157,81 @@
    "label": "Labor Law",
    "options": "Labor Law",
    "reqd": 1
+  },
+  {
+   "fieldname": "reference_tab",
+   "fieldtype": "Tab Break",
+   "label": "Reference"
+  },
+  {
+   "fieldname": "payment_entry",
+   "fieldtype": "Link",
+   "label": "Payment Entry",
+   "options": "Payment Entry"
+  },
+  {
+   "default": "0",
+   "fieldname": "payment_entry_created",
+   "fieldtype": "Check",
+   "label": "Payment Entry Created"
+  },
+  {
+   "fetch_from": "employee.company",
+   "fieldname": "company",
+   "fieldtype": "Data",
+   "hidden": 1,
+   "label": "Company"
+  },
+  {
+   "fieldname": "column_break_kbzh",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "paid_amount",
+   "fieldtype": "Currency",
+   "hidden": 1,
+   "label": "Paid Amount"
+  },
+  {
+   "default": "0",
+   "fieldname": "is_travel_cost",
+   "fieldtype": "Check",
+   "label": "Is Travel Cost"
+  },
+  {
+   "fieldname": "column_break_rvmr",
+   "fieldtype": "Column Break"
+  },
+  {
+   "depends_on": "eval: doc.is_travel_cost == 1",
+   "fieldname": "ticket_type",
+   "fieldtype": "Link",
+   "label": "Ticket Type",
+   "options": "Travel Ticket Type"
+  },
+  {
+   "fetch_from": "ticket_type.ticket_cost",
+   "fieldname": "ticket_cost",
+   "fieldtype": "Currency",
+   "label": "Ticket Cost",
+   "read_only": 1
+  },
+  {
+   "fieldname": "additional_amounts_break",
+   "fieldtype": "Section Break",
+   "label": "Additional Amounts"
+  },
+  {
+   "fieldname": "last_work_days_salary",
+   "fieldtype": "Currency",
+   "label": "Last Work Days Salary",
+   "read_only": 1
   }
  ],
  "index_web_pages_for_search": 1,
  "is_submittable": 1,
  "links": [],
- "modified": "2024-10-09 15:25:21.456505",
+ "modified": "2024-10-13 15:01:41.100619",
  "modified_by": "Administrator",
  "module": "Optima Hr",
  "name": "End of Service Benefits",

@@ -9,10 +9,17 @@
   "gratuity_setting_tab",
   "allow_to_edit_start_work_date",
   "allow_to_edit_total_salary",
+  "allow_to_edit_last_work_days_salary",
   "column_break_odfc",
   "company",
   "section_break_uzfw",
   "required_allowance",
+  "last_work_days_salary_section",
+  "payroll_date_beginning",
+  "component_to_calculate_cost_of_day",
+  "column_break_htqo",
+  "leave_type",
+  "component_to_calculate_cost_of_day_for_leaves",
   "leave_due_settings_tab",
   "leave_dues_fields"
  ],
@@ -60,18 +67,57 @@
   },
   {
    "fieldname": "section_break_uzfw",
-   "fieldtype": "Section Break"
+   "fieldtype": "Section Break",
+   "label": "Employee Salary Allowance"
   },
   {
    "fieldname": "required_allowance",
    "fieldtype": "Table",
    "label": "Required Allowance",
    "options": "Leave Dues Fields"
+  },
+  {
+   "fieldname": "last_work_days_salary_section",
+   "fieldtype": "Section Break",
+   "label": "Last Work Days Salary - Outstanding Leaves"
+  },
+  {
+   "fieldname": "payroll_date_beginning",
+   "fieldtype": "Date",
+   "label": "Payroll Date Beginning "
+  },
+  {
+   "default": "0",
+   "fieldname": "allow_to_edit_last_work_days_salary",
+   "fieldtype": "Check",
+   "label": "Allow To Edit Last Work Days Salary"
+  },
+  {
+   "fieldname": "component_to_calculate_cost_of_day",
+   "fieldtype": "Table",
+   "label": "Component to Calculate Cost of Day",
+   "options": "Leave Dues Fields"
+  },
+  {
+   "fieldname": "leave_type",
+   "fieldtype": "Link",
+   "label": "Leave Type",
+   "options": "Leave Type"
+  },
+  {
+   "fieldname": "component_to_calculate_cost_of_day_for_leaves",
+   "fieldtype": "Table",
+   "label": "Component to Calculate Cost of Day for Leaves",
+   "options": "Leave Dues Fields"
+  },
+  {
+   "fieldname": "column_break_htqo",
+   "fieldtype": "Column Break"
   }
  ],
  "index_web_pages_for_search": 1,
  "links": [],
- "modified": "2024-10-09 15:46:53.642957",
+ "modified": "2024-10-13 15:33:55.799561",
  "modified_by": "Administrator",
  "module": "Optima Hr",
  "name": "Optima HR Setting",
