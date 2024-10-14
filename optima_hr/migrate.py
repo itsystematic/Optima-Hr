@@ -79,6 +79,15 @@ def add_additional_fields():
                 "depends_on" : "eval: doc.is_salary_structure_assignment_componant ==1 ;" ,
                 "mandatory_depends_on" : "eval: doc.is_salary_structure_assignment_componant ==1 ;" ,
             } ,
+        ],
+        "Shift Type" : [
+            {
+                "fieldname" : "shift_duration" ,
+                "fieldtype" : "Float" ,
+                "label"     : "Shift Duration" ,
+                "insert_after" : "allow_check_out_after_shift_end_time",
+                "description" : "Shift Duration in hours \n Example :  8:30 "
+            }
         ]
 
     }

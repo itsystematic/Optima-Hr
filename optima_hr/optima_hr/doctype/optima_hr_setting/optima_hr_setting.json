@@ -14,7 +14,14 @@
   "section_break_uzfw",
   "required_allowance",
   "leave_due_settings_tab",
-  "leave_dues_fields"
+  "leave_dues_fields",
+  "attendance_setting_tab",
+  "enable_shift_duration",
+  "section_break_bmzs",
+  "salary_component_for_earning",
+  "salary_component_for_deduction",
+  "column_break_zjio",
+  "enable_shift_types"
  ],
  "fields": [
   {
@@ -67,11 +74,54 @@
    "fieldtype": "Table",
    "label": "Required Allowance",
    "options": "Leave Dues Fields"
+  },
+  {
+   "fieldname": "attendance_setting_tab",
+   "fieldtype": "Tab Break",
+   "label": "Attendance Setting"
+  },
+  {
+   "default": "0",
+   "fieldname": "enable_shift_duration",
+   "fieldtype": "Check",
+   "label": "Enable Shift Duration"
+  },
+  {
+   "fieldname": "section_break_bmzs",
+   "fieldtype": "Section Break"
+  },
+  {
+   "depends_on": "eval: doc.enable_shift_duration",
+   "fieldname": "enable_shift_types",
+   "fieldtype": "Table",
+   "label": "Enable Shift Types",
+   "mandatory_depends_on": "eval: doc.enable_shift_duration",
+   "options": "Enable Shift Types"
+  },
+  {
+   "depends_on": "eval: doc.enable_shift_duration",
+   "fieldname": "salary_component_for_earning",
+   "fieldtype": "Link",
+   "label": "Salary Component For Earning",
+   "mandatory_depends_on": "eval: doc.enable_shift_duration",
+   "options": "Salary Component"
+  },
+  {
+   "fieldname": "column_break_zjio",
+   "fieldtype": "Column Break"
+  },
+  {
+   "depends_on": "eval: doc.enable_shift_duration",
+   "fieldname": "salary_component_for_deduction",
+   "fieldtype": "Link",
+   "label": "Salary Component For Deduction",
+   "mandatory_depends_on": "eval: doc.enable_shift_duration",
+   "options": "Salary Component"
   }
  ],
  "index_web_pages_for_search": 1,
  "links": [],
- "modified": "2024-10-09 15:46:53.642957",
+ "modified": "2024-10-14 08:40:50.965255",
  "modified_by": "Administrator",
  "module": "Optima Hr",
  "name": "Optima HR Setting",
