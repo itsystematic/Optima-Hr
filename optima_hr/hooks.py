@@ -251,4 +251,4 @@ override_doctype_class = {
 # }
 
 after_migrate = "optima_hr.migrate.after_migrate"
-advance_payment_doctypes = ["Leave Dues"]
+advance_payment_doctypes = ["Leave Dues", "End of Service Benefits"]

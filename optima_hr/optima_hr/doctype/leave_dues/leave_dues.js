@@ -16,7 +16,7 @@ frappe.ui.form.on("Leave Dues", {
                         frm.add_custom_button(__("Create Payment Entry"), () => {
                                 frappe.call({
                                         method:
-                                                "optima_hr.optima_hr.doctype.leave_dues.leave_dues.create_payment_entry",
+                                                "optima_hr.optima_hr.utils.create_payment_entry",
                                         args: {
                                                 doc: frm.doc,
                                         },
