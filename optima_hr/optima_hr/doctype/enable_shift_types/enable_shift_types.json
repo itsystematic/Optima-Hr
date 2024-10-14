@@ -6,7 +6,9 @@
  "editable_grid": 1,
  "engine": "InnoDB",
  "field_order": [
-  "shift_type"
+  "shift_type",
+  "column_break_hksx",
+  "shift_duration"
  ],
  "fields": [
   {
@@ -16,12 +18,23 @@
    "label": "Shift Type",
    "options": "Shift Type",
    "reqd": 1
+  },
+  {
+   "fieldname": "column_break_hksx",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "shift_duration",
+   "fieldtype": "Float",
+   "in_list_view": 1,
+   "label": "Shift Duration",
+   "reqd": 1
   }
  ],
  "index_web_pages_for_search": 1,
  "istable": 1,
  "links": [],
- "modified": "2024-10-14 08:37:50.998166",
+ "modified": "2024-10-14 10:44:17.341123",
  "modified_by": "Administrator",
  "module": "Optima Hr",
  "name": "Enable Shift Types",
