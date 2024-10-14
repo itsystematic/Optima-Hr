@@ -28,7 +28,9 @@
         "salary_component_for_earning",
         "salary_component_for_deduction",
         "column_break_zjio",
-        "enable_shift_types"
+        "enable_shift_types",
+        "section_break_ziai",
+        "set_emplyee_absent"
     ],
     "fields": [
         {
@@ -163,11 +165,21 @@
             "label": "Salary Component For Deduction",
             "mandatory_depends_on": "eval: doc.enable_shift_duration",
             "options": "Salary Component"
+        },
+        {
+            "fieldname": "section_break_ziai",
+            "fieldtype": "Section Break"
+        },
+        {
+            "fieldname": "set_emplyee_absent",
+            "fieldtype": "Table",
+            "label": "Set Employee Absent",
+            "options": "Set Employee Absent"
         }
     ],
     "index_web_pages_for_search": 1,
     "links": [],
-    "modified": "2024-10-14 08:40:50.965255",
+    "modified": "2024-10-14 11:15:38.403116",
     "modified_by": "Administrator",
     "module": "Optima Hr",
     "name": "Optima HR Setting",
