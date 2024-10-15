@@ -10,6 +10,8 @@
   "allow_to_edit_start_work_date",
   "allow_to_edit_total_salary",
   "allow_to_edit_last_work_days_salary",
+  "allow_to_edit_outstanding_leave_amount",
+  "allow_to_edit_employee_advance_amount",
   "column_break_odfc",
   "company",
   "section_break_uzfw",
@@ -20,6 +22,8 @@
   "column_break_htqo",
   "leave_type",
   "component_to_calculate_cost_of_day_for_leaves",
+  "employee_advance_section",
+  "employee_advance_account",
   "leave_due_settings_tab",
   "leave_dues_fields"
  ],
@@ -113,11 +117,34 @@
   {
    "fieldname": "column_break_htqo",
    "fieldtype": "Column Break"
+  },
+  {
+   "default": "0",
+   "fieldname": "allow_to_edit_outstanding_leave_amount",
+   "fieldtype": "Check",
+   "label": "Allow To Edit Outstanding Leave Amount"
+  },
+  {
+   "default": "0",
+   "fieldname": "allow_to_edit_employee_advance_amount",
+   "fieldtype": "Check",
+   "label": "Allow To Edit Employee Advance Amount"
+  },
+  {
+   "fieldname": "employee_advance_section",
+   "fieldtype": "Section Break",
+   "label": "Employee Advance"
+  },
+  {
+   "fieldname": "employee_advance_account",
+   "fieldtype": "Link",
+   "label": "Employee Advance Account",
+   "options": "Account"
   }
  ],
  "index_web_pages_for_search": 1,
  "links": [],
- "modified": "2024-10-13 15:33:55.799561",
+ "modified": "2024-10-14 10:12:59.676631",
  "modified_by": "Administrator",
  "module": "Optima Hr",
  "name": "Optima HR Setting",

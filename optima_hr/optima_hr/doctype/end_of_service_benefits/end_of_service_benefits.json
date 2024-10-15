@@ -1,6 +1,7 @@
 {
  "actions": [],
  "allow_rename": 1,
+ "autoname": "format:{employee}-{end_work_date}",
  "creation": "2024-10-08 11:32:49.580058",
  "doctype": "DocType",
  "engine": "InnoDB",
@@ -24,11 +25,21 @@
   "column_break_bakm",
   "total_salary",
   "additional_amounts_break",
+  "is_last_work_days_salary",
+  "last_work_days",
+  "last_work_days_salary",
+  "column_break_fbme",
   "is_travel_cost",
   "ticket_type",
   "ticket_cost",
+  "column_break_rdgd",
+  "employee_advance",
+  "closing_cr",
+  "closing_de",
   "column_break_rvmr",
-  "last_work_days_salary",
+  "outstanding_leaves",
+  "outstanding_leave_balance",
+  "outstanding_leave_balance_amount",
   "section_break_bcge",
   "final_result",
   "column_break_kbzh",
@@ -116,6 +127,7 @@
    "label": "Start Work Date"
   },
   {
+   "depends_on": "eval: doc.employee != null",
    "fieldname": "end_work_date",
    "fieldtype": "Date",
    "in_list_view": 1,
@@ -203,13 +215,15 @@
    "fieldtype": "Column Break"
   },
   {
-   "depends_on": "eval: doc.is_travel_cost == 1",
+   "depends_on": "eval: doc.is_travel_cost != 0",
    "fieldname": "ticket_type",
    "fieldtype": "Link",
    "label": "Ticket Type",
+   "mandatory_depends_on": "eval: doc.is_travel_cost != 0",
    "options": "Travel Ticket Type"
   },
   {
+   "depends_on": "eval: doc.is_travel_cost != 0",
    "fetch_from": "ticket_type.ticket_cost",
    "fieldname": "ticket_cost",
    "fieldtype": "Currency",
@@ -222,19 +236,82 @@
    "label": "Additional Amounts"
   },
   {
+   "depends_on": "eval: doc.is_last_work_days_salary !=0",
    "fieldname": "last_work_days_salary",
    "fieldtype": "Currency",
    "label": "Last Work Days Salary",
+   "read_only": 1
+  },
+  {
+   "depends_on": "eval: doc.outstanding_leaves !=0",
+   "fieldname": "outstanding_leave_balance",
+   "fieldtype": "Int",
+   "label": "Outstanding Leave Balance",
+   "read_only": 1
+  },
+  {
+   "depends_on": "eval: doc.outstanding_leaves !=0",
+   "fieldname": "outstanding_leave_balance_amount",
+   "fieldtype": "Currency",
+   "label": "Outstanding Leave Balance Amount",
+   "read_only": 1
+  },
+  {
+   "fieldname": "column_break_fbme",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "column_break_rdgd",
+   "fieldtype": "Column Break"
+  },
+  {
+   "default": "0",
+   "fieldname": "employee_advance",
+   "fieldtype": "Check",
+   "label": "Employee Advance"
+  },
+  {
+   "depends_on": "eval: doc.employee_advance !=0",
+   "fieldname": "closing_cr",
+   "fieldtype": "Currency",
+   "label": "Closing Cr",
+   "read_only": 1
+  },
+  {
+   "depends_on": "eval: doc.employee_advance !=0",
+   "fieldname": "closing_de",
+   "fieldtype": "Currency",
+   "label": "Closing De",
+   "read_only": 1
+  },
+  {
+   "default": "0",
+   "fieldname": "outstanding_leaves",
+   "fieldtype": "Check",
+   "label": "Outstanding Leaves"
+  },
+  {
+   "default": "0",
+   "fieldname": "is_last_work_days_salary",
+   "fieldtype": "Check",
+   "label": "Is Last Work Days Salary"
+  },
+  {
+   "depends_on": "eval: doc.is_last_work_days_salary !=0",
+   "fieldname": "last_work_days",
+   "fieldtype": "Int",
+   "label": "Last Work Days",
    "read_only": 1
   }
  ],
  "index_web_pages_for_search": 1,
  "is_submittable": 1,
  "links": [],
- "modified": "2024-10-13 15:01:41.100619",
+ "modified": "2024-10-14 11:50:05.291207",
  "modified_by": "Administrator",
  "module": "Optima Hr",
  "name": "End of Service Benefits",
+ "naming_rule": "Expression",
  "owner": "Administrator",
  "permissions": [
   {

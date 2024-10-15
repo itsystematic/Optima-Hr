@@ -7,21 +7,20 @@ from frappe import _
 from frappe.utils.data import date_diff 
 from frappe.utils import getdate ,flt
 from frappe.query_builder.functions import Sum
-
+from optima_hr.optima_hr.utils import get_closing_balances
 class EndofServiceBenefits(Document):
 
     def before_save(self):
         self.calculation()
         self.calc_total_salary()
-        self.calc_final_result()
         self.calc_final_result_with_additional()
+        self.get_closing_balances()
         
     @frappe.whitelist()
     def calculation(self):
         self.days_diff()
         self.year_diff()
         
-
     def days_diff(self):
         self.total_work_days = date_diff(self.end_work_date , self.start_work_date)
         
@@ -55,18 +54,28 @@ class EndofServiceBenefits(Document):
                 result = m3 * 5 + m4 * 10 + m5 * (self.total_work_years-10)
         else: 
             result = 0
-        self.final_result = round(result,2)
+        return  round(result,2)
     
     def calc_total_salary(self):
         self.total_salary = self.base_salary + self.salary_allowance
     
     def calc_final_result_with_additional(self):
-        if self.ticket_cost and self.is_travel_cost:
-            self.final_result = round((self.final_result + self.ticket_cost +self.last_work_days_salary),2)
-        else :
-            self.final_result = round((self.final_result +self.last_work_days_salary),2)
-        
+        final_res = self.calc_final_result()
+        if self.is_last_work_days_salary:
+            final_res = final_res + self.last_work_days_salary
+        if self.is_travel_cost ==1 and self.ticket_cost > 0:
+            final_res = final_res + self.ticket_cost
+        if self.employee_advance:
+            final_res = final_res + self.closing_cr - self.closing_de
+        if self.outstanding_leaves:
+            final_res = final_res + self.outstanding_leave_balance_amount
+        self.final_result =final_res
     
+    def get_closing_balances(self):
+        closing_balance = get_closing_balances(self.company, self.end_work_date, self.employee)
+        self.closing_cr = closing_balance.get("closing_credit")
+        self.closing_de = closing_balance.get("closing_debit")
+        
     def set_total_advance_paid(self) :
         gle = frappe.qb.DocType("GL Entry")
 
@@ -88,6 +97,8 @@ class EndofServiceBenefits(Document):
                 _("Row {0}# Paid Amount cannot be greater than Final Result"),
             )
         self.db_set("paid_amount", paid_amount)
+
+
 
 @frappe.whitelist()
 def get_salary_structure_assignment_for_employee(employee):

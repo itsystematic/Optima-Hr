@@ -1,8 +1,10 @@
 
+from datetime import datetime
 import frappe
 from erpnext.accounts.party import get_party_account
-from frappe.utils import getdate , date_diff
+from frappe.utils import getdate , date_diff , get_year_start, flt
 from dateutil.relativedelta import relativedelta
+from hrms.hr.doctype.leave_application.leave_application import get_leave_balance_on
 
 @frappe.whitelist()
 def get_fields_for_leave_dues(parent,parentfield) :
@@ -38,12 +40,43 @@ def get_last_work_days_salary(employee, company, end_work_date):
     salary_per_day = total / 30
     remaining_salary = salary_per_day * days_to_pay
     
-    return remaining_salary
+    return {
+        "remaining_salary" : remaining_salary,
+        "days_to_pay": days_to_pay
+    }
+
+@frappe.whitelist()
+def get_leave_balance_amount(company,employee,leave_date):
+
+    to_date = getdate(leave_date)
+    leave_type = get_optima_hr_leave_type(company)
+    fields = get_fields_for_leave_dues(company, "component_to_calculate_cost_of_day_for_leaves")
+    total_amounts = get_total_amount_for_salary_structure_assignment(employee , fields)
+    starting_day_of_current_year = get_year_start(datetime.now())
+
+    outstanding_leave_balance = get_leave_balance_on(
+        employee=employee,
+        leave_type=leave_type,
+        date=starting_day_of_current_year,
+        to_date=to_date,
+        consider_all_leaves_in_the_allocation_period=1
+    )
+    
+    salary_per_day = total_amounts / 30
+    outstanding_leave_amount = outstanding_leave_balance * salary_per_day
+    
+    return {
+        "outstanding_leave_amount" : outstanding_leave_amount,
+        "outstanding_leave_balance":outstanding_leave_balance
+    }
 
 def get_optima_hr_payroll_date_beginning(company):
     payroll_date_beginning = frappe.db.get_value("Optima HR Setting", {"company": company}, "payroll_date_beginning")
     return getdate(payroll_date_beginning)
 
+def get_optima_hr_leave_type(company):
+    leave_type = frappe.db.get_value("Optima HR Setting", {"company": company}, "leave_type")
+    return leave_type
 
 def get_payroll_start_date(payroll_date_beginning, end_work_date):
     payroll_day = payroll_date_beginning.day
@@ -53,6 +86,58 @@ def get_payroll_start_date(payroll_date_beginning, end_work_date):
     else:
         previous_month = end_work_date - relativedelta(months=1)
         return previous_month.replace(day=payroll_day)
+
+
+def get_optima_hr_employee_advance_account(company):
+    employee_advance_account = frappe.db.get_value("Optima HR Setting", {"company": company}, "employee_advance_account")
+    return employee_advance_account
+
+@frappe.whitelist()
+def get_closing_balances(company, to_date, party):
+    employee_advance_account = get_optima_hr_employee_advance_account(company)
+    
+    if not employee_advance_account:
+        frappe.throw("Employee Advance Account not set in Optima HR Setting for this company.")
+
+    gle = frappe.db.sql(
+        """
+        SELECT 
+            party,
+            SUM(debit) as total_debit,
+            SUM(credit) as total_credit
+        FROM `tabGL Entry`
+        WHERE company = %(company)s
+            AND is_cancelled = 0
+            AND party_type = 'Employee'
+            AND party = %(party)s
+            AND posting_date <= %(to_date)s
+            AND account = %(account)s
+        GROUP BY party
+        """,
+        {
+            "company": company,
+            "to_date": to_date,
+            "party": party,
+            "account": employee_advance_account
+        },
+        as_dict=True,
+    )
+
+    if gle:
+        total_debit = flt(gle[0].total_debit)
+        total_credit = flt(gle[0].total_credit)
+        closing_balance = total_debit - total_credit
+        
+        return {
+            "closing_debit": closing_balance if closing_balance > 0 else 0,
+            "closing_credit": abs(closing_balance) if closing_balance < 0 else 0
+        }
+    else:
+        return {
+            "closing_debit": 0,
+            "closing_credit": 0
+        }
+    
 
 @frappe.whitelist()
 def create_payment_entry(doc) :
