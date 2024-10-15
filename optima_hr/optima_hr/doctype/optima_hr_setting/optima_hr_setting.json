@@ -1,174 +1,4 @@
 {
-<<<<<<< HEAD
- "actions": [],
- "allow_rename": 1,
- "autoname": "field:company",
- "creation": "2024-10-08 10:54:53.837710",
- "doctype": "DocType",
- "engine": "InnoDB",
- "field_order": [
-  "gratuity_setting_tab",
-  "allow_to_edit_start_work_date",
-  "allow_to_edit_total_salary",
-  "allow_to_edit_last_work_days_salary",
-  "allow_to_edit_outstanding_leave_amount",
-  "allow_to_edit_employee_advance_amount",
-  "column_break_odfc",
-  "company",
-  "section_break_uzfw",
-  "required_allowance",
-  "last_work_days_salary_section",
-  "payroll_date_beginning",
-  "component_to_calculate_cost_of_day",
-  "column_break_htqo",
-  "leave_type",
-  "component_to_calculate_cost_of_day_for_leaves",
-  "employee_advance_section",
-  "employee_advance_account",
-  "leave_due_settings_tab",
-  "leave_dues_fields"
- ],
- "fields": [
-  {
-   "fieldname": "gratuity_setting_tab",
-   "fieldtype": "Tab Break",
-   "label": "End of service benefits"
-  },
-  {
-   "default": "0",
-   "fieldname": "allow_to_edit_total_salary",
-   "fieldtype": "Check",
-   "label": "Allow To Edit Total Salary"
-  },
-  {
-   "default": "0",
-   "fieldname": "allow_to_edit_start_work_date",
-   "fieldtype": "Check",
-   "label": "Allow To Edit Start Work Date"
-  },
-  {
-   "fieldname": "leave_due_settings_tab",
-   "fieldtype": "Tab Break",
-   "label": "Leave Due Settings"
-  },
-  {
-   "fieldname": "leave_dues_fields",
-   "fieldtype": "Table",
-   "label": "Leave Dues Fields",
-   "options": "Leave Dues Fields"
-  },
-  {
-   "fieldname": "company",
-   "fieldtype": "Link",
-   "in_list_view": 1,
-   "label": "Company",
-   "options": "Company",
-   "reqd": 1,
-   "unique": 1
-  },
-  {
-   "fieldname": "column_break_odfc",
-   "fieldtype": "Column Break"
-  },
-  {
-   "fieldname": "section_break_uzfw",
-   "fieldtype": "Section Break",
-   "label": "Employee Salary Allowance"
-  },
-  {
-   "fieldname": "required_allowance",
-   "fieldtype": "Table",
-   "label": "Required Allowance",
-   "options": "Leave Dues Fields"
-  },
-  {
-   "fieldname": "last_work_days_salary_section",
-   "fieldtype": "Section Break",
-   "label": "Last Work Days Salary - Outstanding Leaves"
-  },
-  {
-   "fieldname": "payroll_date_beginning",
-   "fieldtype": "Date",
-   "label": "Payroll Date Beginning "
-  },
-  {
-   "default": "0",
-   "fieldname": "allow_to_edit_last_work_days_salary",
-   "fieldtype": "Check",
-   "label": "Allow To Edit Last Work Days Salary"
-  },
-  {
-   "fieldname": "component_to_calculate_cost_of_day",
-   "fieldtype": "Table",
-   "label": "Component to Calculate Cost of Day",
-   "options": "Leave Dues Fields"
-  },
-  {
-   "fieldname": "leave_type",
-   "fieldtype": "Link",
-   "label": "Leave Type",
-   "options": "Leave Type"
-  },
-  {
-   "fieldname": "component_to_calculate_cost_of_day_for_leaves",
-   "fieldtype": "Table",
-   "label": "Component to Calculate Cost of Day for Leaves",
-   "options": "Leave Dues Fields"
-  },
-  {
-   "fieldname": "column_break_htqo",
-   "fieldtype": "Column Break"
-  },
-  {
-   "default": "0",
-   "fieldname": "allow_to_edit_outstanding_leave_amount",
-   "fieldtype": "Check",
-   "label": "Allow To Edit Outstanding Leave Amount"
-  },
-  {
-   "default": "0",
-   "fieldname": "allow_to_edit_employee_advance_amount",
-   "fieldtype": "Check",
-   "label": "Allow To Edit Employee Advance Amount"
-  },
-  {
-   "fieldname": "employee_advance_section",
-   "fieldtype": "Section Break",
-   "label": "Employee Advance"
-  },
-  {
-   "fieldname": "employee_advance_account",
-   "fieldtype": "Link",
-   "label": "Employee Advance Account",
-   "options": "Account"
-  }
- ],
- "index_web_pages_for_search": 1,
- "links": [],
- "modified": "2024-10-14 10:12:59.676631",
- "modified_by": "Administrator",
- "module": "Optima Hr",
- "name": "Optima HR Setting",
- "naming_rule": "By fieldname",
- "owner": "Administrator",
- "permissions": [
-  {
-   "create": 1,
-   "delete": 1,
-   "email": 1,
-   "export": 1,
-   "print": 1,
-   "read": 1,
-   "report": 1,
-   "role": "System Manager",
-   "share": 1,
-   "write": 1
-  }
- ],
- "sort_field": "modified",
- "sort_order": "DESC",
- "states": []
-=======
     "actions": [],
     "allow_rename": 1,
     "autoname": "field:company",
@@ -180,6 +10,8 @@
         "allow_to_edit_start_work_date",
         "allow_to_edit_total_salary",
         "allow_to_edit_last_work_days_salary",
+        "allow_to_edit_outstanding_leave_amount",
+        "allow_to_edit_employee_advance_amount",
         "column_break_odfc",
         "company",
         "section_break_uzfw",
@@ -190,6 +22,8 @@
         "column_break_htqo",
         "leave_type",
         "component_to_calculate_cost_of_day_for_leaves",
+        "employee_advance_section",
+        "employee_advance_account",
         "leave_due_settings_tab",
         "leave_dues_fields",
         "attendance_setting_tab",
@@ -221,6 +55,35 @@
             "fieldname": "allow_to_edit_start_work_date",
             "fieldtype": "Check",
             "label": "Allow To Edit Start Work Date"
+        },
+        {
+            "default": "0",
+            "fieldname": "allow_to_edit_outstanding_leave_amount",
+            "fieldtype": "Check",
+            "label": "Allow To Edit Outstanding Leave Amount"
+        },
+        {
+            "default": "0",
+            "fieldname": "allow_to_edit_employee_advance_amount",
+            "fieldtype": "Check",
+            "label": "Allow To Edit Employee Advance Amount"
+        },
+        {
+            "default": "0",
+            "fieldname": "allow_to_edit_last_work_days_salary",
+            "fieldtype": "Check",
+            "label": "Allow To Edit Last Work Days Salary"
+        },
+        {
+            "fieldname": "employee_advance_section",
+            "fieldtype": "Section Break",
+            "label": "Employee Advance"
+        },
+        {
+            "fieldname": "employee_advance_account",
+            "fieldtype": "Link",
+            "label": "Employee Advance Account",
+            "options": "Account"
         },
         {
             "fieldname": "leave_due_settings_tab",
@@ -266,12 +129,6 @@
             "fieldname": "payroll_date_beginning",
             "fieldtype": "Date",
             "label": "Payroll Date Beginning "
-        },
-        {
-            "default": "0",
-            "fieldname": "allow_to_edit_last_work_days_salary",
-            "fieldtype": "Check",
-            "label": "Allow To Edit Last Work Days Salary"
         },
         {
             "fieldname": "component_to_calculate_cost_of_day",
@@ -358,7 +215,7 @@
             "label": "Skip Employee In Attendance",
             "options": "Set Employee Absent"
         }
-    ],
+    ] ,
     "index_web_pages_for_search": 1,
     "links": [],
     "modified": "2024-10-14 14:26:41.220173",
@@ -384,5 +241,4 @@
     "sort_field": "modified",
     "sort_order": "DESC",
     "states": []
->>>>>>> f9ca65d4eca9c76cd429b9dbae17d01d945dd079
 }
