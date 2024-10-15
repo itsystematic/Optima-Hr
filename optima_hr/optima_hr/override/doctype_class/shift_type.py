@@ -115,5 +115,5 @@ class OptimaShiftType(ShiftType) :
 
     def get_skip_employee_from_attendance(self) :
         
-        return frappe.db.get_all("Skip Employee In Attendance" ,
-        {"parent" : "HR Ensan Setting" , "parentfield" : "skip_employee_in_attendance" } , pluck="employee" )
+        return frappe.db.get_all("Set Employee Absent" ,{ 
+            "parent" : "Optima HR Setting" , "parentfield" : "skip_employee_in_attendance" } , pluck="employee" )

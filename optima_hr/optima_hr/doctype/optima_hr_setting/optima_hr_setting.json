@@ -30,7 +30,9 @@
         "column_break_zjio",
         "enable_shift_types",
         "section_break_ziai",
-        "set_emplyee_absent"
+        "set_emplyee_absent",
+        "column_break_psgb",
+        "skip_employee_in_attendance"
     ],
     "fields": [
         {
@@ -175,11 +177,21 @@
             "fieldtype": "Table",
             "label": "Set Employee Absent",
             "options": "Set Employee Absent"
+        },
+        {
+            "fieldname": "column_break_psgb",
+            "fieldtype": "Column Break"
+        },
+        {
+            "fieldname": "skip_employee_in_attendance",
+            "fieldtype": "Table",
+            "label": "Skip Employee In Attendance",
+            "options": "Set Employee Absent"
         }
     ],
     "index_web_pages_for_search": 1,
     "links": [],
-    "modified": "2024-10-14 11:15:38.403116",
+    "modified": "2024-10-14 14:26:41.220173",
     "modified_by": "Administrator",
     "module": "Optima Hr",
     "name": "Optima HR Setting",
