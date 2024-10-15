@@ -5,8 +5,34 @@ frappe.provide("optima_hr_setting");
 
 optima_hr_setting.OptimaHRSetting = class OptimaHRSetting extends frappe.ui.form.Controller {
 
+
     refresh() {
+        this.setup_queries();
         this.get_fields_of_salary_structure_assignment();
+
+    }
+
+    setup_queries() {
+
+        this.frm.set_query("salary_component_for_earning" , () => {
+            return {
+                filters : [
+                    ["disabled" , "=", 0] ,
+                    ["type" , "=", "Earning"] ,
+                    ["Salary Component Account", "company", "=", this.frm.doc.company]
+                ]
+            }
+        })
+
+        this.frm.set_query("salary_component_for_deduction" , () => {
+            return {
+                filters : [
+                    ["disabled" , "=", 0] ,
+                    ["type" , "=", "Deduction"] ,
+                    ["Salary Component Account", "company", "=", this.frm.doc.company]
+                ]
+            }
+        })
     }
 
     get_fields_of_salary_structure_assignment() {

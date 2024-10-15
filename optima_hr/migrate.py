@@ -80,7 +80,6 @@ def add_additional_fields():
                 "mandatory_depends_on" : "eval: doc.is_salary_structure_assignment_componant ==1 ;" ,
             } ,
         ]
-
     }
 
     create_custom_fields(custom_fields , update=True)

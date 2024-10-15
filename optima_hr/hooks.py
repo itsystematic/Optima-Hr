@@ -156,7 +156,10 @@ override_doctype_class = {
 # Scheduled Tasks
 # ---------------
 
-# scheduler_events = {
+scheduler_events = {
+    "Cron": {
+        # "0 0 1 * *": "optima_hr.tasks.cron.make_attendance_absent_for_unmarked_employee",
+    },
 # 	"all": [
 # 		"optima_hr.tasks.all"
 # 	],
@@ -172,7 +175,7 @@ override_doctype_class = {
 # 	"monthly": [
 # 		"optima_hr.tasks.monthly"
 # 	],
-# }
+}
 
 # Testing
 # -------
