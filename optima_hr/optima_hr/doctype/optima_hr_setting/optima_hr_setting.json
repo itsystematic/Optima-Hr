@@ -33,10 +33,16 @@
         "salary_component_for_deduction",
         "column_break_zjio",
         "enable_shift_types",
-        "section_break_ziai",
+        "section_break_pmrt",
+        "make_absent_for_unmark_attendance",
+        "section_break_hyjq",
+        "from_date",
+        "to_date",
+        "custom_date",
         "set_emplyee_absent",
         "column_break_psgb",
-        "skip_employee_in_attendance"
+        "skip_employee_in_attendance",
+        "call_api"
     ],
     "fields": [
         {
@@ -214,7 +220,46 @@
             "fieldtype": "Table",
             "label": "Skip Employee In Attendance",
             "options": "Set Employee Absent"
-        }
+        },
+        {
+            "depends_on": "eval:doc.custom_date == 1",
+            "fieldname": "from_date",
+            "fieldtype": "Date",
+            "label": "From Date"
+        },
+        {
+            "depends_on": "eval:doc.custom_date == 1",
+            "fieldname": "to_date",
+            "fieldtype": "Date",
+            "label": "To Date"
+        },
+    {
+        "depends_on": "eval:doc.make_absent_for_unmark_attendance == 1",
+        "fieldname": "section_break_hyjq",
+        "fieldtype": "Section Break"
+    },
+    {
+    "fieldname": "call_api",
+    "fieldtype": "Button",
+    "label": "Making An Api Call"
+    },
+    {
+    "fieldname": "section_break_pmrt",
+    "fieldtype": "Section Break"
+    },
+    {
+    "default": "0",
+    "fieldname": "make_absent_for_unmark_attendance",
+    "fieldtype": "Check",
+    "label": "Make Absent For Unmark Attendance."
+    },
+    {
+    "default": "0",
+    "description": "If disabled, this will calculate from the beginning of the month.",
+    "fieldname": "custom_date",
+    "fieldtype": "Check",
+    "label": "Custom Date?"
+    }
     ] ,
     "index_web_pages_for_search": 1,
     "links": [],

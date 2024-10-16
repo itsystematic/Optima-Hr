@@ -61,6 +61,33 @@ optima_hr_setting.OptimaHRSetting = class OptimaHRSetting extends frappe.ui.form
             }
         });
     }
+
+    call_api(doc) {
+        const button = $('button[data-fieldname="call_api"]');
+        const originalText = button.text();
+        button.html('<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span> Loading...');
+        frappe.call({
+            method: 'optima_hr.tasks.cron.make_attendance_absent_for_unmarked_employee',
+            args: {
+                from_date: doc.from_date ? doc.from_date : null,
+                to_date: doc.to_date ? doc.to_date : null,
+            },
+            callback: (res) => {
+                if (res.message) {
+                    button.html(originalText);
+                    frappe.show_alert({ message: __(res.message), indicator: 'green' });
+                }
+            },
+            error: (err) => {
+                frappe.show_alert({ message: __(err), indicator: 'red' });
+            },
+            always: () => {
+                // Restore the original button text
+                button.html(originalText); // Restore original text
+
+            }
+        })
+    }
 }
 
 extend_cscript(cur_frm.cscript, new optima_hr_setting.OptimaHRSetting({ frm: cur_frm }));
