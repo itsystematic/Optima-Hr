@@ -137,21 +137,19 @@ doctype_list_js = {
 
 override_doctype_class = {
 
-    "Additional Salary": "optima_hr.optima_hr.override.doctype_class.additional_salary.CustomAdditionalSalary",
-    "Payment Entry": "optima_hr.optima_hr.override.doctype_class.payment_entry.OptimaPaymentEntry",
+    "Additional Salary": "optima_hr.override.doctype_class.additional_salary.CustomAdditionalSalary",
+    "Payment Entry": "optima_hr.override.doctype_class.payment_entry.OptimaPaymentEntry",
 }
 
 # Document Events
 # ---------------
 # Hook on document methods and events
 
-# doc_events = {
-# 	"*": {
-# 		"on_update": "method",
-# 		"on_cancel": "method",
-# 		"on_trash": "method"
-# 	}
-# }
+doc_events = {
+	"Attendance": {
+		"on_submit": "optima_hr.doc_events.attendance.on_submit",
+	}
+}
 
 # Scheduled Tasks
 # ---------------
