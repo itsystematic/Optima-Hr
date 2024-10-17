@@ -1,10 +1,27 @@
 
-from datetime import datetime
 import frappe
+from frappe import _
+from frappe.utils import now
+from datetime import datetime
 from erpnext.accounts.party import get_party_account
 from frappe.utils import getdate , date_diff , get_year_start, flt
 from dateutil.relativedelta import relativedelta
 from hrms.hr.doctype.leave_application.leave_application import get_leave_balance_on
+
+
+def get_optima_hr_settings(company) :
+
+    if settings:= frappe.db.exists("Optima HR Setting", {"company": company}) :
+        return frappe.get_doc("Optima HR Setting", settings)
+
+    return {}
+
+def get_company_setting_with_employee(employee) :
+	
+    default_company = frappe.db.get_value("Employee" , employee , "company" , cache=True)
+    optima_settings = get_optima_hr_settings(default_company)
+	
+    return optima_settings
 
 @frappe.whitelist()
 def get_fields_for_leave_dues(parent,parentfield) :
@@ -197,3 +214,37 @@ def create_payment_entry(doc) :
     payment_entry.set_amounts()
     
     return payment_entry
+
+
+def create_additional_salary(**kwargs):
+    """
+        Base Method To Create Additional Salary From Doctype ( Permissions  , Employee Advance , Attendance )
+    """
+    additional_salary = frappe.new_doc('Additional Salary')
+    additional_salary.employee = kwargs.get("employee")
+    additional_salary.payroll_date = kwargs.get("posting_date", now())
+    additional_salary.amount = kwargs.get("amount", 0)
+    additional_salary.salary_component = kwargs.get("salary_component")
+    additional_salary.ref_doctype = kwargs.get("ref_doctype")
+    additional_salary.ref_docname = kwargs.get("ref_docname")
+    additional_salary.overwrite_salary_structure_amount = 0
+    additional_salary.save(ignore_permissions=True)
+    additional_salary.submit()
+    
+    return additional_salary
+
+
+
+def get_employee_salary(employee) :
+    """ 
+        Base Method To Get Employee Salary
+    """
+    base_salary_fields = get_company_setting_with_employee(employee).get("required_allowance" ,[])
+
+    if not  base_salary_fields : return 0
+
+    last_salary = frappe.db.get_all("Salary Structure Assignment" , {"docstatus":1 , "employee" : employee} , base_salary_fields  + ['base'],  order_by="creation desc" , limit=1 )
+
+    if not last_salary : return 0
+
+    return sum(last_salary[0].values())

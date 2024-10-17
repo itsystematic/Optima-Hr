@@ -6,8 +6,7 @@ from hrms.hr.doctype.employee_checkin.employee_checkin import (
 	calculate_working_hours,
 	mark_attendance_and_link_log,
 )
-from datetime import timedelta
-from optima_hr import get_company_setting_with_employee
+from optima_hr.optima_hr.utils import get_company_setting_with_employee
 
 
 EMPLOYEE_CHUNK_SIZE = 50
