@@ -148,7 +148,10 @@ override_doctype_class = {
 doc_events = {
 	"Attendance": {
 		"on_submit": "optima_hr.doc_events.attendance.on_submit",
-	}
+	},
+    "Shift Assignment": {
+        "on_submit": "optima_hr.doc_events.shift-assignment.default_shift_assignment",
+    }
 }
 
 # Scheduled Tasks
