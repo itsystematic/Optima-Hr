@@ -33,16 +33,18 @@
         "salary_component_for_deduction",
         "column_break_zjio",
         "enable_shift_types",
+        "section_break_bgol",
+        "skip_employee_in_attendance",
         "section_break_pmrt",
         "make_absent_for_unmark_attendance",
-        "section_break_hyjq",
+        "section_break_kwnb",
         "from_date",
+        "column_break_wcwg",
         "to_date",
-        "custom_date",
+        "section_break_hyjq",
+        "date_range",
         "set_emplyee_absent",
-        "column_break_psgb",
-        "skip_employee_in_attendance",
-        "call_api"
+        "making_absent"
     ],
     "fields": [
         {
@@ -202,18 +204,10 @@
             "options": "Salary Component"
         },
         {
-            "fieldname": "section_break_ziai",
-            "fieldtype": "Section Break"
-        },
-        {
             "fieldname": "set_emplyee_absent",
             "fieldtype": "Table",
             "label": "Set Employee Absent",
             "options": "Set Employee Absent"
-        },
-        {
-            "fieldname": "column_break_psgb",
-            "fieldtype": "Column Break"
         },
         {
             "fieldname": "skip_employee_in_attendance",
@@ -222,26 +216,23 @@
             "options": "Set Employee Absent"
         },
         {
-            "depends_on": "eval:doc.custom_date == 1",
+            "depends_on": "eval:doc.date_range == 1",
             "fieldname": "from_date",
             "fieldtype": "Date",
-            "label": "From Date"
+            "label": "From Date",
+            "mandatory_depends_on": "eval:doc.date_range == 1"
         },
         {
-            "depends_on": "eval:doc.custom_date == 1",
+            "depends_on": "eval:doc.date_range == 1",
             "fieldname": "to_date",
             "fieldtype": "Date",
-            "label": "To Date"
+            "label": "To Date",
+            "mandatory_depends_on": "eval:doc.date_range == 1"
         },
         {
             "depends_on": "eval:doc.make_absent_for_unmark_attendance == 1",
             "fieldname": "section_break_hyjq",
             "fieldtype": "Section Break"
-        },
-        {
-            "fieldname": "call_api",
-            "fieldtype": "Button",
-            "label": "Making An Api Call"
         },
         {
             "fieldname": "section_break_pmrt",
@@ -254,16 +245,33 @@
             "label": "Make Absent For Unmark Attendance."
         },
         {
+            "fieldname": "section_break_bgol",
+            "fieldtype": "Section Break"
+        },
+        {
+            "fieldname": "making_absent",
+            "fieldtype": "Button",
+            "label": "Making Absent"
+        },
+        {
             "default": "0",
             "description": "If disabled, this will calculate from the beginning of the month.",
-            "fieldname": "custom_date",
+            "fieldname": "date_range",
             "fieldtype": "Check",
-            "label": "Custom Date?"
+            "label": "Date Range?"
+        },
+        {
+            "fieldname": "section_break_kwnb",
+            "fieldtype": "Section Break"
+        },
+        {
+            "fieldname": "column_break_wcwg",
+            "fieldtype": "Column Break"
         }
     ],
     "index_web_pages_for_search": 1,
     "links": [],
-    "modified": "2024-10-14 14:26:41.220173",
+    "modified": "2024-10-20 09:37:41.485112",
     "modified_by": "Administrator",
     "module": "Optima Hr",
     "name": "Optima HR Setting",
