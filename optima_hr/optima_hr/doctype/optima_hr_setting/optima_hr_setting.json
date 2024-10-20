@@ -1,289 +1,287 @@
 {
-    "actions": [],
-    "allow_rename": 1,
-    "autoname": "field:company",
-    "creation": "2024-10-08 10:54:53.837710",
-    "doctype": "DocType",
-    "engine": "InnoDB",
-    "field_order": [
-        "gratuity_setting_tab",
-        "allow_to_edit_start_work_date",
-        "allow_to_edit_total_salary",
-        "allow_to_edit_last_work_days_salary",
-        "allow_to_edit_outstanding_leave_amount",
-        "allow_to_edit_employee_advance_amount",
-        "column_break_odfc",
-        "company",
-        "section_break_uzfw",
-        "required_allowance",
-        "last_work_days_salary_section",
-        "payroll_date_beginning",
-        "component_to_calculate_cost_of_day",
-        "column_break_htqo",
-        "leave_type",
-        "component_to_calculate_cost_of_day_for_leaves",
-        "employee_advance_section",
-        "employee_advance_account",
-        "leave_due_settings_tab",
-        "leave_dues_fields",
-        "attendance_setting_tab",
-        "enable_shift_duration",
-        "section_break_bmzs",
-        "salary_component_for_earning",
-        "salary_component_for_deduction",
-        "column_break_zjio",
-        "enable_shift_types",
-        "section_break_pmrt",
-        "make_absent_for_unmark_attendance",
-        "section_break_hyjq",
-        "from_date",
-        "to_date",
-        "custom_date",
-        "set_emplyee_absent",
-        "column_break_psgb",
-        "skip_employee_in_attendance",
-        "call_api"
-    ],
-    "fields": [
-        {
-            "fieldname": "gratuity_setting_tab",
-            "fieldtype": "Tab Break",
-            "label": "End of service benefits"
-        },
-        {
-            "default": "0",
-            "fieldname": "allow_to_edit_total_salary",
-            "fieldtype": "Check",
-            "label": "Allow To Edit Total Salary"
-        },
-        {
-            "default": "0",
-            "fieldname": "allow_to_edit_start_work_date",
-            "fieldtype": "Check",
-            "label": "Allow To Edit Start Work Date"
-        },
-        {
-            "default": "0",
-            "fieldname": "allow_to_edit_outstanding_leave_amount",
-            "fieldtype": "Check",
-            "label": "Allow To Edit Outstanding Leave Amount"
-        },
-        {
-            "default": "0",
-            "fieldname": "allow_to_edit_employee_advance_amount",
-            "fieldtype": "Check",
-            "label": "Allow To Edit Employee Advance Amount"
-        },
-        {
-            "default": "0",
-            "fieldname": "allow_to_edit_last_work_days_salary",
-            "fieldtype": "Check",
-            "label": "Allow To Edit Last Work Days Salary"
-        },
-        {
-            "fieldname": "employee_advance_section",
-            "fieldtype": "Section Break",
-            "label": "Employee Advance"
-        },
-        {
-            "fieldname": "employee_advance_account",
-            "fieldtype": "Link",
-            "label": "Employee Advance Account",
-            "options": "Account"
-        },
-        {
-            "fieldname": "leave_due_settings_tab",
-            "fieldtype": "Tab Break",
-            "label": "Leave Due Settings"
-        },
-        {
-            "fieldname": "leave_dues_fields",
-            "fieldtype": "Table",
-            "label": "Leave Dues Fields",
-            "options": "Leave Dues Fields"
-        },
-        {
-            "fieldname": "company",
-            "fieldtype": "Link",
-            "in_list_view": 1,
-            "label": "Company",
-            "options": "Company",
-            "reqd": 1,
-            "unique": 1
-        },
-        {
-            "fieldname": "column_break_odfc",
-            "fieldtype": "Column Break"
-        },
-        {
-            "fieldname": "section_break_uzfw",
-            "fieldtype": "Section Break",
-            "label": "Employee Salary Allowance"
-        },
-        {
-            "fieldname": "required_allowance",
-            "fieldtype": "Table",
-            "label": "Required Allowance",
-            "options": "Leave Dues Fields"
-        },
-        {
-            "fieldname": "last_work_days_salary_section",
-            "fieldtype": "Section Break",
-            "label": "Last Work Days Salary - Outstanding Leaves"
-        },
-        {
-            "fieldname": "payroll_date_beginning",
-            "fieldtype": "Date",
-            "label": "Payroll Date Beginning "
-        },
-        {
-            "fieldname": "component_to_calculate_cost_of_day",
-            "fieldtype": "Table",
-            "label": "Component to Calculate Cost of Day",
-            "options": "Leave Dues Fields"
-        },
-        {
-            "fieldname": "leave_type",
-            "fieldtype": "Link",
-            "label": "Leave Type",
-            "options": "Leave Type"
-        },
-        {
-            "fieldname": "component_to_calculate_cost_of_day_for_leaves",
-            "fieldtype": "Table",
-            "label": "Component to Calculate Cost of Day for Leaves",
-            "options": "Leave Dues Fields"
-        },
-        {
-            "fieldname": "column_break_htqo",
-            "fieldtype": "Column Break"
-        },
-        {
-            "fieldname": "attendance_setting_tab",
-            "fieldtype": "Tab Break",
-            "label": "Attendance Setting"
-        },
-        {
-            "default": "0",
-            "fieldname": "enable_shift_duration",
-            "fieldtype": "Check",
-            "label": "Enable Shift Duration"
-        },
-        {
-            "fieldname": "section_break_bmzs",
-            "fieldtype": "Section Break"
-        },
-        {
-            "depends_on": "eval: doc.enable_shift_duration",
-            "fieldname": "enable_shift_types",
-            "fieldtype": "Table",
-            "label": "Enable Shift Types",
-            "mandatory_depends_on": "eval: doc.enable_shift_duration",
-            "options": "Enable Shift Types"
-        },
-        {
-            "depends_on": "eval: doc.enable_shift_duration",
-            "fieldname": "salary_component_for_earning",
-            "fieldtype": "Link",
-            "label": "Salary Component For Earning",
-            "mandatory_depends_on": "eval: doc.enable_shift_duration",
-            "options": "Salary Component"
-        },
-        {
-            "fieldname": "column_break_zjio",
-            "fieldtype": "Column Break"
-        },
-        {
-            "depends_on": "eval: doc.enable_shift_duration",
-            "fieldname": "salary_component_for_deduction",
-            "fieldtype": "Link",
-            "label": "Salary Component For Deduction",
-            "mandatory_depends_on": "eval: doc.enable_shift_duration",
-            "options": "Salary Component"
-        },
-        {
-            "fieldname": "section_break_ziai",
-            "fieldtype": "Section Break"
-        },
-        {
-            "fieldname": "set_emplyee_absent",
-            "fieldtype": "Table",
-            "label": "Set Employee Absent",
-            "options": "Set Employee Absent"
-        },
-        {
-            "fieldname": "column_break_psgb",
-            "fieldtype": "Column Break"
-        },
-        {
-            "fieldname": "skip_employee_in_attendance",
-            "fieldtype": "Table",
-            "label": "Skip Employee In Attendance",
-            "options": "Set Employee Absent"
-        },
-        {
-            "depends_on": "eval:doc.custom_date == 1",
-            "fieldname": "from_date",
-            "fieldtype": "Date",
-            "label": "From Date"
-        },
-        {
-            "depends_on": "eval:doc.custom_date == 1",
-            "fieldname": "to_date",
-            "fieldtype": "Date",
-            "label": "To Date"
-        },
-    {
-        "depends_on": "eval:doc.make_absent_for_unmark_attendance == 1",
-        "fieldname": "section_break_hyjq",
-        "fieldtype": "Section Break"
-    },
-    {
-    "fieldname": "call_api",
-    "fieldtype": "Button",
-    "label": "Making An Api Call"
-    },
-    {
-    "fieldname": "section_break_pmrt",
-    "fieldtype": "Section Break"
-    },
-    {
-    "default": "0",
-    "fieldname": "make_absent_for_unmark_attendance",
-    "fieldtype": "Check",
-    "label": "Make Absent For Unmark Attendance."
-    },
-    {
-    "default": "0",
-    "description": "If disabled, this will calculate from the beginning of the month.",
-    "fieldname": "custom_date",
-    "fieldtype": "Check",
-    "label": "Custom Date?"
-    }
-    ] ,
-    "index_web_pages_for_search": 1,
-    "links": [],
-    "modified": "2024-10-14 14:26:41.220173",
-    "modified_by": "Administrator",
-    "module": "Optima Hr",
-    "name": "Optima HR Setting",
-    "naming_rule": "By fieldname",
-    "owner": "Administrator",
-    "permissions": [
-        {
-            "create": 1,
-            "delete": 1,
-            "email": 1,
-            "export": 1,
-            "print": 1,
-            "read": 1,
-            "report": 1,
-            "role": "System Manager",
-            "share": 1,
-            "write": 1
-        }
-    ],
-    "sort_field": "modified",
-    "sort_order": "DESC",
-    "states": []
+ "actions": [],
+ "allow_rename": 1,
+ "autoname": "field:company",
+ "creation": "2024-10-08 10:54:53.837710",
+ "doctype": "DocType",
+ "engine": "InnoDB",
+ "field_order": [
+  "gratuity_setting_tab",
+  "allow_to_edit_start_work_date",
+  "allow_to_edit_total_salary",
+  "allow_to_edit_last_work_days_salary",
+  "allow_to_edit_outstanding_leave_amount",
+  "allow_to_edit_employee_advance_amount",
+  "column_break_odfc",
+  "company",
+  "section_break_uzfw",
+  "required_allowance",
+  "last_work_days_salary_section",
+  "payroll_date_beginning",
+  "component_to_calculate_cost_of_day",
+  "column_break_htqo",
+  "leave_type",
+  "component_to_calculate_cost_of_day_for_leaves",
+  "employee_advance_section",
+  "employee_advance_account",
+  "leave_due_settings_tab",
+  "leave_dues_fields",
+  "attendance_setting_tab",
+  "enable_shift_duration",
+  "section_break_bmzs",
+  "salary_component_for_earning",
+  "salary_component_for_deduction",
+  "column_break_zjio",
+  "enable_shift_types",
+  "section_break_bgol",
+  "skip_employee_in_attendance",
+  "section_break_pmrt",
+  "make_absent_for_unmark_attendance",
+  "section_break_hyjq",
+  "from_date",
+  "to_date",
+  "date_range",
+  "set_emplyee_absent",
+  "making_absent"
+ ],
+ "fields": [
+  {
+   "fieldname": "gratuity_setting_tab",
+   "fieldtype": "Tab Break",
+   "label": "End of service benefits"
+  },
+  {
+   "default": "0",
+   "fieldname": "allow_to_edit_total_salary",
+   "fieldtype": "Check",
+   "label": "Allow To Edit Total Salary"
+  },
+  {
+   "default": "0",
+   "fieldname": "allow_to_edit_start_work_date",
+   "fieldtype": "Check",
+   "label": "Allow To Edit Start Work Date"
+  },
+  {
+   "default": "0",
+   "fieldname": "allow_to_edit_outstanding_leave_amount",
+   "fieldtype": "Check",
+   "label": "Allow To Edit Outstanding Leave Amount"
+  },
+  {
+   "default": "0",
+   "fieldname": "allow_to_edit_employee_advance_amount",
+   "fieldtype": "Check",
+   "label": "Allow To Edit Employee Advance Amount"
+  },
+  {
+   "default": "0",
+   "fieldname": "allow_to_edit_last_work_days_salary",
+   "fieldtype": "Check",
+   "label": "Allow To Edit Last Work Days Salary"
+  },
+  {
+   "fieldname": "employee_advance_section",
+   "fieldtype": "Section Break",
+   "label": "Employee Advance"
+  },
+  {
+   "fieldname": "employee_advance_account",
+   "fieldtype": "Link",
+   "label": "Employee Advance Account",
+   "options": "Account"
+  },
+  {
+   "fieldname": "leave_due_settings_tab",
+   "fieldtype": "Tab Break",
+   "label": "Leave Due Settings"
+  },
+  {
+   "fieldname": "leave_dues_fields",
+   "fieldtype": "Table",
+   "label": "Leave Dues Fields",
+   "options": "Leave Dues Fields"
+  },
+  {
+   "fieldname": "company",
+   "fieldtype": "Link",
+   "in_list_view": 1,
+   "label": "Company",
+   "options": "Company",
+   "reqd": 1,
+   "unique": 1
+  },
+  {
+   "fieldname": "column_break_odfc",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "section_break_uzfw",
+   "fieldtype": "Section Break",
+   "label": "Employee Salary Allowance"
+  },
+  {
+   "fieldname": "required_allowance",
+   "fieldtype": "Table",
+   "label": "Required Allowance",
+   "options": "Leave Dues Fields"
+  },
+  {
+   "fieldname": "last_work_days_salary_section",
+   "fieldtype": "Section Break",
+   "label": "Last Work Days Salary - Outstanding Leaves"
+  },
+  {
+   "fieldname": "payroll_date_beginning",
+   "fieldtype": "Date",
+   "label": "Payroll Date Beginning "
+  },
+  {
+   "fieldname": "component_to_calculate_cost_of_day",
+   "fieldtype": "Table",
+   "label": "Component to Calculate Cost of Day",
+   "options": "Leave Dues Fields"
+  },
+  {
+   "fieldname": "leave_type",
+   "fieldtype": "Link",
+   "label": "Leave Type",
+   "options": "Leave Type"
+  },
+  {
+   "fieldname": "component_to_calculate_cost_of_day_for_leaves",
+   "fieldtype": "Table",
+   "label": "Component to Calculate Cost of Day for Leaves",
+   "options": "Leave Dues Fields"
+  },
+  {
+   "fieldname": "column_break_htqo",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "attendance_setting_tab",
+   "fieldtype": "Tab Break",
+   "label": "Attendance Setting"
+  },
+  {
+   "default": "0",
+   "fieldname": "enable_shift_duration",
+   "fieldtype": "Check",
+   "label": "Enable Shift Duration"
+  },
+  {
+   "fieldname": "section_break_bmzs",
+   "fieldtype": "Section Break"
+  },
+  {
+   "depends_on": "eval: doc.enable_shift_duration",
+   "fieldname": "enable_shift_types",
+   "fieldtype": "Table",
+   "label": "Enable Shift Types",
+   "mandatory_depends_on": "eval: doc.enable_shift_duration",
+   "options": "Enable Shift Types"
+  },
+  {
+   "depends_on": "eval: doc.enable_shift_duration",
+   "fieldname": "salary_component_for_earning",
+   "fieldtype": "Link",
+   "label": "Salary Component For Earning",
+   "mandatory_depends_on": "eval: doc.enable_shift_duration",
+   "options": "Salary Component"
+  },
+  {
+   "fieldname": "column_break_zjio",
+   "fieldtype": "Column Break"
+  },
+  {
+   "depends_on": "eval: doc.enable_shift_duration",
+   "fieldname": "salary_component_for_deduction",
+   "fieldtype": "Link",
+   "label": "Salary Component For Deduction",
+   "mandatory_depends_on": "eval: doc.enable_shift_duration",
+   "options": "Salary Component"
+  },
+  {
+   "fieldname": "set_emplyee_absent",
+   "fieldtype": "Table",
+   "label": "Set Employee Absent",
+   "options": "Set Employee Absent"
+  },
+  {
+   "fieldname": "skip_employee_in_attendance",
+   "fieldtype": "Table",
+   "label": "Skip Employee In Attendance",
+   "options": "Set Employee Absent"
+  },
+  {
+   "depends_on": "eval:doc.date_range == 1",
+   "fieldname": "from_date",
+   "fieldtype": "Date",
+   "label": "From Date",
+   "mandatory_depends_on": "eval:doc.date_range == 1"
+  },
+  {
+   "depends_on": "eval:doc.date_range == 1",
+   "fieldname": "to_date",
+   "fieldtype": "Date",
+   "label": "To Date",
+   "mandatory_depends_on": "eval:doc.date_range == 1"
+  },
+  {
+   "depends_on": "eval:doc.make_absent_for_unmark_attendance == 1",
+   "fieldname": "section_break_hyjq",
+   "fieldtype": "Section Break"
+  },
+  {
+   "fieldname": "section_break_pmrt",
+   "fieldtype": "Section Break"
+  },
+  {
+   "default": "0",
+   "fieldname": "make_absent_for_unmark_attendance",
+   "fieldtype": "Check",
+   "label": "Make Absent For Unmark Attendance."
+  },
+  {
+   "fieldname": "section_break_bgol",
+   "fieldtype": "Section Break"
+  },
+  {
+   "fieldname": "making_absent",
+   "fieldtype": "Button",
+   "label": "Making Absent"
+  },
+  {
+   "default": "0",
+   "description": "If disabled, this will calculate from the beginning of the month.",
+   "fieldname": "date_range",
+   "fieldtype": "Check",
+   "label": "Date Range?"
+  }
+ ],
+ "index_web_pages_for_search": 1,
+ "links": [],
+ "modified": "2024-10-20 09:27:04.323933",
+ "modified_by": "Administrator",
+ "module": "Optima Hr",
+ "name": "Optima HR Setting",
+ "naming_rule": "By fieldname",
+ "owner": "Administrator",
+ "permissions": [
+  {
+   "create": 1,
+   "delete": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "System Manager",
+   "share": 1,
+   "write": 1
+  }
+ ],
+ "sort_field": "modified",
+ "sort_order": "DESC",
+ "states": []
 }

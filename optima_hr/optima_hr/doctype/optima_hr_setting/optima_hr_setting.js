@@ -62,8 +62,8 @@ optima_hr_setting.OptimaHRSetting = class OptimaHRSetting extends frappe.ui.form
         });
     }
 
-    call_api(doc) {
-        const button = $('button[data-fieldname="call_api"]');
+    making_absent(doc) {
+        const button = $('button[data-fieldname="making_absent"]');
         const originalText = button.text();
         button.html('<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span> Loading...');
         frappe.call({
