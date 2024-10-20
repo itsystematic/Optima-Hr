@@ -233,34 +233,34 @@
             "fieldtype": "Date",
             "label": "To Date"
         },
-    {
-        "depends_on": "eval:doc.make_absent_for_unmark_attendance == 1",
-        "fieldname": "section_break_hyjq",
-        "fieldtype": "Section Break"
-    },
-    {
-    "fieldname": "call_api",
-    "fieldtype": "Button",
-    "label": "Making An Api Call"
-    },
-    {
-    "fieldname": "section_break_pmrt",
-    "fieldtype": "Section Break"
-    },
-    {
-    "default": "0",
-    "fieldname": "make_absent_for_unmark_attendance",
-    "fieldtype": "Check",
-    "label": "Make Absent For Unmark Attendance."
-    },
-    {
-    "default": "0",
-    "description": "If disabled, this will calculate from the beginning of the month.",
-    "fieldname": "custom_date",
-    "fieldtype": "Check",
-    "label": "Custom Date?"
-    }
-    ] ,
+        {
+            "depends_on": "eval:doc.make_absent_for_unmark_attendance == 1",
+            "fieldname": "section_break_hyjq",
+            "fieldtype": "Section Break"
+        },
+        {
+            "fieldname": "call_api",
+            "fieldtype": "Button",
+            "label": "Making An Api Call"
+        },
+        {
+            "fieldname": "section_break_pmrt",
+            "fieldtype": "Section Break"
+        },
+        {
+            "default": "0",
+            "fieldname": "make_absent_for_unmark_attendance",
+            "fieldtype": "Check",
+            "label": "Make Absent For Unmark Attendance."
+        },
+        {
+            "default": "0",
+            "description": "If disabled, this will calculate from the beginning of the month.",
+            "fieldname": "custom_date",
+            "fieldtype": "Check",
+            "label": "Custom Date?"
+        }
+    ],
     "index_web_pages_for_search": 1,
     "links": [],
     "modified": "2024-10-14 14:26:41.220173",
