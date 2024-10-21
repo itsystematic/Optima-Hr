@@ -89,7 +89,7 @@ doctype_list_js = {
 # ------------
 
 # before_install = "optima_hr.install.before_install"
-# after_install = "optima_hr.install.after_install"
+after_install = "optima_hr.after_install.delete_genders"
 
 # Uninstallation
 # ------------
@@ -121,7 +121,7 @@ doctype_list_js = {
 
 # Permissions
 # -----------
-# Permissions evaluated in scripted ways
+# Permissions evaluated in scripted ways  
 
 # permission_query_conditions = {
 # 	"Event": "frappe.desk.doctype.event.event.get_permission_query_conditions",
