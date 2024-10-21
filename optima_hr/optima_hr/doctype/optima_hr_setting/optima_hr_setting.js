@@ -8,54 +8,76 @@ optima_hr_setting.OptimaHRSetting = class OptimaHRSetting extends frappe.ui.form
 
     refresh() {
         this.setup_queries();
-        this.get_fields_of_salary_structure_assignment();
+    }
 
+    onload() {
+        this.button = null;
+        $(document).ready(() => {
+            const button = $('button[data-fieldname="making_absent"]');
+            button.addClass('btn btn-danger text-white fw-bold');
+            button.hover(() => {
+                button.css('background-color', '#ff000080');
+            }, () => {
+                button.css('background-color', '');
+            })
+            this.button = button;
+        })
     }
 
     setup_queries() {
 
-        this.frm.set_query("salary_component_for_earning" , () => {
+        let child_table_fields = [
+            "required_allowance" , "component_to_calculate_cost_of_day", 
+            "component_to_calculate_cost_of_day_for_leaves" ,"leave_dues_fields",
+            "employee_salary"
+        ];  
+
+        for (let child_table_name of child_table_fields) {
+            this.frm.set_query("salary_component",child_table_name, () => {
+                return {
+                    filters: [
+                        ["Salary Component Account", "company", "=", this.frm.doc.company],
+                        ["disabled", "=", 0],
+                        ["is_salary_structure_assignment_componant", "=" , 1],
+                        ["ssa_name" , "not in" , [null , ""]]
+                    ]
+                }
+            })
+        }
+
+        this.frm.set_query("salary_component_for_earning", () => {
             return {
-                filters : [
-                    ["disabled" , "=", 0] ,
-                    ["type" , "=", "Earning"] ,
+                filters: [
+                    ["disabled", "=", 0],
+                    ["type", "=", "Earning"],
                     ["Salary Component Account", "company", "=", this.frm.doc.company]
                 ]
             }
         })
 
-        this.frm.set_query("salary_component_for_deduction" , () => {
+        this.frm.set_query("salary_component_for_deduction", () => {
             return {
-                filters : [
-                    ["disabled" , "=", 0] ,
-                    ["type" , "=", "Deduction"] ,
+                filters: [
+                    ["disabled", "=", 0],
+                    ["type", "=", "Deduction"],
                     ["Salary Component Account", "company", "=", this.frm.doc.company]
                 ]
             }
         })
 
-        this.frm.set_query("employee" , "skip_employee_in_attendance", () => {
+        this.frm.set_query("employee", "skip_employee_in_attendance", () => {
             let employee = this.frm.doc.skip_employee_in_attendance.map(employee => employee.employee);
             return {
-                filters : {
-                    status : "Active",
-                    company : this.frm.doc.company,
-                    name : ["not in" , employee]
+                filters: {
+                    status: "Active",
+                    company: this.frm.doc.company,
+                    name: ["not in", employee]
                 }
             }
         })
+
     }
 
-    get_fields_of_salary_structure_assignment() {
-        let me = this;
-        frappe.call({
-            method : "get_fields_of_salary_structure_assignment" ,
-            doc : me.frm.doc ,
-            callback:(r) =>  {
-                me.frm.fields_dict["leave_dues_fields"].grid.get_docfield("field_name").options = r.message
-            }
-        })
-    }
 
     fetch_salary_components() {
         frappe.call({
@@ -63,7 +85,7 @@ optima_hr_setting.OptimaHRSetting = class OptimaHRSetting extends frappe.ui.form
             args: {
                 doctype: 'Salary Component',
                 fields: ['name'],
-                limit: 0 
+                limit: 0
             },
             callback: (response) => {
                 if (response.message) {
@@ -74,9 +96,8 @@ optima_hr_setting.OptimaHRSetting = class OptimaHRSetting extends frappe.ui.form
     }
 
     making_absent(doc) {
-        const button = $('button[data-fieldname="making_absent"]');
-        const originalText = button.text();
-        button.html('<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span> Loading...');
+        const originalText = this.button.text();
+        this.button.html('<span class="spinner-border bg-danger text-white spinner-border-sm" role="status" aria-hidden="true"></span> Loading...');
         frappe.call({
             method: 'optima_hr.optima_hr.doctype.optima_hr_setting.optima_hr_setting.make_attendance_absent_for_unmarked_employee',
             args: {
@@ -85,7 +106,7 @@ optima_hr_setting.OptimaHRSetting = class OptimaHRSetting extends frappe.ui.form
             },
             callback: (res) => {
                 if (res.message) {
-                    button.html(originalText);
+                    this.button.html(originalText);
                     frappe.show_alert({ message: __(res.message), indicator: 'green' });
                 }
             },
@@ -93,7 +114,7 @@ optima_hr_setting.OptimaHRSetting = class OptimaHRSetting extends frappe.ui.form
                 frappe.show_alert({ message: __(err), indicator: 'red' });
             },
             always: () => {
-                button.html(originalText); // Restore original text
+                this.button.html(originalText); // Restore original text
 
             }
         })

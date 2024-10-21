@@ -244,9 +244,8 @@ def get_employee_salary(employee) :
     if not  employee_salary : return 0
 
     base_salary_fields = list(map(lambda x : x.get("field_name") , employee_salary ))
-    fields = list(map(lambda x : x.get("fieldname") , filter(lambda x : x.get("label") in base_salary_fields ,frappe.get_meta("Salary Structure Assignment").fields) ))
 
-    last_salary = frappe.db.get_all("Salary Structure Assignment" , {"docstatus":1 , "employee" : employee} , fields  ,  order_by="creation desc" , limit=1 )
+    last_salary = frappe.db.get_all("Salary Structure Assignment" , {"docstatus":1 , "employee" : employee} , base_salary_fields  ,  order_by="creation desc" , limit=1 )
 
     if not last_salary : return 0
 
