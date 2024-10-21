@@ -1,7 +1,7 @@
 app_name = "optima_hr"
-app_title = "Optima Hr"
+app_title = "Optima Hr KSA"
 app_publisher = "IT Systematic Company"
-app_description = "App For Customization of Hr"
+app_description = "App For Customization of Hr KSA's projects"
 app_email = "sales@itsystematic.com"
 required_apps = ["frappe", "erpnext", "hrms"]
 app_license = "mit"
@@ -89,7 +89,7 @@ doctype_list_js = {
 # ------------
 
 # before_install = "optima_hr.install.before_install"
-# after_install = "optima_hr.install.after_install"
+after_install = "optima_hr.after_install.delete_genders"
 
 # Uninstallation
 # ------------
@@ -121,7 +121,7 @@ doctype_list_js = {
 
 # Permissions
 # -----------
-# Permissions evaluated in scripted ways
+# Permissions evaluated in scripted ways  
 
 # permission_query_conditions = {
 # 	"Event": "frappe.desk.doctype.event.event.get_permission_query_conditions",
