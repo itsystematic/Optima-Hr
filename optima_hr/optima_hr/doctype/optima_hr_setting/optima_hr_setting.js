@@ -33,6 +33,17 @@ optima_hr_setting.OptimaHRSetting = class OptimaHRSetting extends frappe.ui.form
                 ]
             }
         })
+
+        this.frm.set_query("employee" , "skip_employee_in_attendance", () => {
+            let employee = this.frm.doc.skip_employee_in_attendance.map(employee => employee.employee);
+            return {
+                filters : {
+                    status : "Active",
+                    company : this.frm.doc.company,
+                    name : ["not in" , employee]
+                }
+            }
+        })
     }
 
     get_fields_of_salary_structure_assignment() {
