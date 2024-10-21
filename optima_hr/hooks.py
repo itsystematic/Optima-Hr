@@ -1,7 +1,7 @@
 app_name = "optima_hr"
-app_title = "Optima Hr"
+app_title = "Optima Hr KSA"
 app_publisher = "IT Systematic Company"
-app_description = "App For Customization of Hr"
+app_description = "App For Customization of Hr KSA's projects"
 app_email = "sales@itsystematic.com"
 required_apps = ["frappe", "erpnext", "hrms"]
 app_license = "mit"

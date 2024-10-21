@@ -37,9 +37,11 @@
   "skip_employee_in_attendance",
   "section_break_pmrt",
   "make_absent_for_unmark_attendance",
-  "section_break_hyjq",
+  "section_break_kwnb",
   "from_date",
+  "column_break_wcwg",
   "to_date",
+  "section_break_hyjq",
   "date_range",
   "set_emplyee_absent",
   "making_absent"
@@ -257,11 +259,19 @@
    "fieldname": "date_range",
    "fieldtype": "Check",
    "label": "Date Range?"
+  },
+  {
+   "fieldname": "section_break_kwnb",
+   "fieldtype": "Section Break"
+  },
+  {
+   "fieldname": "column_break_wcwg",
+   "fieldtype": "Column Break"
   }
  ],
  "index_web_pages_for_search": 1,
  "links": [],
- "modified": "2024-10-20 09:27:04.323933",
+ "modified": "2024-10-20 09:37:41.485112",
  "modified_by": "Administrator",
  "module": "Optima Hr",
  "name": "Optima HR Setting",
