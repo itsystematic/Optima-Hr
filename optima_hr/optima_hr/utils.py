@@ -26,10 +26,10 @@ def get_company_setting_with_employee(employee) :
 @frappe.whitelist()
 def get_fields_for_leave_dues(parent,parentfield) :
 
-    label_fields = frappe.db.get_all("Leave Dues Fields"  ,{"parent" : parent, "parentfield" : parentfield }, pluck="field_name")
-    fields = list(map(lambda x : x.get("fieldname") , filter(lambda x : x.get("label") in label_fields ,frappe.get_meta("Salary Structure Assignment").fields) ))
+    label_fields = frappe.db.get_all("Salary Component Fields"  ,{"parent" : parent, "parentfield" : parentfield }, pluck="field_name")
+    # fields = list(map(lambda x : x.get("fieldname") , filter(lambda x : x.get("label") in label_fields ,frappe.get_meta("Salary Structure Assignment").fields) ))
 
-    return fields
+    return label_fields
 
 @frappe.whitelist()
 def get_total_amount_for_salary_structure_assignment(employee , include_fields) :
