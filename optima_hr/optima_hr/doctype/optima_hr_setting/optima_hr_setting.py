@@ -12,17 +12,7 @@ from hrms.hr.doctype.shift_assignment.shift_assignment import get_shifts_for_dat
 
 
 class OptimaHRSetting(Document):
-	
-
-	@frappe.whitelist()
-	def get_fields_of_salary_structure_assignment(self):
-
-		meta = frappe.get_meta("Salary Structure Assignment", cached=False)
-		return list(map(lambda x : x.get("label") , filter(lambda x : x.get("fieldtype") == "Currency" ,meta.fields) ))
-	
-
-
-
+    pass
 
 
 @frappe.whitelist()

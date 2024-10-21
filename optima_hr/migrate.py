@@ -17,6 +17,47 @@ def add_additional_fields():
 
 def get_custom_fields():
     custom_fields = {
+        "Shift Type" : [
+            {
+                "fieldname" : "section_break_40" ,
+                "insert_after" : "early_exit_grace_period" ,
+                "fieldtype" : "Section Break" ,
+                "label" : "Auto Attendance Settings",
+            },
+            {
+                "fieldname":"early_checkout",
+                "fieldtype":"Table",
+                "label":"Early Checkout",
+                "options" :"Auto Attendance Settings",
+                "insert_after" :"section_break_40"
+            },
+            {
+                "fieldname":"overtime",
+                "fieldtype":"Table",
+                "label":"Overtime",
+                "options" :"Auto Attendance Settings",
+                "insert_after" :"early_checkout"
+            },
+            {
+                "fieldname" :"column_break_41" ,
+                "insert_after" :"overtime",
+                "fieldtype" :"Column Break"
+            },
+            {
+                "fieldname":"late_checkin",
+                "fieldtype":"Table",
+                "label":"Late Checkin",
+                "options" :"Auto Attendance Settings",
+                "insert_after" :"column_break_41"
+            },
+            {
+                "fieldname":"late_or_early_checkin",
+                "fieldtype":"Table",
+                "label":"Late or Early Checkin ",
+                "options" :"Auto Attendance Settings",
+                "insert_after" :"late_checkin"
+            },
+        ],
 
         "Employee": [
             {

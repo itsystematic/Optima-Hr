@@ -239,11 +239,13 @@ def get_employee_salary(employee) :
     """ 
         Base Method To Get Employee Salary
     """
-    base_salary_fields = get_company_setting_with_employee(employee).get("required_allowance" ,[])
+    employee_salary = get_company_setting_with_employee(employee).get("employee_salary" ,[])
 
-    if not  base_salary_fields : return 0
+    if not  employee_salary : return 0
 
-    last_salary = frappe.db.get_all("Salary Structure Assignment" , {"docstatus":1 , "employee" : employee} , base_salary_fields  + ['base'],  order_by="creation desc" , limit=1 )
+    base_salary_fields = list(map(lambda x : x.get("field_name") , employee_salary ))
+
+    last_salary = frappe.db.get_all("Salary Structure Assignment" , {"docstatus":1 , "employee" : employee} , base_salary_fields  ,  order_by="creation desc" , limit=1 )
 
     if not last_salary : return 0
 
