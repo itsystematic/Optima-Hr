@@ -24,6 +24,7 @@ optima_hr.end_of_service_benefits.EndOfServiceBenefits = class EndOfServiceBenef
     employee() {
         this.is_salary_structured_employee();
         this.calc_salary_allawance();
+        console.log(this.frm.doc.employee);
         // this.get_optima_hr_settings();
     }
 
@@ -36,8 +37,7 @@ optima_hr.end_of_service_benefits.EndOfServiceBenefits = class EndOfServiceBenef
 
     add_buttons() {
         if (
-            this.frm.doc.docstatus === 1 &&
-            0 < this.frm.doc.paid_amount && this.frm.doc.paid_amount <= this.frm.doc.final_result
+            this.frm.doc.docstatus === 1
         ) {
             this.frm.add_custom_button(__("Create Payment Entry"), () => {
                 frappe.call({
