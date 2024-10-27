@@ -27,7 +27,7 @@ def get_company_setting_with_employee(employee) :
 def get_fields_for_leave_dues(parent,parentfield) :
 
     label_fields = frappe.db.get_all("Leave Dues Fields"  ,{"parent" : parent, "parentfield" : parentfield }, pluck="field_name")
-    fields = list(map(lambda x : x.get("fieldname") , filter(lambda x : x.get("label") in label_fields ,frappe.get_meta("Salary Structure Assignment").fields) ))
+    # fields = list(map(lambda x : x.get("fieldname") , filter(lambda x : x.get("") in label_fields ,frappe.get_meta("Salary Structure Assignment").fields) ))
 
     return fields
 
