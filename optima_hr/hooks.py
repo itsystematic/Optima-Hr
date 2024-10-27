@@ -139,7 +139,8 @@ override_doctype_class = {
 
     "Additional Salary": "optima_hr.override.doctype_class.additional_salary.CustomAdditionalSalary",
     "Payment Entry": "optima_hr.override.doctype_class.payment_entry.OptimaPaymentEntry",
-    "Salary Slip": "optima_hr.override.doctype_class.salary_slip.CustomSalarySlip"
+    "Salary Slip": "optima_hr.override.doctype_class.salary_slip.CustomSalarySlip",
+    "Employee Checkin": "optima_hr.override.doctype_class.employee_checkin.CustomEmployeeCheckin",
 }
 
 # Document Events
