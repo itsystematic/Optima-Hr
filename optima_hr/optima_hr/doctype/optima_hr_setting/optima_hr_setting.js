@@ -33,13 +33,16 @@ optima_hr_setting.OptimaHRSetting = class OptimaHRSetting extends frappe.ui.form
         ];  
 
         for (let child_table_name of child_table_fields) {
-            this.frm.set_query("salary_component",child_table_name, () => {
+            this.frm.set_query("salary_component",child_table_name, (doc, cdt ,cdn) => {
+                let row = locals[cdt][cdn];
+                let salary_component = doc[child_table_name].map(field => field.salary_component)
                 return {
                     filters: [
                         ["Salary Component Account", "company", "=", this.frm.doc.company],
                         ["disabled", "=", 0],
                         ["is_salary_structure_assignment_componant", "=" , 1],
-                        ["ssa_name" , "not in" , [null , ""]]
+                        ["ssa_name" , "not in" , [null , ""]],
+                        ["name" , "not in" , salary_component]
                     ]
                 }
             })

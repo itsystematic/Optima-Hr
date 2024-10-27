@@ -28,6 +28,7 @@
   "leave_dues_fields",
   "attendance_setting_tab",
   "enable_shift_duration",
+  "enable_standard_shift",
   "enable_add_deduction_for_checkin_late",
   "enable_add_deduction_for_checkout_early",
   "enable_add_overtime_to_employee",
@@ -37,9 +38,9 @@
   "default_salary_component_for_check_out_early",
   "default_salary_component_for_over_time",
   "section_break_bmzs",
-  "enable_shift_types",
-  "column_break_eikd",
   "employee_salary",
+  "column_break_eikd",
+  "enable_shift_types",
   "section_break_bgol",
   "skip_employee_in_attendance",
   "section_break_pmrt",
@@ -174,6 +175,7 @@
   },
   {
    "default": "0",
+   "depends_on": "eval: doc.enable_standard_shift ==0",
    "fieldname": "enable_shift_duration",
    "fieldtype": "Check",
    "label": "Enable Shift Duration"
@@ -184,6 +186,7 @@
   },
   {
    "depends_on": "eval: doc.enable_shift_duration",
+   "description": "For Shift Duration Mode , Select the Required Shift and set the duration and that is the base of accounting for Add and Deduction\n",
    "fieldname": "enable_shift_types",
    "fieldtype": "Table",
    "label": "Enable Shift Types",
@@ -257,18 +260,21 @@
   },
   {
    "default": "0",
+   "depends_on": "eval: doc.enable_standard_shift",
    "fieldname": "enable_add_deduction_for_checkin_late",
    "fieldtype": "Check",
    "label": "Enable Add Deduction For Checkin Late"
   },
   {
    "default": "0",
+   "depends_on": "eval: doc.enable_standard_shift",
    "fieldname": "enable_add_deduction_for_checkout_early",
    "fieldtype": "Check",
    "label": "Enable Add Deduction For Checkout Early"
   },
   {
    "default": "0",
+   "depends_on": "eval: doc.enable_standard_shift",
    "fieldname": "enable_add_overtime_to_employee",
    "fieldtype": "Check",
    "label": "Enable Add Overtime To Employee"
@@ -278,20 +284,23 @@
    "fieldtype": "Column Break"
   },
   {
+   "depends_on": "eval: doc.enable_add_deduction_for_checkin_late && doc.enable_standard_shift",
    "fieldname": "default_salary_component_for_check_in_late",
    "fieldtype": "Link",
    "label": "Default Salary Component For Check in Late",
-   "mandatory_depends_on": "eval: doc.enable_add_deduction_for_checkin_late == 1 ",
+   "mandatory_depends_on": "eval: doc.enable_add_deduction_for_checkin_late && doc.enable_standard_shift",
    "options": "Salary Component"
   },
   {
+   "depends_on": "eval: doc.enable_add_deduction_for_checkout_early && doc.enable_standard_shift",
    "fieldname": "default_salary_component_for_check_out_early",
    "fieldtype": "Link",
    "label": "Default Salary Component For Check Out Early",
-   "mandatory_depends_on": "eval: doc.enable_add_deduction_for_checkout_early == 1",
+   "mandatory_depends_on": "eval: doc.enable_add_deduction_for_checkout_early && doc.enable_standard_shift",
    "options": "Salary Component"
   },
   {
+   "depends_on": "eval: (doc.enable_add_overtime_to_employee && doc.enable_standard_shift ) || doc.enable_shift_duration",
    "fieldname": "default_salary_component_for_over_time",
    "fieldtype": "Link",
    "label": "Default Salary Component For Over Time",
@@ -303,6 +312,7 @@
    "fieldtype": "Column Break"
   },
   {
+   "description": "\nThese are the required components to clac the the cost of day for all Add or Deduction Components",
    "fieldname": "employee_salary",
    "fieldtype": "Table",
    "label": "Employee Salary",
@@ -316,11 +326,18 @@
    "label": "Default Salary Component For Deduction",
    "mandatory_depends_on": "eval: doc.enable_shift_duration == 1 ",
    "options": "Salary Component"
+  },
+  {
+   "default": "0",
+   "depends_on": "eval: doc.enable_shift_duration==0",
+   "fieldname": "enable_standard_shift",
+   "fieldtype": "Check",
+   "label": "Enable Standard Shift"
   }
  ],
  "index_web_pages_for_search": 1,
  "links": [],
- "modified": "2024-10-21 12:03:52.306559",
+ "modified": "2024-10-27 09:33:57.695767",
  "modified_by": "Administrator",
  "module": "Optima Hr",
  "name": "Optima HR Setting",
