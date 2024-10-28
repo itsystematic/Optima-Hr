@@ -2,11 +2,13 @@
 from hrms.payroll.doctype.salary_slip.salary_slip import SalarySlip, set_loan_repayment, get_period_factor
 import frappe
 from frappe import _
-from frappe.utils import flt , cint , getdate,add_days  ,rounded
+from frappe.utils import flt , cint , getdate,add_days  ,rounded,date_diff
+from optima_hr.optima_hr.utils import allow_edit_salary_slip
 
 
 class CustomSalarySlip(SalarySlip):
     
+    @allow_edit_salary_slip
     def calculate_net_pay(self):
         if not getattr(self, "_salary_structure_doc", None):
             self._salary_structure_doc = frappe.get_cached_doc("Salary Structure", self.salary_structure)
@@ -19,13 +21,11 @@ class CustomSalarySlip(SalarySlip):
             self.remaining_sub_periods = get_period_factor(
                 self.employee, self.start_date, self.end_date, self.payroll_frequency, self.payroll_period
             )[1]
-        print(self.gross_pay)
 
         self.gross_pay = self.get_component_totals("earnings", depends_on_payment_days=1)
         self.base_gross_pay = flt(
             flt(self.gross_pay) * flt(self.exchange_rate), self.precision("base_gross_pay")
         )
-        print(self.gross_pay)
 
         if self.salary_structure and self.is_new() :
             self.calculate_component_amounts("deductions")
@@ -38,112 +38,117 @@ class CustomSalarySlip(SalarySlip):
         self.set_net_pay()
         self.compute_income_tax_breakup()
         self.calculate_custom_cost_to_company_ctc()
-    # def get_working_days_details(self, lwp=None, for_preview=0):
-    #     payroll_settings = frappe.get_cached_value(
-    #         "Payroll Settings",
-    #         None,
-    #         (
-    #             "payroll_based_on",
-    #             "include_holidays_in_total_working_days",
-    #             "consider_marked_attendance_on_holidays",
-    #             "daily_wages_fraction_for_half_day",
-    #             "consider_unmarked_attendance_as",
-    #         ),
-    #         as_dict=1,
-    #     )
 
-    #     consider_marked_attendance_on_holidays = (
-    #         payroll_settings.include_holidays_in_total_working_days
-    #         and payroll_settings.consider_marked_attendance_on_holidays
-    #     )
+    # @allow_edit_salary_slip
+    def get_working_days_details(self, lwp=None, for_preview=0):
+        payroll_settings = frappe.get_cached_value(
+            "Payroll Settings",
+            None,
+            (
+                "payroll_based_on",
+                "include_holidays_in_total_working_days",
+                "consider_marked_attendance_on_holidays",
+                "daily_wages_fraction_for_half_day",
+                "consider_unmarked_attendance_as",
+            ),
+            as_dict=1,
+        )
 
-    #     daily_wages_fraction_for_half_day = (
-    #         flt(payroll_settings.daily_wages_fraction_for_half_day) or 0.5
-    #     )
+        consider_marked_attendance_on_holidays = (
+            payroll_settings.include_holidays_in_total_working_days
+            and payroll_settings.consider_marked_attendance_on_holidays
+        )
 
-    #     working_days = 30
-    #     # working_days = date_diff(self.end_date, self.start_date) + 1
-    #     if for_preview:
-    #         self.total_working_days = working_days
-    #         self.payment_days = working_days
-    #         return
+        daily_wages_fraction_for_half_day = (
+            flt(payroll_settings.daily_wages_fraction_for_half_day) or 0.5
+        )
 
-    #     holidays = self.get_holidays_for_employee(self.start_date, self.end_date)
-    #     working_days_list = [
-    #         add_days(getdate(self.start_date), days=day) for day in range(0, working_days)
-    #     ]
+        working_days = 30
+        # working_days = date_diff(self.end_date, self.start_date) + 1
+        if for_preview:
+            self.total_working_days = working_days
+            self.payment_days = working_days
+            return
 
-    #     if not cint(payroll_settings.include_holidays_in_total_working_days):
-    #         working_days_list = [i for i in working_days_list if i not in holidays]
+        holidays = self.get_holidays_for_employee(self.start_date, self.end_date)
+        working_days_list = [
+            add_days(getdate(self.start_date), days=day) for day in range(0, working_days)
+        ]
 
-    #         working_days -= len(holidays)
-    #         if working_days < 0:
-    #             frappe.throw(_("There are more holidays than working days this month."))
+        if not cint(payroll_settings.include_holidays_in_total_working_days):
+            working_days_list = [i for i in working_days_list if i not in holidays]
 
-    #     if not payroll_settings.payroll_based_on:
-    #         frappe.throw(_("Please set Payroll based on in Payroll settings"))
+            working_days -= len(holidays)
+            if working_days < 0:
+                frappe.throw(_("There are more holidays than working days this month."))
 
-    #     if payroll_settings.payroll_based_on == "Attendance":
-    #         actual_lwp, absent = self.calculate_lwp_ppl_and_absent_days_based_on_attendance(
-    #             holidays, daily_wages_fraction_for_half_day, consider_marked_attendance_on_holidays
-    #         )
-    #         self.absent_days = absent
-    #     else:
-    #         actual_lwp = self.calculate_lwp_or_ppl_based_on_leave_application(
-    #             holidays, working_days_list, daily_wages_fraction_for_half_day
-    #         )
+        if not payroll_settings.payroll_based_on:
+            frappe.throw(_("Please set Payroll based on in Payroll settings"))
 
-    #     if not lwp:
-    #         lwp = actual_lwp
-    #     elif lwp != actual_lwp:
-    #         frappe.msgprint(
-    #             _("Leave Without Pay does not match with approved {} records").format(
-    #                 payroll_settings.payroll_based_on
-    #             )
-    #         )
+        if payroll_settings.payroll_based_on == "Attendance":
+            actual_lwp, absent = self.calculate_lwp_ppl_and_absent_days_based_on_attendance(
+                holidays, daily_wages_fraction_for_half_day, consider_marked_attendance_on_holidays
+            )
+            self.absent_days = absent
+        else:
+            actual_lwp = self.calculate_lwp_or_ppl_based_on_leave_application(
+                holidays, working_days_list, daily_wages_fraction_for_half_day
+            )
 
-    #     self.leave_without_pay = lwp
-    #     self.total_working_days = working_days
+        if not lwp:
+            lwp = actual_lwp
+        elif lwp != actual_lwp:
+            frappe.msgprint(
+                _("Leave Without Pay does not match with approved {} records").format(
+                    payroll_settings.payroll_based_on
+                )
+            )
 
-    #     payment_days = self.get_payment_days(payroll_settings.include_holidays_in_total_working_days)
+        self.leave_without_pay = lwp
+        self.total_working_days = working_days
 
-    #     if flt(payment_days) > flt(lwp):
-    #         self.payment_days = flt(payment_days) - flt(lwp)
+        payment_days = self.get_payment_days(payroll_settings.include_holidays_in_total_working_days)
 
-    #         if payroll_settings.payroll_based_on == "Attendance":
-    #             self.payment_days -= flt(absent)
+        if flt(payment_days) > flt(lwp):
+            self.payment_days = flt(payment_days) - flt(lwp)
 
-    #         consider_unmarked_attendance_as = payroll_settings.consider_unmarked_attendance_as or "Present"
+            if payroll_settings.payroll_based_on == "Attendance":
+                self.payment_days -= flt(absent)
 
-    #         if (
-    #             payroll_settings.payroll_based_on == "Attendance"
-    #             and consider_unmarked_attendance_as == "Absent"
-    #         ):
-    #             unmarked_days = self.get_unmarked_days(payroll_settings.include_holidays_in_total_working_days)
-    #             self.absent_days += unmarked_days  # will be treated as absent
-    #             self.payment_days -= unmarked_days
-    #     else:
-    #         self.payment_days = 0  
+            consider_unmarked_attendance_as = payroll_settings.consider_unmarked_attendance_as or "Present"
+
+            if (
+                payroll_settings.payroll_based_on == "Attendance"
+                and consider_unmarked_attendance_as == "Absent"
+            ):
+                unmarked_days = self.get_unmarked_days(payroll_settings.include_holidays_in_total_working_days)
+                self.absent_days += unmarked_days  # will be treated as absent
+                self.payment_days -= unmarked_days
+        else:
+            self.payment_days = 0  
     
-    # def get_payment_days(self, include_holidays_in_total_working_days):
-    #     if self.joining_date and self.joining_date > getdate(self.end_date):
-    #         # employee joined after payroll date
-    #         return 0
+    # @allow_edit_salary_slip
+    def get_payment_days(self, include_holidays_in_total_working_days):
+        if self.joining_date and self.joining_date > getdate(self.end_date):
+            # employee joined after payroll date
+            return 0
 
-    #     if self.relieving_date:
-    #         employee_status = frappe.db.get_value("Employee", self.employee, "status")
-    #         if self.relieving_date < getdate(self.start_date) and employee_status != "Left":
-    #             frappe.throw(_("Employee relieved on {0} must be set as 'Left'").format(self.relieving_date))
+        if self.relieving_date:
+            employee_status = frappe.db.get_value("Employee", self.employee, "status")
+            if self.relieving_date < getdate(self.start_date) and employee_status != "Left":
+                frappe.throw(_("Employee relieved on {0} must be set as 'Left'").format(self.relieving_date))
 
-    #     # payment_days = date_diff(self.actual_end_date, self.actual_start_date) + 1
-    #     payment_days = 30
+        # payment_days = date_diff(self.actual_end_date, self.actual_start_date) + 1
+        payment_days = 30
 
-    #     if not cint(include_holidays_in_total_working_days):
-    #         holidays = self.get_holidays_for_employee(self.actual_start_date, self.actual_end_date)
-    #         payment_days -= len(holidays)
+        if not cint(include_holidays_in_total_working_days):
+            holidays = self.get_holidays_for_employee(self.actual_start_date, self.actual_end_date)
+            payment_days -= len(holidays)
 
-    #     return payment_days
+        return payment_days
 
+    
+    @allow_edit_salary_slip
     def get_amount_based_on_payment_days(self, row):
         amount, additional_amount = row.amount, row.additional_amount
         timesheet_component = self._salary_structure_doc.salary_component
@@ -161,17 +166,19 @@ class CustomSalarySlip(SalarySlip):
                 or (self.relieving_date and getdate(self.end_date) > self.relieving_date)
             )
         ):
-            additional_amount = flt(
-                (flt(row.additional_amount) * flt(self.payment_days) / cint(self.total_working_days)),
-                row.precision("additional_amount"),
+            # Calculate amount based on payment days
+            amount = flt(
+                (flt(row.amount) * flt(self.payment_days) / cint(self.total_working_days)),
+                row.precision("amount")
             )
-            amount = (
-                flt(
-                    (flt(row.amount) * flt(self.payment_days) / cint(self.total_working_days)),
-                    row.precision("amount"),
+            
+            # Only add additional_amount if it exists
+            if flt(row.additional_amount):
+                additional_amount = flt(
+                    (flt(row.additional_amount) * flt(self.payment_days) / cint(self.total_working_days)),
+                    row.precision("additional_amount")
                 )
-                + additional_amount
-            )
+                amount += additional_amount
 
         elif (
             not self.payment_days
@@ -180,15 +187,19 @@ class CustomSalarySlip(SalarySlip):
         ):
             amount, additional_amount = 0, 0
         elif not row.amount:
-            amount = flt(row.amount) + flt(row.additional_amount)
+            amount = flt(additional_amount)
 
         # apply rounding
         if frappe.db.get_value(
             "Salary Component", row.salary_component, "round_to_the_nearest_integer", cache=True
         ):
-            amount, additional_amount = rounded(amount or 0), rounded(additional_amount or 0)
+            amount = rounded(amount or 0)
+            additional_amount = rounded(additional_amount or 0)
+        
         return amount, additional_amount
+    
     @frappe.whitelist()
+    @allow_edit_salary_slip
     def calculate_custom_cost_to_company_ctc(self) :
         
         custom_fields = frappe.db.get_all("Custom Field" , {
