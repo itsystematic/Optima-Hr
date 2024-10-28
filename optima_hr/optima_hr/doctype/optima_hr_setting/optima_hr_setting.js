@@ -11,17 +11,31 @@ optima_hr_setting.OptimaHRSetting = class OptimaHRSetting extends frappe.ui.form
     }
 
     onload() {
-        this.button = null;
+        // this.button = null;
         $(document).ready(() => {
-            const button = $('button[data-fieldname="making_absent"]');
-            button.addClass('btn btn-danger text-white fw-bold');
-            button.hover(() => {
-                button.css('background-color', '#ff000080');
-            }, () => {
-                button.css('background-color', '');
-            })
-            this.button = button;
+            
+            this.handle_buttons();
+
         })
+    }
+
+    handle_buttons() {
+        // Button oNe 
+        const making_absent = $('button[data-fieldname="making_absent"]');
+        making_absent.removeClass('btn-default');
+        making_absent.addClass('btn btn-danger text-white fw-bold');
+        making_absent.hover(() => {
+            making_absent.css('background-color', '#ff000080');
+        }, () => {
+            making_absent.css('background-color', '');
+        })
+
+        this.making_absent_button = making_absent;
+
+        // Button Two
+        const make_attendance = $('button[data-fieldname="make_attendance"]');
+        make_attendance.removeClass('btn-default');
+        make_attendance.addClass('btn btn-success fw-bold');
     }
 
     setup_queries() {
@@ -33,13 +47,15 @@ optima_hr_setting.OptimaHRSetting = class OptimaHRSetting extends frappe.ui.form
         ];  
 
         for (let child_table_name of child_table_fields) {
-            this.frm.set_query("salary_component",child_table_name, () => {
+            this.frm.set_query("salary_component",child_table_name, (doc, cdt ,cdn) => {
+                let salary_component = doc[child_table_name].map(field => field.salary_component)
                 return {
                     filters: [
                         ["Salary Component Account", "company", "=", this.frm.doc.company],
                         ["disabled", "=", 0],
                         ["is_salary_structure_assignment_componant", "=" , 1],
-                        ["ssa_name" , "not in" , [null , ""]]
+                        ["ssa_name" , "not in" , [null , ""]],
+                        ["name" , "not in" , salary_component]
                     ]
                 }
             })
@@ -96,8 +112,8 @@ optima_hr_setting.OptimaHRSetting = class OptimaHRSetting extends frappe.ui.form
     }
 
     making_absent(doc) {
-        const originalText = this.button.text();
-        this.button.html('<span class="spinner-border bg-danger text-white spinner-border-sm" role="status" aria-hidden="true"></span> Loading...');
+        const originalText = this.making_absent_button.text();
+        this.making_absent_button.html('<span class="spinner-border bg-danger text-white spinner-border-sm" role="status" aria-hidden="true"></span> Loading...');
         frappe.call({
             method: 'optima_hr.optima_hr.doctype.optima_hr_setting.optima_hr_setting.make_attendance_absent_for_unmarked_employee',
             args: {
@@ -106,7 +122,7 @@ optima_hr_setting.OptimaHRSetting = class OptimaHRSetting extends frappe.ui.form
             },
             callback: (res) => {
                 if (res.message) {
-                    this.button.html(originalText);
+                    this.making_absent_button.html(originalText);
                     frappe.show_alert({ message: __(res.message), indicator: 'green' });
                 }
             },
@@ -114,10 +130,21 @@ optima_hr_setting.OptimaHRSetting = class OptimaHRSetting extends frappe.ui.form
                 frappe.show_alert({ message: __(err), indicator: 'red' });
             },
             always: () => {
-                this.button.html(originalText); // Restore original text
+                this.making_absent_button.html(originalText); // Restore original text
 
             }
         })
+    }
+
+    make_attendance(doc) {
+        frappe.call({
+            method: 'optima_hr.optima_hr.doctype.optima_hr_setting.optima_hr_setting.make_attendance',
+            args : {
+                company : doc.company 
+            },
+            async: true,
+        })
+
     }
 }
 

@@ -16,7 +16,7 @@ def attendance_on_submit(doc:dict={} , event:str=""):
     """_
         Attendance Calculating By Two Way 
             1 - By One Shift 
-            2 - By Shift Type
+            2 - By Shift Type ( Standard Shift )
 
     """
 
@@ -25,7 +25,7 @@ def attendance_on_submit(doc:dict={} , event:str=""):
         optima_hr_settings  = get_optima_hr_settings(doc.company)
         if optima_hr_settings.get("enable_shift_duration") :   
             calculate_auto_attendance_by_one_shift(doc , optima_hr_settings)
-        else :
+        elif optima_hr_settings.get("enable_standard_shift") :
             calculate_auto_attendance_by_shift_type(doc , optima_hr_settings)
         
 
