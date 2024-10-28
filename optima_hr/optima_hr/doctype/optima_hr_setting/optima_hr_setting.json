@@ -12,6 +12,7 @@
   "allow_to_edit_last_work_days_salary",
   "allow_to_edit_outstanding_leave_amount",
   "allow_to_edit_employee_advance_amount",
+  "allow_to_edit_salary_slip_component",
   "column_break_odfc",
   "company",
   "section_break_uzfw",
@@ -316,11 +317,17 @@
    "label": "Default Salary Component For Deduction",
    "mandatory_depends_on": "eval: doc.enable_shift_duration == 1 ",
    "options": "Salary Component"
+  },
+  {
+   "default": "0",
+   "fieldname": "allow_to_edit_salary_slip_component",
+   "fieldtype": "Check",
+   "label": "Allow To Edit Salary Slip Component"
   }
  ],
  "index_web_pages_for_search": 1,
  "links": [],
- "modified": "2024-10-21 12:03:52.306559",
+ "modified": "2024-10-27 09:06:00.033568",
  "modified_by": "Administrator",
  "module": "Optima Hr",
  "name": "Optima HR Setting",

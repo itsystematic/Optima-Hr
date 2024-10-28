@@ -245,8 +245,28 @@ def get_employee_salary(employee) :
 
     base_salary_fields = list(map(lambda x : x.get("field_name") , employee_salary ))
 
-    last_salary = frappe.db.get_all("Salary Structure Assignment" , {"docstatus":1 , "employee" : employee} , base_salary_fields  ,  order_by="creation desc" , limit=1 )
+    last_salary = frappe.db.get_all("Salary Structure Assignment" , {"docstatus":1 , "employee" : employee} ,
+                                    base_salary_fields  ,  order_by="creation desc" , limit=1 )
 
     if not last_salary : return 0
 
     return sum(last_salary[0].values())
+
+
+def allow_edit_salary_slip(func):
+    def wrapper(self, *args, **kwargs):
+        # Get the company from the salary slip document itself
+        company = self.company
+        
+        setting = frappe.get_value("Optima HR Setting", 
+                                 {"company": company},
+                                 "allow_to_edit_salary_slip_component")
+        
+        if not setting:
+            # If setting is disabled, use parent class method
+            parent_method = getattr(super(self.__class__, self), func.__name__)
+            return parent_method(*args, **kwargs)
+        
+        # If setting is enabled, use the custom method
+        return func(self, *args, **kwargs)
+    return wrapper
