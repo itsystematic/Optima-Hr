@@ -22,9 +22,7 @@ class OptimaShiftType(ShiftType) :
     
     
     @frappe.whitelist()
-    def process_auto_attendance(self , company=None):
-        print("in in in ")
-        skip_employee = []
+    def process_auto_attendance(self):
 
         if (
             not cint(self.enable_auto_attendance)
@@ -33,23 +31,15 @@ class OptimaShiftType(ShiftType) :
         ):
             return
 
-        logs = self.get_employee_checkins(company)
-        optima_hr_settings = get_optima_hr_settings(company)
+        skip_employee = get_skip_employees()
+        logs = self.get_employee_checkins(skip_employee)
 
-        for key, group in groupby(logs, key=lambda x: (x["company"] ,x["employee"], x["shift_start"])):
-            company = key[0]
-            employee = key[1]
-            attendance_date = key[2].date()
+        for key, group in groupby(logs, key=lambda x: (x["employee"], x["shift_start"])):
+            employee = key[0]
+            attendance_date = key[1].date()
             single_shift_logs = list(group)
 
-            if setting := optima_hr_settings.get("company") :
-                skip_employee += list(map(lambda x : x.get("employee") , setting.skip_employee_in_attendance))
-
-                if setting.get("skip_employee") and setting.get("skip_employee_date_range") :
-                    if not (setting.get("skip_employee_from_date") <= attendance_date <= setting.get("skip_employee_to_date") ):
-                        continue
-
-            if not self.should_mark_attendance(employee, attendance_date) or employee in skip_employee :
+            if not self.should_mark_attendance(employee, attendance_date):
                 continue
 
             (
@@ -87,7 +77,7 @@ class OptimaShiftType(ShiftType) :
             frappe.db.commit()  # nosemgrep
         
             
-    def get_employee_checkins(self , company=None) -> list[dict]:
+    def get_employee_checkins(self , skip_employee=None) -> list[dict]:
         
         employee = frappe.qb.DocType("Employee")
         check_in = frappe.qb.DocType("Employee Checkin")
@@ -116,27 +106,18 @@ class OptimaShiftType(ShiftType) :
             .where(check_in.shift == self.name)
         )
 
-        if company : query.where(employee.company == company)
+        if skip_employee :
+            query = query.where(~employee.name.isin(skip_employee))
 
         return query.run(as_dict=True)
 
 
-    # def get_skip_employee_from_attendance(self , company=None) :
+def get_skip_employees() :
 
-    #     filters = {"parentfield" : "skip_employee_in_attendance"}
-    #     if company : filters["parent"] = company
-    #     skip_employees = frappe.db.get_all("Set Employee Absent" ,filters , pluck="employee" )
+    return frappe.db.sql("""
 
-    #     return skip_employees
-
-def get_optima_hr_settings(company=None) :
-
-    filters = {}
-    optima_hr_settings = {}
-
-    if company : filters["company"] = company
-
-    for optima_hr in frappe.db.get_all("Optima HR Setting" , filters,pluck="name") :
-        optima_hr_settings[optima_hr] = frappe.get_doc("Optima HR Setting" , optima_hr)
-
-    return optima_hr_settings
+        SELECT se.employee
+        FROM `tabOptima Hr Setting` ohs
+        INNER JOIN `tabSet Employee Absent` se
+        WHERE ohs.skip_employee = 1
+    """ ,pluck=True)

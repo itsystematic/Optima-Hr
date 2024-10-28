@@ -51,13 +51,11 @@
   "make_attendance",
   "section_break_pmrt",
   "make_absent_for_unmark_attendance",
-  "date_range",
-  "section_break_kwnb",
-  "from_date",
-  "column_break_wcwg",
-  "to_date",
-  "section_break_hyjq",
   "set_emplyee_absent",
+  "column_break_owux",
+  "date_range",
+  "from_date",
+  "to_date",
   "making_absent"
  ],
  "fields": [
@@ -200,6 +198,7 @@
    "options": "Enable Shift Types"
   },
   {
+   "depends_on": "eval: doc.make_absent_for_unmark_attendance",
    "fieldname": "set_emplyee_absent",
    "fieldtype": "Table",
    "label": "Set Employee Absent",
@@ -227,12 +226,6 @@
    "mandatory_depends_on": "eval:doc.date_range == 1"
   },
   {
-   "depends_on": "eval:doc.make_absent_for_unmark_attendance == 1",
-   "fieldname": "section_break_hyjq",
-   "fieldtype": "Section Break",
-   "hide_border": 1
-  },
-  {
    "fieldname": "section_break_pmrt",
    "fieldtype": "Section Break",
    "hide_border": 1
@@ -250,6 +243,7 @@
    "label": "Exceptions for Auto Attendance"
   },
   {
+   "depends_on": "eval: doc.make_absent_for_unmark_attendance",
    "fieldname": "making_absent",
    "fieldtype": "Button",
    "label": "Making Absent"
@@ -261,15 +255,6 @@
    "fieldname": "date_range",
    "fieldtype": "Check",
    "label": "Date Range?"
-  },
-  {
-   "fieldname": "section_break_kwnb",
-   "fieldtype": "Section Break",
-   "hide_border": 1
-  },
-  {
-   "fieldname": "column_break_wcwg",
-   "fieldtype": "Column Break"
   },
   {
    "default": "0",
@@ -383,11 +368,15 @@
    "fieldname": "make_attendance",
    "fieldtype": "Button",
    "label": "Make Attendance"
+  },
+  {
+   "fieldname": "column_break_owux",
+   "fieldtype": "Column Break"
   }
  ],
  "index_web_pages_for_search": 1,
  "links": [],
- "modified": "2024-10-27 12:29:28.523805",
+ "modified": "2024-10-28 11:18:37.633059",
  "modified_by": "Administrator",
  "module": "Optima Hr",
  "name": "Optima HR Setting",
