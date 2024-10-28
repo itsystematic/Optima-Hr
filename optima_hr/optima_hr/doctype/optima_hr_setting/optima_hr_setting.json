@@ -42,15 +42,21 @@
   "column_break_eikd",
   "enable_shift_types",
   "section_break_bgol",
+  "skip_employee",
   "skip_employee_in_attendance",
+  "column_break_tsia",
+  "skip_employee_data_range",
+  "skip_employee_from_date",
+  "skip_employee_to_date",
+  "make_attendance",
   "section_break_pmrt",
   "make_absent_for_unmark_attendance",
+  "date_range",
   "section_break_kwnb",
   "from_date",
   "column_break_wcwg",
   "to_date",
   "section_break_hyjq",
-  "date_range",
   "set_emplyee_absent",
   "making_absent"
  ],
@@ -200,6 +206,7 @@
    "options": "Set Employee Absent"
   },
   {
+   "depends_on": "eval: doc.skip_employee",
    "fieldname": "skip_employee_in_attendance",
    "fieldtype": "Table",
    "label": "Skip Employee In Attendance",
@@ -222,11 +229,13 @@
   {
    "depends_on": "eval:doc.make_absent_for_unmark_attendance == 1",
    "fieldname": "section_break_hyjq",
-   "fieldtype": "Section Break"
+   "fieldtype": "Section Break",
+   "hide_border": 1
   },
   {
    "fieldname": "section_break_pmrt",
-   "fieldtype": "Section Break"
+   "fieldtype": "Section Break",
+   "hide_border": 1
   },
   {
    "default": "0",
@@ -236,7 +245,9 @@
   },
   {
    "fieldname": "section_break_bgol",
-   "fieldtype": "Section Break"
+   "fieldtype": "Section Break",
+   "hide_border": 1,
+   "label": "Exceptions for Auto Attendance"
   },
   {
    "fieldname": "making_absent",
@@ -245,6 +256,7 @@
   },
   {
    "default": "0",
+   "depends_on": "eval: doc.make_absent_for_unmark_attendance",
    "description": "If disabled, this will calculate from the beginning of the month.",
    "fieldname": "date_range",
    "fieldtype": "Check",
@@ -252,7 +264,8 @@
   },
   {
    "fieldname": "section_break_kwnb",
-   "fieldtype": "Section Break"
+   "fieldtype": "Section Break",
+   "hide_border": 1
   },
   {
    "fieldname": "column_break_wcwg",
@@ -333,11 +346,48 @@
    "fieldname": "enable_standard_shift",
    "fieldtype": "Check",
    "label": "Enable Standard Shift"
+  },
+  {
+   "default": "0",
+   "fieldname": "skip_employee",
+   "fieldtype": "Check",
+   "label": "Skip Employee In Attendance"
+  },
+  {
+   "default": "0",
+   "depends_on": "eval: doc.skip_employee",
+   "fieldname": "skip_employee_data_range",
+   "fieldtype": "Check",
+   "label": "Date Range"
+  },
+  {
+   "depends_on": "eval: doc.skip_employee_data_range && doc.skip_employee",
+   "fieldname": "skip_employee_from_date",
+   "fieldtype": "Date",
+   "label": "From Date",
+   "mandatory_depends_on": "eval: doc.skip_employee_data_range && doc.skip_employee"
+  },
+  {
+   "depends_on": "eval: doc.skip_employee_data_range && doc.skip_employee",
+   "fieldname": "skip_employee_to_date",
+   "fieldtype": "Date",
+   "label": "To Date",
+   "mandatory_depends_on": "eval: doc.skip_employee_data_range && doc.skip_employee"
+  },
+  {
+   "fieldname": "column_break_tsia",
+   "fieldtype": "Column Break"
+  },
+  {
+   "depends_on": "eval: doc.skip_employee;",
+   "fieldname": "make_attendance",
+   "fieldtype": "Button",
+   "label": "Make Attendance"
   }
  ],
  "index_web_pages_for_search": 1,
  "links": [],
- "modified": "2024-10-27 09:33:57.695767",
+ "modified": "2024-10-27 12:29:28.523805",
  "modified_by": "Administrator",
  "module": "Optima Hr",
  "name": "Optima HR Setting",

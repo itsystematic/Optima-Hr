@@ -103,3 +103,11 @@ def mark_bulk_attendance(data):
 		}
 		attendance = frappe.get_doc(doc_dict).insert()
 		attendance.submit()
+
+
+@frappe.whitelist()
+def make_attendance(company):
+	shift_list = frappe.get_all("Shift Type", filters={"enable_auto_attendance": "1"}, pluck="name")
+	for shift in shift_list:
+		doc = frappe.get_doc("Shift Type", shift)
+		doc.process_auto_attendance(company)
