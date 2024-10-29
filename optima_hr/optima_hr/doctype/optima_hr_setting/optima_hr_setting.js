@@ -44,7 +44,7 @@ optima_hr_setting.OptimaHRSetting = class OptimaHRSetting extends frappe.ui.form
         let child_table_fields = [
             "required_allowance" , "component_to_calculate_cost_of_day", 
             "component_to_calculate_cost_of_day_for_leaves" ,"leave_dues_fields",
-            "employee_salary"
+            "employee_salary" , "penalty_component" , "salary_allowance_details"
         ];  
 
         for (let child_table_name of child_table_fields) {

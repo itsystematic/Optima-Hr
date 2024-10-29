@@ -70,7 +70,11 @@
   "allowed_permission_hours",
   "default_salary_component_for_permissions",
   "section_break_ibzk",
-  "salary_allowance_details"
+  "salary_allowance_details",
+  "penalty_tab",
+  "default_salary_component_for_employee_penalty",
+  "column_break_wfsf",
+  "penalty_component"
  ],
  "fields": [
   {
@@ -122,7 +126,7 @@
   {
    "fieldname": "leave_due_settings_tab",
    "fieldtype": "Tab Break",
-   "label": "Leave Due Settings"
+   "label": "Leave Due"
   },
   {
    "description": "\nThese are the required components to clac the the cost of day for all Add or Deduction Components",
@@ -192,7 +196,7 @@
   {
    "fieldname": "attendance_setting_tab",
    "fieldtype": "Tab Break",
-   "label": "Attendance Setting"
+   "label": "Attendance"
   },
   {
    "default": "0",
@@ -474,11 +478,32 @@
    "fieldtype": "Table",
    "label": "Salary Allowance Details",
    "options": "Salary Component Fields"
+  },
+  {
+   "fieldname": "penalty_tab",
+   "fieldtype": "Tab Break",
+   "label": "Penalty"
+  },
+  {
+   "fieldname": "penalty_component",
+   "fieldtype": "Table",
+   "label": "Penalty Component",
+   "options": "Salary Component Fields"
+  },
+  {
+   "fieldname": "default_salary_component_for_employee_penalty",
+   "fieldtype": "Link",
+   "label": "Default Salary Component For Employee Penalty",
+   "options": "Salary Component"
+  },
+  {
+   "fieldname": "column_break_wfsf",
+   "fieldtype": "Column Break"
   }
  ],
  "index_web_pages_for_search": 1,
  "links": [],
- "modified": "2024-10-29 09:34:16.201440",
+ "modified": "2024-10-29 10:14:54.821800",
  "modified_by": "Administrator",
  "module": "Optima Hr",
  "name": "Optima HR Setting",
