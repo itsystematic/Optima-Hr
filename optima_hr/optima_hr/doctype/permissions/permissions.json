@@ -15,6 +15,7 @@
   "direct_manager",
   "remaining_hours",
   "allowed_hour",
+  "extra_hours",
   "section_break_1iywy",
   "reason",
   "section_break_4",
@@ -123,6 +124,7 @@
    "read_only": 1
   },
   {
+   "depends_on": "eval: doc.type == \"Exit\"",
    "fieldname": "remaining_hours",
    "fieldtype": "Time",
    "label": "Remaining Hours",
@@ -137,16 +139,23 @@
    "read_only": 1
   },
   {
+   "depends_on": "eval: doc.type == \"Exit\"",
    "fieldname": "allowed_hour",
    "fieldtype": "Time",
    "label": "Allowed Hour",
+   "read_only": 1
+  },
+  {
+   "fieldname": "extra_hours",
+   "fieldtype": "Time",
+   "label": "Extra Hours",
    "read_only": 1
   }
  ],
  "index_web_pages_for_search": 1,
  "is_submittable": 1,
  "links": [],
- "modified": "2024-10-28 13:44:19.977016",
+ "modified": "2024-10-29 11:44:27.687418",
  "modified_by": "Administrator",
  "module": "Optima Hr",
  "name": "Permissions",

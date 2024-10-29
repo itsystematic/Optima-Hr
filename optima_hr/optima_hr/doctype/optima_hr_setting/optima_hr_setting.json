@@ -69,6 +69,7 @@
   "allowed_permission_numbers",
   "allowed_permission_hours",
   "default_salary_component_for_permissions",
+  "default_permissions_per_day",
   "section_break_ibzk",
   "salary_allowance_details",
   "penalty_tab",
@@ -499,11 +500,17 @@
   {
    "fieldname": "column_break_wfsf",
    "fieldtype": "Column Break"
+  },
+  {
+   "default": "1",
+   "fieldname": "default_permissions_per_day",
+   "fieldtype": "Int",
+   "label": "Default Permissions per Day"
   }
  ],
  "index_web_pages_for_search": 1,
  "links": [],
- "modified": "2024-10-29 10:14:54.821800",
+ "modified": "2024-10-29 10:46:56.577729",
  "modified_by": "Administrator",
  "module": "Optima Hr",
  "name": "Optima HR Setting",

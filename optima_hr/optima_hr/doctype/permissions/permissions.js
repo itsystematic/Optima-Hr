@@ -4,7 +4,6 @@
 frappe.ui.form.on('Permissions', {
 
 	employee_name: function(frm) {
-
 		frm.trigger("get_total_time_remaining") ;
 	},
 
@@ -13,7 +12,9 @@ frappe.ui.form.on('Permissions', {
 			method: 'get_total_time_remaining',
 			doc : frm.doc,
 			callback: (r) => {
-				frm.set_value("remaining_hours" , r.message);
+				if(frm.type == 'Exit'){
+					frm.set_value("remaining_hours" , r.message);
+				}
 				frm.refresh_field('remaining_hours');
 			},
 		})
