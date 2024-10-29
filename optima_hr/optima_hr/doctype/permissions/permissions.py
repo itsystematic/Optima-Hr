@@ -25,13 +25,16 @@ class Permissions(Document):
          return setting
      
     def validate(self):
-        
         self.validate_difference_time_calculation()              
         self.validate_allowed_hours()
         self.validate_company_salary_component()        
         self.vaildate_employee_daily_permission()        
-        self.validate_number_of_permission_hours_allowed()        
+        self.validate_number_of_permission_hours_allowed()                
         self.validate_number_of_permission_number_allowed()
+        if self.type != "Exit":
+            self.extra_hours = None
+            self.remaining_hours = None
+
 
 
 
@@ -155,29 +158,28 @@ class Permissions(Document):
     @frappe.whitelist()
     def get_total_time_remaining(self):
         self.extra_hours = None
-        if self.allowed_hour and self.get_settings().get("enable_calculate_permission_by_hours") :    
-                    
+        if self.allowed_hour and self.get_settings().get("enable_calculate_permission_by_hours") == 1:    
             all_times_for_employee = self.get_total_hours_taken()   
-                     
             total_delta =  self.allowed_hour - all_times_for_employee    
-                    
-            if self.type == "Exit" and self.remaining_hours != None:
-                print(self.extra_hours)
+            if self.type == "Exit" :
                 if self.time_difference > total_delta:
-                    print(self.extra_hours)
                     if self.get_settings().get("enable_add_deduction_after_permissions__hours_allowed") == 0:
                         frappe.throw(_("The Maximum Working Hours have been Exhausted {0}".format(self.get_settings().allowed_permission_hours)))
                     elif self.time_difference < total_delta:
-                        print(self.extra_hours)
-                        self.remaining_hours = None
+                        self.remaining_hours = self.time_difference - total_delta
+                    if total_delta != None:
                         self.extra_hours = self.time_difference - total_delta
+                        self.remaining_hours = None
+                    elif total_delta == None:
+                        self.remaining_hours = None
+                        self.extra_hours = self.time_difference
                 else:
-                    print(self.extra_hours)
-                    self.remaining_hours = total_delta - self.time_difference
+                    self.remaining_hours = total_delta -self.time_difference 
+                    self.extra_hours = None
+                    
             else:
-                print(self.extra_hours)
                 self.remaining_hours = total_delta
-            print(self.extra_hours)
+                self.extra_hours = None
             return total_delta
 
     # @frappe.whitelist()
@@ -191,11 +193,9 @@ class Permissions(Document):
     #             total_delta_seconds = total_delta.total_seconds()
     #             time_diff_seconds = self.time_difference.total_seconds()
     #             remaining_seconds = total_delta_seconds - time_diff_seconds
-    #             print(remaining_seconds)
     #             # Convert back to timedelta, but ensure it's not negative
     #             from datetime import timedelta
     #             self.remaining_hours = timedelta(seconds=max(0, remaining_seconds))
-    #             print(self.remaining_hours)
     #         else:
     #             self.remaining_hours = total_delta
                 
