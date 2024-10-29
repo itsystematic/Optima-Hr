@@ -22,12 +22,9 @@ class Permissions(Document):
     def get_settings(self):
          setting = frappe.get_doc("Optima HR Setting",self.company)
          self.allowed_hour = setting.allowed_permission_hours
-         print(self.allowed_hour)
-         print(setting.allowed_permission_hours)
-         print(setting.get("enable_calculate_permission_by_hours"))
          return setting
+     
     def validate(self):
-        print(self.get_settings().allowed_permission_hours)
         self.validate_difference_time_calculation()      
         self.validate_allowed_hours()
         self.validate_company_salary_component()
@@ -43,8 +40,13 @@ class Permissions(Document):
             
             
     def validate_allowed_hours(self):
-        if self.type == "Exit" and self.time_difference > self.allowed_hour and self.get_settings().get("enable_calculate_permission_by_hours") and self.get_settings().get("enable_add_deduction_after_permissions__hours_allowed") == 0:
-            frappe.throw(_("The Maximum Permission Hours {0}".format(self.get_settings().allowed_permission_hours)))
+        # print(type(self.remaining_hours) , type(self.time_difference))
+        # if self.type == "Exit" and self.time_difference >  self.remaining_hours and self.get_settings().get("enable_add_deduction_after_permissions__hours_allowed") == 0:
+        #     frappe.throw(_("The Maximum Permission Hours {0}".format(self.get_settings().allowed_permission_hours)))
+        if self.type == "Exit":
+            if self.time_difference > self.get_total_time_remaining():
+                if  self.get_settings().get("enable_add_deduction_after_permissions__hours_allowed") == 0:
+                    frappe.throw(_("The Maximum Permission Hours {0}".format(self.get_settings().allowed_permission_hours))) 
             
             
     def validate_company_salary_component(self):
@@ -139,20 +141,18 @@ class Permissions(Document):
     
     @frappe.whitelist()
     def get_total_time_remaining(self):
-        print('get_total_time_remaining')
         if self.allowed_hour and self.get_settings().get("enable_calculate_permission_by_hours") :
-            print('get_total_time_remaining 01 ')
             all_times_for_employee = self.get_total_hours_taken()
-            print(all_times_for_employee)
             total_delta =  self.allowed_hour - all_times_for_employee
-            print(total_delta)
-
+            print   (total_delta)
+            self.remaining_hours = total_delta - self.time_difference
+            
             return total_delta
     
     
     def get_total_hours_taken(self):
         filters = {
-            'date': ['>=',get_first_day(self.date) ] ,
+            'date': ['>=',self.get_settings().get("payroll_date_beginning") ] ,
             'docstatus' : 1 ,
             'employee_name' : self.employee_name ,
             'type' : "Exit" ,
@@ -160,7 +160,6 @@ class Permissions(Document):
         }
         
         all_times_for_employee = frappe.db.get_list("Permissions" , filters, pluck="time_difference")
-        
         return sum(all_times_for_employee, datetime.timedelta()) 
     
     
