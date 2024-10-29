@@ -3,16 +3,13 @@
 
 
 frappe.ui.form.on('Employee Penalty', {
-	refresh(frm) {
-	// 	frm.add_custom_button(__('Additional Salary'), () => {
-    //     frappe.new_doc("Additional Salary", {employee: "New Maintenance Unit"},
-    //     doc => {doc.employee = frm.doc.employee})
-    // }, __("Create"));
-
+    refresh(frm) {
+        
         frm.set_query("employee" , () => {
             return {
                 filters : {
-                    company : frm.doc.company
+                    company : frm.doc.company ,
+                    is_active : 1
                 }
             }
         })

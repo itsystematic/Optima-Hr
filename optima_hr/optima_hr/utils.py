@@ -235,7 +235,7 @@ def create_additional_salary(**kwargs):
 
 
 
-def get_employee_salary(employee) :
+def get_employee_salary(employee , child_table) :
     """ 
         Base Method To Get Employee Salary
     """

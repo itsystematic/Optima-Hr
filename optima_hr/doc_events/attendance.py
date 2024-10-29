@@ -50,7 +50,7 @@ def calculate_auto_attendance_by_one_shift(doc :dict={} , optima_hr_settings:dic
 
 def add_deduction_to_employee(doc , shift_duration , working_hours , salary_component):
     
-    price_of_hour = ( get_employee_salary(doc.employee) / 30 ) / shift_duration
+    price_of_hour = ( get_employee_salary(doc.employee , "employee_salary") / 30 ) / shift_duration
     total_minute =  ( shift_duration - working_hours ) * 60 
 
     filters = {"parentfield": "late_or_early_checkin" , "parent" : doc.get("shift") ,'from': ['<',total_minute ] ,'to': ['>',total_minute ] }
@@ -72,7 +72,7 @@ def add_deduction_to_employee(doc , shift_duration , working_hours , salary_comp
         
 def add_earning_to_employee(doc , shift_duration , working_hours , salary_component):
     
-    price_of_hour = ( get_employee_salary(doc.employee) / 30 ) / shift_duration
+    price_of_hour = ( get_employee_salary(doc.employee , "employee_salary") / 30 ) / shift_duration
     total_minute =  ( working_hours - shift_duration  ) * 60 
     filters = {"parentfield": "overtime" ,"parent" : doc.get("shift") ,'from': ['<=',total_minute ] ,'to': ['>=',total_minute ] }
     or_filters = {"parentfield": "overtime" ,"parent" : doc.get("shift") ,'from': ['<=',total_minute ] ,'to': ['=',0 ] }
@@ -147,7 +147,7 @@ def check_if_employee_get_late(converted_in_time:datetime ,  converted_shift_sta
     or_filters = {"parentfield": "late_checkin" , "parent" : doc.get("shift") ,'from': ['<',total_minute ] ,'to': ['=',0 ] }
     penalty_allowed = frappe.db.get_list("Auto Attendance Settings" ,filters=filters,or_filters= or_filters , fields=["from" , "to" , "value"])
     if penalty_allowed :
-        deduction_amount =  (get_employee_salary(doc.get("employee")) / 30 ) * penalty_allowed[0].get("value" , 0)
+        deduction_amount =  (get_employee_salary(doc.get("employee") , "employee_salary") / 30 ) * penalty_allowed[0].get("value" , 0)
         create_additional_salary(
             employee=doc.employee,
             posting_date=doc.attendance_date,
@@ -181,7 +181,7 @@ def chek_if_employee_exit_early(
     or_filters = {"parentfield": "early_checkout" ,"parent" : doc.get("shift") ,'from': ['<',total_minute ] ,'to': ['=',0 ] }
     penalty_allowed = frappe.db.get_list("Auto Attendance Settings" ,filters=filters,or_filters= or_filters , fields=["from" , "to" , "value"])
     if penalty_allowed :
-        deduction_amount =  (get_employee_salary(doc.get("employee")) / 30 ) * penalty_allowed[0].get("value" , 0)
+        deduction_amount =  (get_employee_salary(doc.get("employee") , "employee_salary") / 30 ) * penalty_allowed[0].get("value" , 0)
         create_additional_salary(
             employee=doc.employee,
             posting_date=doc.attendance_date,

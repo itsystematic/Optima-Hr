@@ -3,7 +3,7 @@
 
 import frappe
 from frappe.model.document import Document
-# from hr_ksa.api import create_additional_salary , get_hr_permission_setting  ,get_employee_base_amount
+from optima_hr.optima_hr.utils import create_additional_salary , get_employee_salary
 from frappe import _
 
 
@@ -39,7 +39,6 @@ class EmployeePenalty(Document):
             frappe.throw(_("Employee Not have Salary Structure Assignment"))
         
         
-        
     @frappe.whitelist()
     def get_employee_penallty_repeat_state_and_penalty(self):
         self.get_penality_number_for_employee()
@@ -57,23 +56,29 @@ class EmployeePenalty(Document):
 
 
     def on_submit(self):
+        self.check_approved_status()
         self.create_additional_salary()
 
 
-    # def create_additional_salary(self):
-    #     employee_base_amount  = get_employee_base_amount(self.employee) 
-        
-    #     if self.penalty_value > 0  and self.status == 'Approved' : 
-    #         amount = (employee_base_amount / 30) * ( self.penalty_value or 1 ) 
+    def check_approved_status(self):
+        if self.status != 'Approved' :
+            frappe.throw(_("Status Must be Approved"))
+
             
-    #         doc = create_additional_salary(
-    #             employee=self.employee,
-    #             posting_date=self.posting_date,
-    #             amount=amount ,
-    #             salary_component= get_hr_permission_setting().get("default_salary_component_for_employee_penalty"),
-    #             ref_doctype=self.doctype,
-    #             ref_docname=self.name
-    #             )
+    def create_additional_salary(self):
+        employee_base_amount  = get_employee_salary(self.employee , "penalty_component") 
+        salary_component = frappe.db.get_value("Optima HR Setting" , self.company , "default_salary_component_for_employee_penalty")
+        if self.penalty_value > 0  and self.status == 'Approved' : 
+            amount = (employee_base_amount / 30) * ( self.penalty_value or 1 ) 
+            
+            doc = create_additional_salary(
+                employee=self.employee,
+                posting_date=self.posting_date,
+                amount=amount ,
+                salary_component= salary_component,
+                ref_doctype=self.doctype,
+                ref_docname=self.name
+                )
             
             
     def on_cancel(self):
