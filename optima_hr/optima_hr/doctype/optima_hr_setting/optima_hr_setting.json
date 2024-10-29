@@ -18,11 +18,11 @@
   "section_break_uzfw",
   "required_allowance",
   "last_work_days_salary_section",
-  "payroll_date_beginning",
   "component_to_calculate_cost_of_day",
+  "payroll_date_beginning",
   "column_break_htqo",
-  "leave_type",
   "component_to_calculate_cost_of_day_for_leaves",
+  "leave_type",
   "employee_advance_section",
   "employee_advance_account",
   "leave_due_settings_tab",
@@ -59,7 +59,18 @@
   "to_date",
   "section_break_hyjq",
   "set_emplyee_absent",
-  "making_absent"
+  "making_absent",
+  "permissions_tab",
+  "enable_calculate_permission_by_number",
+  "enable_calculate_permission_by_hours",
+  "enable_add_deduction_after_permissions__number_allowed",
+  "enable_add_deduction_after_permissions__hours_allowed",
+  "column_break_mkip",
+  "allowed_permission_numbers",
+  "allowed_permission_hours",
+  "default_salary_component_for_permissions",
+  "section_break_ibzk",
+  "salary_allowance_details"
  ],
  "fields": [
   {
@@ -114,6 +125,7 @@
    "label": "Leave Due Settings"
   },
   {
+   "description": "\nThese are the required components to clac the the cost of day for all Add or Deduction Components",
    "fieldname": "leave_dues_fields",
    "fieldtype": "Table",
    "label": "Leave Dues Fields",
@@ -149,9 +161,11 @@
    "label": "Last Work Days Salary - Outstanding Leaves"
   },
   {
+   "description": "This Field also Used in permission",
    "fieldname": "payroll_date_beginning",
    "fieldtype": "Date",
-   "label": "Payroll Date Beginning "
+   "label": "Payroll Date Beginning ",
+   "reqd": 1
   },
   {
    "fieldname": "component_to_calculate_cost_of_day",
@@ -390,11 +404,81 @@
    "fieldname": "allow_to_edit_salary_slip_component",
    "fieldtype": "Check",
    "label": "Allow To Edit Salary Slip Component"
+  },
+  {
+   "fieldname": "permissions_tab",
+   "fieldtype": "Tab Break",
+   "label": "Permissions"
+  },
+  {
+   "default": "0",
+   "depends_on": "eval: doc.enable_calculate_permission_by_hours == 0",
+   "fieldname": "enable_calculate_permission_by_number",
+   "fieldtype": "Check",
+   "label": "Enable Calculate Permission By Number"
+  },
+  {
+   "default": "0",
+   "depends_on": "eval: doc.enable_calculate_permission_by_number == 0",
+   "fieldname": "enable_calculate_permission_by_hours",
+   "fieldtype": "Check",
+   "label": "Enable Calculate Permission By Hours"
+  },
+  {
+   "default": "0",
+   "depends_on": "eval: doc.enable_calculate_permission_by_number",
+   "fieldname": "enable_add_deduction_after_permissions__number_allowed",
+   "fieldtype": "Check",
+   "label": "Enable Add Deduction After Permissions  Number Allowed"
+  },
+  {
+   "default": "0",
+   "depends_on": "eval: doc.enable_calculate_permission_by_hours",
+   "fieldname": "enable_add_deduction_after_permissions__hours_allowed",
+   "fieldtype": "Check",
+   "label": "Enable Add Deduction After Permissions  Hours Allowed"
+  },
+  {
+   "fieldname": "column_break_mkip",
+   "fieldtype": "Column Break"
+  },
+  {
+   "depends_on": "eval: doc.enable_calculate_permission_by_number",
+   "fieldname": "allowed_permission_numbers",
+   "fieldtype": "Int",
+   "label": "Allowed Permission Numbers per month",
+   "mandatory_depends_on": "eval: doc.enable_calculate_permission_by_number"
+  },
+  {
+   "depends_on": "eval: doc.enable_calculate_permission_by_hours",
+   "fieldname": "allowed_permission_hours",
+   "fieldtype": "Time",
+   "label": "Allowed Permission Hours per month",
+   "mandatory_depends_on": "eval: doc.enable_calculate_permission_by_hours"
+  },
+  {
+   "depends_on": "eval: doc.enable_add_deduction_after_permissions__number_allowed || doc.enable_add_deduction_after_permissions__hours_allowed",
+   "fieldname": "default_salary_component_for_permissions",
+   "fieldtype": "Link",
+   "label": "Default Salary Component For Permissions",
+   "mandatory_depends_on": "eval: doc.enable_calculate_permission_by_number || doc.enable_calculate_permission_by_hours",
+   "options": "Salary Component"
+  },
+  {
+   "fieldname": "section_break_ibzk",
+   "fieldtype": "Section Break"
+  },
+  {
+   "description": "\nThese are the required components to clac the the cost of day for all Add or Deduction Components",
+   "fieldname": "salary_allowance_details",
+   "fieldtype": "Table",
+   "label": "Salary Allowance Details",
+   "options": "Salary Component Fields"
   }
  ],
  "index_web_pages_for_search": 1,
  "links": [],
- "modified": "2024-10-27 12:29:28.523805",
+ "modified": "2024-10-29 09:34:16.201440",
  "modified_by": "Administrator",
  "module": "Optima Hr",
  "name": "Optima HR Setting",

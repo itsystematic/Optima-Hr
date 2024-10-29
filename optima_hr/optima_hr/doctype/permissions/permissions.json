@@ -1,0 +1,173 @@
+{
+ "actions": [],
+ "allow_rename": 1,
+ "autoname": "HR-PER.####",
+ "creation": "2023-02-12 11:30:18.990208",
+ "doctype": "DocType",
+ "editable_grid": 1,
+ "engine": "InnoDB",
+ "field_order": [
+  "type",
+  "date",
+  "column_break_a1yg9",
+  "employee_name",
+  "company",
+  "direct_manager",
+  "remaining_hours",
+  "allowed_hour",
+  "section_break_1iywy",
+  "reason",
+  "section_break_4",
+  "from_time",
+  "column_break_6",
+  "to_time",
+  "column_break_8",
+  "number_of_hours",
+  "time_difference",
+  "column_break_mkegc",
+  "amended_from"
+ ],
+ "fields": [
+  {
+   "default": "Today",
+   "fieldname": "date",
+   "fieldtype": "Date",
+   "label": "Date"
+  },
+  {
+   "fieldname": "employee_name",
+   "fieldtype": "Link",
+   "label": "Employee name",
+   "options": "Employee",
+   "reqd": 1
+  },
+  {
+   "fieldname": "reason",
+   "fieldtype": "Small Text",
+   "label": "Reason",
+   "mandatory_depends_on": "eval: doc.type == \"Work Assignment\""
+  },
+  {
+   "fieldname": "section_break_4",
+   "fieldtype": "Section Break"
+  },
+  {
+   "fieldname": "column_break_6",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "amended_from",
+   "fieldtype": "Link",
+   "label": "Amended From",
+   "no_copy": 1,
+   "options": "Permissions",
+   "print_hide": 1,
+   "read_only": 1
+  },
+  {
+   "fieldname": "column_break_8",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "from_time",
+   "fieldtype": "Time",
+   "in_list_view": 1,
+   "label": "From Time",
+   "reqd": 1
+  },
+  {
+   "fieldname": "to_time",
+   "fieldtype": "Time",
+   "in_list_view": 1,
+   "label": "To Time",
+   "reqd": 1
+  },
+  {
+   "fieldname": "number_of_hours",
+   "fieldtype": "Float",
+   "hidden": 1,
+   "label": "Number of Hours",
+   "read_only": 1
+  },
+  {
+   "default": "Exit",
+   "fieldname": "type",
+   "fieldtype": "Select",
+   "label": "Type",
+   "options": "Exit\nEnter\nWork Assignment"
+  },
+  {
+   "depends_on": "eval:doc.type == \"Enter\"",
+   "fetch_from": "employee_name.leave_approver",
+   "fieldname": "direct_manager",
+   "fieldtype": "Link",
+   "label": "Direct Manager",
+   "options": "User"
+  },
+  {
+   "fieldname": "column_break_a1yg9",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "section_break_1iywy",
+   "fieldtype": "Section Break"
+  },
+  {
+   "fieldname": "column_break_mkegc",
+   "fieldtype": "Section Break"
+  },
+  {
+   "fieldname": "time_difference",
+   "fieldtype": "Time",
+   "label": "Time Difference",
+   "read_only": 1
+  },
+  {
+   "fieldname": "remaining_hours",
+   "fieldtype": "Time",
+   "label": "Remaining Hours",
+   "read_only": 1
+  },
+  {
+   "fetch_from": "employee_name.company",
+   "fieldname": "company",
+   "fieldtype": "Link",
+   "label": "Company",
+   "options": "Company",
+   "read_only": 1
+  },
+  {
+   "fieldname": "allowed_hour",
+   "fieldtype": "Time",
+   "label": "Allowed Hour",
+   "read_only": 1
+  }
+ ],
+ "index_web_pages_for_search": 1,
+ "is_submittable": 1,
+ "links": [],
+ "modified": "2024-10-28 13:44:19.977016",
+ "modified_by": "Administrator",
+ "module": "Optima Hr",
+ "name": "Permissions",
+ "naming_rule": "Expression (old style)",
+ "owner": "Administrator",
+ "permissions": [
+  {
+   "create": 1,
+   "delete": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "System Manager",
+   "share": 1,
+   "submit": 1,
+   "write": 1
+  }
+ ],
+ "sort_field": "modified",
+ "sort_order": "DESC",
+ "states": []
+}

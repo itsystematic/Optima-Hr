@@ -8,6 +8,7 @@ optima_hr_setting.OptimaHRSetting = class OptimaHRSetting extends frappe.ui.form
 
     refresh() {
         this.setup_queries();
+        this.add_button_import_file();
     }
 
     onload() {
@@ -145,6 +146,49 @@ optima_hr_setting.OptimaHRSetting = class OptimaHRSetting extends frappe.ui.form
             async: true,
         })
 
+    }
+    add_button_import_file(){
+        this.frm.add_custom_button('Import Doc ' , () => {
+            frappe.prompt([
+                {
+                    label: 'DocType',
+                    fieldname: 'doctype',
+                    fieldtype: 'Select' ,
+                    options: [
+                        {label: __('Leave Type'), value: 'Leave Type'},
+                        {label: __('Penalty Type'), value: 'Penalty Type'}
+                    ]
+                },
+            ], (values) => {
+                frappe.warn('Are you sure you want to proceed?',
+                'This make change in doctype are you sure',
+                () => {
+                    this.frm.call({
+                        method : 'optima_hr.optima_hr.doctype.optima_hr_setting.optima_hr_setting.import_doc_by_csv',
+                        args : {
+                            name_of_doctype : values.doctype
+                        }
+                    })
+                },
+                'Continue',
+                true // Sets dialog as minimizable
+            )
+    
+            })
+    
+        })
+    }
+
+    enable_calculate_permission_by_hours(){
+        if (this.frm.doc.enable_calculate_permission_by_hours == 0){
+            this.frm.set_value('enable_add_deduction_after_permissions__hours_allowed' , 0)
+        }
+    }
+
+    enable_calculate_permission_by_number(){
+        if (this.frm.doc.enable_calculate_permission_by_number == 0){
+            this.frm.set_value('enable_add_deduction_after_permissions__number_allowed' , 0)
+        }
     }
 }
 

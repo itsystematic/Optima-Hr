@@ -9,10 +9,19 @@ from frappe.model.document import Document
 from frappe.utils import getdate, get_datetime
 from hrms.hr.doctype.attendance.attendance import get_unmarked_days
 from hrms.hr.doctype.shift_assignment.shift_assignment import get_shifts_for_date
+from frappe.core.doctype.data_import.data_import import import_doc
+import click
+import os
 
 
 class OptimaHRSetting(Document):
-    pass
+    def before_save(self) :
+        if self.enable_calculate_permission_by_number == 1 :
+            self.enable_add_deduction_after_permissions__hours_allowed = 0
+            
+        if self.enable_calculate_permission_by_hours == 1 :
+            self.enable_add_deduction_after_permissions__number_allowed = 0
+
 
 
 @frappe.whitelist()
@@ -111,3 +120,18 @@ def make_attendance(company):
 	for shift in shift_list:
 		doc = frappe.get_doc("Shift Type", shift)
 		doc.process_auto_attendance(company)
+  
+  
+@frappe.whitelist()
+def import_doc_by_csv(name_of_doctype:str="") :
+    if name_of_doctype :
+        path_of_file = frappe.get_app_path("optima_hr" ,"files/" + "{}.json".format("_".join(name_of_doctype.split(" ")) ))
+        import_doc(path_of_file)
+        frappe.db.commit()
+    
+    else :
+        all_files_in_folders = os.listdir( frappe.get_app_path("optima_hr" ,"files"))
+        click.secho("Install Doctypes From Files  => {}".format( " ,".join(all_files_in_folders)), fg="green")
+        for file in all_files_in_folders:
+            import_doc(frappe.get_app_path("optima_hr" ,"files/" + f"{file}"))
+            frappe.db.commit()
