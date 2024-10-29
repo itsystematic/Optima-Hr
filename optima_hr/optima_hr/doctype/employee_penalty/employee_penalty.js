@@ -9,7 +9,7 @@ frappe.ui.form.on('Employee Penalty', {
             return {
                 filters : {
                     company : frm.doc.company ,
-                    is_active : 1
+                    status : "Active"
                 }
             }
         })

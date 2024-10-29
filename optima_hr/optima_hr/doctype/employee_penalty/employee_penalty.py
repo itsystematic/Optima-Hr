@@ -2,9 +2,10 @@
 # For license information, please see license.txt
 
 import frappe
+from frappe import _
+from frappe.utils import getdate , add_months
 from frappe.model.document import Document
 from optima_hr.optima_hr.utils import create_additional_salary , get_employee_salary
-from frappe import _
 
 
 
@@ -31,7 +32,7 @@ class EmployeePenalty(Document):
         
         for field in company_settings_fields :
             if not company_settings.get(field) :
-                frappe.throw(_("Missing Field in Setting  : {0}").format(field))
+                frappe.throw(_("Please Set {0} In Optima HR Setting").format(field.replace("_"," ").title()))
 
     
     def check_employee_has_salary_structure_asignment(self):
@@ -47,7 +48,13 @@ class EmployeePenalty(Document):
 
     def get_penality_number_for_employee(self):
         if self.employee and self.penalty_type :
-            employee_penalty_number = frappe.db.count('Employee Penalty', {'docstatus': 1 , "employee" : self.employee , "penalty_type" : self.penalty_type} )
+            begining_date = get_payroll_date_beginning_for_this_month(self.company , self.penalty_date)
+            employee_penalty_number = frappe.db.count('Employee Penalty',{
+                'docstatus': 1 ,
+                "employee" : self.employee , 
+                "penalty_type" : self.penalty_type ,
+                'penalty_date': ['between', [begining_date , add_months(begining_date , 1)] ] ,
+            })
             self.repeat_status = PENALITY_NUMBER.get(f'{employee_penalty_number}' , "fourth")
 
 
@@ -64,7 +71,7 @@ class EmployeePenalty(Document):
         if self.status != 'Approved' :
             frappe.throw(_("Status Must be Approved"))
 
-            
+
     def create_additional_salary(self):
         employee_base_amount  = get_employee_salary(self.employee , "penalty_component") 
         salary_component = frappe.db.get_value("Optima HR Setting" , self.company , "default_salary_component_for_employee_penalty")
@@ -88,3 +95,12 @@ class EmployeePenalty(Document):
         if frappe.db.exists("Additional Salary" , {"ref_doctype" : self.doctype , "ref_docname" : self.name}) :
             additional_salary = frappe.get_doc("Additional Salary" , {"ref_doctype" : self.doctype , "ref_docname" : self.name})
             additional_salary.cancel()
+
+
+
+def get_payroll_date_beginning_for_this_month(company, penalty_date):
+
+    payroll_date_beginning = frappe.db.get_value("Optima HR Setting", {"company": company}, "payroll_date_beginning")
+    converted_penalty_date = getdate(penalty_date)
+
+    return getdate(payroll_date_beginning).replace(month=converted_penalty_date.month , year=converted_penalty_date.year)
