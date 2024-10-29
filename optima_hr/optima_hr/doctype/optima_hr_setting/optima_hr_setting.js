@@ -137,13 +137,16 @@ optima_hr_setting.OptimaHRSetting = class OptimaHRSetting extends frappe.ui.form
         })
     }
 
-    make_attendance(doc) {
+    make_attendance() {
         frappe.call({
             method: 'optima_hr.optima_hr.doctype.optima_hr_setting.optima_hr_setting.make_attendance',
             args : {
-                company : doc.company 
+                doc : this.frm.doc 
             },
-            async: true,
+            callback: (res) => {
+                frappe.msgprint(__("Attendance Created"));
+            }
+            // async: true,
         })
 
     }

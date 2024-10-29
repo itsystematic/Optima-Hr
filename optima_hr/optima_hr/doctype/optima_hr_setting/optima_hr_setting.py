@@ -2,6 +2,7 @@
 # For license information, please see license.txt
 
 import frappe
+import json
 from frappe import _
 from datetime import timedelta
 from erpnext import get_default_company
@@ -12,7 +13,7 @@ from hrms.hr.doctype.shift_assignment.shift_assignment import get_shifts_for_dat
 from frappe.core.doctype.data_import.data_import import import_doc
 import click
 import os
-
+from frappe.utils import get_first_day , nowdate
 
 class OptimaHRSetting(Document):
     def before_save(self) :
@@ -93,7 +94,6 @@ def get_employees_has_unmarked_days() :
     
 
 def mark_bulk_attendance(data):
-	import json
 
 	if isinstance(data, str):
 		data = json.loads(data)
@@ -115,11 +115,30 @@ def mark_bulk_attendance(data):
 
 
 @frappe.whitelist()
-def make_attendance(company):
-	shift_list = frappe.get_all("Shift Type", filters={"enable_auto_attendance": "1"}, pluck="name")
-	for shift in shift_list:
-		doc = frappe.get_doc("Shift Type", shift)
-		doc.process_auto_attendance(company)
+def make_attendance(doc):
+
+    doc = json.loads(doc)
+    from_date = doc.get("skip_employee_from_date") if doc.get("skip_employee_date_range") else get_first_day(nowdate())
+    to_date = doc.get("skip_employee_to_date") if doc.get("skip_employee_date_range") else nowdate()
+
+    for employee in doc.get("skip_employee_in_attendance") :
+        unmarked_days = get_unmarked_days(
+            employee.get("employee") ,
+            from_date,
+            to_date,
+            1
+        )     
+        if not unmarked_days :
+            continue
+        
+        mark_bulk_attendance({
+            "employee" : employee.get("employee") ,
+            "unmarked_days" : unmarked_days ,
+            "status" : "Present",
+            "company" : doc.get("company") ,
+            # "shift" : get_shifts_for_date(e, date) 
+        })
+
   
   
 @frappe.whitelist()
