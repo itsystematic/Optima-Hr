@@ -5,7 +5,7 @@ import frappe
 from frappe.model.document import Document
 from frappe import _
 from optima_hr.optima_hr.utils import create_additional_salary
-from frappe.utils import get_first_day , time_diff ,get_datetime
+from frappe.utils import get_first_day , time_diff ,get_datetime ,getdate , today
 import datetime
 
 class Permissions(Document):
@@ -60,7 +60,7 @@ class Permissions(Document):
         # if frappe.db.exists("Permissions", {"date" : self.date , "employee_name" : self.employee_name , "docstatus" : 1 , 'type' : "Exit"}, cache=True):
         if self.type =="Exit":
             filters = {
-            'date': ['>=',self.get_settings().get("payroll_date_beginning")] ,
+            'date': ['>=',self.get_payroll_date_beginning_for_this_month()] ,
             'docstatus' : 1 ,
             'employee_name' : self.employee_name ,
             'type' : "Exit"
@@ -82,7 +82,7 @@ class Permissions(Document):
 
     def validate_number_of_permission_number_allowed(self):
         if self.type == "Exit":
-            payroll_date_beginning = self.get_settings().get("payroll_date_beginning")
+            payroll_date_beginning = self.get_payroll_date_beginning_for_this_month()
             if self.get_settings().get("enable_calculate_permission_by_number") and self.get_settings().get("enable_add_deduction_after_permissions__number_allowed") == 0 and self.type == "Exit":        
                 
                 filters = {
@@ -203,7 +203,7 @@ class Permissions(Document):
     
     def get_total_hours_taken(self):
         filters = {
-            'date': ['>=',self.get_settings().get("payroll_date_beginning") ] ,
+            'date': ['>=',self.get_payroll_date_beginning_for_this_month() ] ,
             'docstatus' : 1 ,
             'employee_name' : self.employee_name ,
             'type' : "Exit" ,
@@ -214,4 +214,8 @@ class Permissions(Document):
         return sum(all_times_for_employee, datetime.timedelta()) 
     
     
-    
+    def get_payroll_date_beginning_for_this_month(self):
+
+        converted_penalty_date = getdate(today())
+
+        return getdate(self.get_settings().get("payroll_date_beginning")).replace(month=converted_penalty_date.month , year=converted_penalty_date.year)
