@@ -1,0 +1,291 @@
+{
+    "actions": [],
+    "allow_import": 1,
+    "allow_rename": 1,
+    "autoname": "PEN-.####",
+    "creation": "2023-01-17 11:59:22.464304",
+    "doctype": "DocType",
+    "editable_grid": 1,
+    "engine": "InnoDB",
+    "field_order": [
+        "company",
+        "employee",
+        "column_break_7",
+        "posting_date",
+        "status",
+        "employee_details_section",
+        "designation",
+        "column_break_sicy",
+        "department",
+        "column_break_pugw",
+        "branch",
+        "column_break_ztmg",
+        "employee_number",
+        "section_break_urlc",
+        "penalty_date",
+        "column_break_mvbd",
+        "penalty_type",
+        "section_break_afaa",
+        "penalty",
+        "penalty_value",
+        "column_break_uzwl",
+        "repeat_status",
+        "column_break_thwq",
+        "penalty_description",
+        "column_break_zcnj",
+        "subject",
+        "directors_decision_section",
+        "modified1",
+        "disabled",
+        "column_break_17",
+        "file",
+        "amended_from"
+    ],
+    "fields": [
+        {
+            "default": "Today",
+            "fieldname": "posting_date",
+            "fieldtype": "Date",
+            "label": "Posting Date"
+        },
+        {
+            "fieldname": "subject",
+            "fieldtype": "Small Text",
+            "label": "Subject"
+        },
+        {
+            "fieldname": "status",
+            "fieldtype": "Select",
+            "label": "Status",
+            "options": "Open\nApproved\nRejected"
+        },
+        {
+            "fieldname": "employee",
+            "fieldtype": "Link",
+            "in_standard_filter": 1,
+            "label": "Employee",
+            "options": "Employee"
+        },
+        {
+            "fetch_from": "employee.employee_number",
+            "fieldname": "employee_number",
+            "fieldtype": "Data",
+            "label": "Employee Number"
+        },
+        {
+            "fetch_from": "employee.branch",
+            "fieldname": "branch",
+            "fieldtype": "Data",
+            "label": "Branch"
+        },
+        {
+            "fetch_from": "employee.department",
+            "fieldname": "department",
+            "fieldtype": "Data",
+            "label": "Department"
+        },
+        {
+            "fetch_from": "employee.designation",
+            "fieldname": "designation",
+            "fieldtype": "Data",
+            "label": "Designation"
+        },
+        {
+            "fieldname": "penalty_date",
+            "fieldtype": "Date",
+            "label": "Penalty Date"
+        },
+        {
+            "fieldname": "penalty_type",
+            "fieldtype": "Link",
+            "label": "Penalty Type",
+            "options": "Penalty type"
+        },
+        {
+            "fieldname": "repeat_status",
+            "fieldtype": "Select",
+            "label": "Repeat Status",
+            "options": "first\nsecond\nthird\nfourth",
+            "read_only": 1
+        },
+        {
+            "fieldname": "amended_from",
+            "fieldtype": "Link",
+            "label": "Amended From",
+            "no_copy": 1,
+            "options": "Employee Penalty",
+            "print_hide": 1,
+            "read_only": 1
+        },
+        {
+            "fieldname": "column_break_7",
+            "fieldtype": "Column Break"
+        },
+        {
+            "fetch_from": "penalty_type.penalty",
+            "fieldname": "penalty_description",
+            "fieldtype": "Small Text",
+            "label": "Penalty Description",
+            "read_only": 1
+        },
+        {
+            "fieldname": "directors_decision_section",
+            "fieldtype": "Section Break",
+            "hidden": 1,
+            "label": "Director's Decision"
+        },
+        {
+            "default": "0",
+            "fieldname": "modified1",
+            "fieldtype": "Check",
+            "label": "Modified"
+        },
+        {
+            "default": "0",
+            "fieldname": "disabled",
+            "fieldtype": "Check",
+            "label": "Disabled"
+        },
+        {
+            "fieldname": "file",
+            "fieldtype": "Attach Image",
+            "label": "File"
+        },
+        {
+            "fieldname": "column_break_17",
+            "fieldtype": "Column Break"
+        },
+        {
+            "fieldname": "penalty",
+            "fieldtype": "Data",
+            "label": "Penalty",
+            "read_only": 1
+        },
+        {
+            "fieldname": "penalty_value",
+            "fieldtype": "Float",
+            "hidden": 1,
+            "label": "Penalty Value"
+        },
+        {
+            "fieldname": "company",
+            "fieldtype": "Link",
+            "in_list_view": 1,
+            "label": "Company",
+            "options": "Company",
+            "reqd": 1
+        },
+        {
+            "depends_on": "eval: doc.employee;",
+            "fieldname": "employee_details_section",
+            "fieldtype": "Section Break",
+            "label": "Employee Details"
+        },
+        {
+            "fieldname": "column_break_sicy",
+            "fieldtype": "Column Break"
+        },
+        {
+            "fieldname": "column_break_pugw",
+            "fieldtype": "Column Break"
+        },
+        {
+            "fieldname": "column_break_ztmg",
+            "fieldtype": "Column Break"
+        },
+        {
+            "depends_on": "eval: doc.penalty_type",
+            "fieldname": "section_break_afaa",
+            "fieldtype": "Section Break",
+            "label": "Penalty Details"
+        },
+        {
+            "fieldname": "column_break_thwq",
+            "fieldtype": "Column Break"
+        },
+        {
+            "fieldname": "section_break_urlc",
+            "fieldtype": "Section Break"
+        },
+        {
+            "fieldname": "column_break_mvbd",
+            "fieldtype": "Column Break"
+        },
+        {
+            "fieldname": "column_break_uzwl",
+            "fieldtype": "Column Break"
+        },
+        {
+            "fieldname": "column_break_zcnj",
+            "fieldtype": "Column Break"
+        }
+    ],
+    "image_field": "file",
+    "index_web_pages_for_search": 1,
+    "is_submittable": 1,
+    "links": [
+        {
+            "link_doctype": "Additional Salary",
+            "link_fieldname": "ref_docname"
+        }
+    ],
+    "make_attachments_public": 1,
+    "max_attachments": 1,
+    "modified": "2024-10-29 12:26:18.402392",
+    "modified_by": "Administrator",
+    "module": "Optima Hr",
+    "name": "Employee Penalty",
+    "naming_rule": "Expression (old style)",
+    "owner": "Administrator",
+    "permissions": [
+        {
+            "amend": 1,
+            "cancel": 1,
+            "create": 1,
+            "delete": 1,
+            "email": 1,
+            "export": 1,
+            "print": 1,
+            "read": 1,
+            "report": 1,
+            "role": "System Manager",
+            "select": 1,
+            "share": 1,
+            "submit": 1,
+            "write": 1
+        },
+        {
+            "amend": 1,
+            "cancel": 1,
+            "create": 1,
+            "delete": 1,
+            "email": 1,
+            "export": 1,
+            "print": 1,
+            "read": 1,
+            "report": 1,
+            "role": "HR Manager",
+            "select": 1,
+            "share": 1,
+            "submit": 1,
+            "write": 1
+        },
+        {
+            "create": 1,
+            "delete": 1,
+            "email": 1,
+            "export": 1,
+            "print": 1,
+            "read": 1,
+            "report": 1,
+            "role": "HR User",
+            "share": 1,
+            "write": 1
+        }
+    ],
+    "sort_field": "modified",
+    "sort_order": "DESC",
+    "states": [],
+    "track_changes": 1,
+    "track_seen": 1
+}

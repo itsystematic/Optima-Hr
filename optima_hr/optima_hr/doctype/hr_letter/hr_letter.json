@@ -1,0 +1,157 @@
+{
+ "actions": [],
+ "allow_rename": 1,
+ "autoname": "format:{###}-{employee_name}",
+ "creation": "2024-10-20 10:58:05.215474",
+ "doctype": "DocType",
+ "engine": "InnoDB",
+ "field_order": [
+  "section_break_o5gx",
+  "employee",
+  "employee_name",
+  "joining_date",
+  "end_work_date",
+  "nationality",
+  "address",
+  "amended_from",
+  "designation",
+  "column_break_ixre",
+  "hr_manager",
+  "hr_manager_name",
+  "company",
+  "section_break_zuog",
+  "hr_letter_template",
+  "terms",
+  "signature_owdf"
+ ],
+ "fields": [
+  {
+   "fieldname": "section_break_o5gx",
+   "fieldtype": "Section Break"
+  },
+  {
+   "fieldname": "amended_from",
+   "fieldtype": "Link",
+   "label": "Amended From",
+   "no_copy": 1,
+   "options": "HR Letter",
+   "print_hide": 1,
+   "read_only": 1,
+   "search_index": 1
+  },
+  {
+   "fieldname": "employee",
+   "fieldtype": "Link",
+   "label": "Employee",
+   "options": "Employee"
+  },
+  {
+   "fetch_from": "employee.date_of_joining",
+   "fieldname": "joining_date",
+   "fieldtype": "Date",
+   "label": "Joining Date",
+   "read_only": 1
+  },
+  {
+   "fetch_from": "employee.employee_name",
+   "fieldname": "employee_name",
+   "fieldtype": "Data",
+   "label": "Employee Name"
+  },
+  {
+   "fetch_from": ".date_of_retirement",
+   "fieldname": "end_work_date",
+   "fieldtype": "Date",
+   "label": "End Work Date"
+  },
+  {
+   "fieldname": "hr_manager",
+   "fieldtype": "Link",
+   "label": "HR Manager",
+   "options": "User"
+  },
+  {
+   "fetch_from": "hr_manager.full_name",
+   "fieldname": "hr_manager_name",
+   "fieldtype": "Data",
+   "label": "HR Manager Name"
+  },
+  {
+   "fetch_from": "employee.company",
+   "fieldname": "company",
+   "fieldtype": "Link",
+   "label": "Company",
+   "options": "Company",
+   "read_only": 1
+  },
+  {
+   "fieldname": "signature_owdf",
+   "fieldtype": "Signature"
+  },
+  {
+   "fieldname": "column_break_ixre",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "section_break_zuog",
+   "fieldtype": "Section Break"
+  },
+  {
+   "fieldname": "hr_letter_template",
+   "fieldtype": "Link",
+   "label": "HR Letter Template",
+   "options": "HR Letter Template"
+  },
+  {
+   "fetch_from": "employee.nationality",
+   "fieldname": "nationality",
+   "fieldtype": "Data",
+   "label": "Nationality",
+   "read_only": 1
+  },
+  {
+   "fetch_from": "employee.current_address",
+   "fieldname": "address",
+   "fieldtype": "Data",
+   "label": "Address"
+  },
+  {
+   "fieldname": "terms",
+   "fieldtype": "Text Editor",
+   "label": "Terms"
+  },
+  {
+   "fetch_from": "employee.designation",
+   "fieldname": "designation",
+   "fieldtype": "Data",
+   "label": "Designation"
+  }
+ ],
+ "index_web_pages_for_search": 1,
+ "is_submittable": 1,
+ "links": [],
+ "modified": "2024-10-20 12:15:05.007036",
+ "modified_by": "Administrator",
+ "module": "Optima Hr",
+ "name": "HR Letter",
+ "naming_rule": "Expression",
+ "owner": "Administrator",
+ "permissions": [
+  {
+   "create": 1,
+   "delete": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "System Manager",
+   "share": 1,
+   "submit": 1,
+   "write": 1
+  }
+ ],
+ "sort_field": "modified",
+ "sort_order": "DESC",
+ "states": []
+}

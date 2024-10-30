@@ -8,28 +8,19 @@ frappe.ui.form.on("Leave Dues", {
 
         add_buttons(frm) {
                 if (
-                        frm.doc.docstatus === 0 &&
-                        !frm.is_new() &&
-                        frm.doc.payment_entry_created == 0
+                        frm.doc.docstatus === 1 &&
+                        frm.doc.paid_amount >= frm.doc.leave_dues_amount
                 ) {
-                        frm.page.clear_primary_action();
+                        // frm.page.clear_primary_action();
                         frm.add_custom_button(__("Create Payment Entry"), () => {
                                 frappe.call({
                                         method:
-                                                "optima_hr.optima_hr.doctype.leave_dues.leave_dues.create_payment_entry",
+                                                "optima_hr.optima_hr.utils.create_payment_entry",
                                         args: {
                                                 doc: frm.doc,
                                         },
                                         callback: (r) => {
                                                 if (r.message) {
-                                                        // frm.set_value({
-                                                        //         payment_entry: r.message,
-                                                        //         payment_entry_created: 1,
-                                                        // });
-                                                        // frm.save();
-                                                        // cur_frm.reload_doc();
-                                                        // frappe.set_route("Form", "Payment Entry", r.message);
-                                                        console.log(r.message)
                                                         var doclist = frappe.model.sync(r.message);
                                                         frappe.set_route("Form", doclist[0].doctype, doclist[0].name);
                                                 }

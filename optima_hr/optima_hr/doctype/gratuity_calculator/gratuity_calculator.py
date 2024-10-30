@@ -6,7 +6,6 @@ from frappe.model.document import Document
 from frappe.utils.data import date_diff 
 import math
 import erpnext
-# from hr_ksa.api import get_employee_base_amount
 from frappe import _
 class GratuityCalculator(Document):
 

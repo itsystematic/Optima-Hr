@@ -1,7 +1,7 @@
 app_name = "optima_hr"
-app_title = "Optima Hr"
+app_title = "Optima Hr KSA"
 app_publisher = "IT Systematic Company"
-app_description = "App For Customization of Hr"
+app_description = "App For Customization of Hr KSA's projects"
 app_email = "sales@itsystematic.com"
 required_apps = ["frappe", "erpnext", "hrms"]
 app_license = "mit"
@@ -89,7 +89,7 @@ doctype_list_js = {
 # ------------
 
 # before_install = "optima_hr.install.before_install"
-# after_install = "optima_hr.install.after_install"
+after_install = "optima_hr.after_install.delete_genders"
 
 # Uninstallation
 # ------------
@@ -121,7 +121,7 @@ doctype_list_js = {
 
 # Permissions
 # -----------
-# Permissions evaluated in scripted ways
+# Permissions evaluated in scripted ways  
 
 # permission_query_conditions = {
 # 	"Event": "frappe.desk.doctype.event.event.get_permission_query_conditions",
@@ -136,26 +136,35 @@ doctype_list_js = {
 # Override standard doctype classes
 
 override_doctype_class = {
-# 	"ToDo": "custom_app.overrides.CustomToDo",
-    "Additional Salary": "optima_hr.optima_hr.override.doctype_class.additional_salary.CustomAdditionalSalary",
+
+    "Additional Salary": "optima_hr.override.doctype_class.additional_salary.CustomAdditionalSalary",
+    "Payment Entry": "optima_hr.override.doctype_class.payment_entry.OptimaPaymentEntry",
+    "Salary Slip": "optima_hr.override.doctype_class.salary_slip.CustomSalarySlip",
+    "Employee Checkin": "optima_hr.override.doctype_class.employee_checkin.CustomEmployeeCheckin", 
+    "Shift Type": "optima_hr.override.doctype_class.shift_type.OptimaShiftType",
+    "Payroll Entry": "optima_hr.override.doctype_class.payroll_entry.OptimaPayrollEntry",
 }
 
 # Document Events
 # ---------------
 # Hook on document methods and events
 
-# doc_events = {
-# 	"*": {
-# 		"on_update": "method",
-# 		"on_cancel": "method",
-# 		"on_trash": "method"
-# 	}
-# }
+doc_events = {
+	"Attendance": {
+		"on_submit": "optima_hr.doc_events.attendance.attendance_on_submit",
+	},
+    "Shift Assignment": {
+        "on_submit": "optima_hr.doc_events.shift-assignment.default_shift_assignment",
+    }
+}
 
 # Scheduled Tasks
 # ---------------
 
-# scheduler_events = {
+scheduler_events = {
+    "Cron": {
+        # "0 0 1 * *": "optima_hr.tasks.cron.make_attendance_absent_for_unmarked_employee",
+    },
 # 	"all": [
 # 		"optima_hr.tasks.all"
 # 	],
@@ -171,7 +180,7 @@ override_doctype_class = {
 # 	"monthly": [
 # 		"optima_hr.tasks.monthly"
 # 	],
-# }
+}
 
 # Testing
 # -------
@@ -249,7 +258,6 @@ override_doctype_class = {
 # 	"Logging DocType Name": 30  # days to retain logs
 # }
 
-
-
 after_migrate = "optima_hr.migrate.after_migrate"
+advance_payment_doctypes = ["Leave Dues", "End of Service Benefits"]
 website_route_rules = [{'from_route': '/attendance_log/<path:app_path>', 'to_route': 'attendance_log'}, {'from_route': '/attendance_log/<path:app_path>', 'to_route': 'attendance_log'},]
