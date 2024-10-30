@@ -71,7 +71,7 @@
   "default_salary_component_for_permissions",
   "default_permissions_per_day",
   "section_break_ibzk",
-  "salary_allowance_details",
+  "salary_component_for_deduction",
   "penalty_tab",
   "default_salary_component_for_employee_penalty",
   "column_break_wfsf",
@@ -474,13 +474,6 @@
    "fieldtype": "Section Break"
   },
   {
-   "description": "\nThese are the required components to clac the the cost of day for all Add or Deduction Components",
-   "fieldname": "salary_allowance_details",
-   "fieldtype": "Table",
-   "label": "Salary Allowance Details",
-   "options": "Salary Component Fields"
-  },
-  {
    "fieldname": "penalty_tab",
    "fieldtype": "Tab Break",
    "label": "Penalty"
@@ -506,11 +499,18 @@
    "fieldname": "default_permissions_per_day",
    "fieldtype": "Int",
    "label": "Default Permissions per Day"
+  },
+  {
+   "description": "\nThese are the required components to clac the the cost of day for all Add or Deduction Components",
+   "fieldname": "salary_component_for_deduction",
+   "fieldtype": "Table",
+   "label": "Salary Component for Deduction",
+   "options": "Salary Component Fields"
   }
  ],
  "index_web_pages_for_search": 1,
  "links": [],
- "modified": "2024-10-29 10:46:56.577729",
+ "modified": "2024-10-30 09:12:32.685341",
  "modified_by": "Administrator",
  "module": "Optima Hr",
  "name": "Optima HR Setting",

@@ -10,10 +10,8 @@ from hrms.hr.doctype.leave_application.leave_application import get_leave_balanc
 
 
 def get_optima_hr_settings(company) :
-
     if settings:= frappe.db.exists("Optima HR Setting", {"company": company}) :
         return frappe.get_doc("Optima HR Setting", settings)
-
     return {}
 
 def get_company_setting_with_employee(employee) :
@@ -104,7 +102,6 @@ def get_payroll_start_date(payroll_date_beginning, end_work_date):
         previous_month = end_work_date - relativedelta(months=1)
         return previous_month.replace(day=payroll_day)
 
-
 def get_optima_hr_employee_advance_account(company):
     employee_advance_account = frappe.db.get_value("Optima HR Setting", {"company": company}, "employee_advance_account")
     return employee_advance_account
@@ -155,7 +152,6 @@ def get_closing_balances(company, to_date, party):
             "closing_credit": 0
         }
     
-
 @frappe.whitelist()
 def create_payment_entry(doc) :
     import json
@@ -215,7 +211,6 @@ def create_payment_entry(doc) :
     
     return payment_entry
 
-
 def create_additional_salary(**kwargs):
     """
         Base Method To Create Additional Salary From Doctype ( Permissions  , Employee Advance , Attendance )
@@ -233,8 +228,6 @@ def create_additional_salary(**kwargs):
     
     return additional_salary
 
-
-
 def get_employee_salary(employee , child_table) :
     """ 
         Base Method To Get Employee Salary
@@ -251,7 +244,6 @@ def get_employee_salary(employee , child_table) :
     if not last_salary : return 0
 
     return sum(last_salary[0].values())
-
 
 def allow_edit_salary_slip(func):
     def wrapper(self, *args, **kwargs):

@@ -9,6 +9,7 @@
  "field_order": [
   "type",
   "date",
+  "shift_type",
   "column_break_a1yg9",
   "employee_name",
   "company",
@@ -150,12 +151,18 @@
    "fieldtype": "Data",
    "label": "Extra Hours",
    "read_only": 1
+  },
+  {
+   "fieldname": "shift_type",
+   "fieldtype": "Link",
+   "label": "Shift Type",
+   "options": "Shift Type"
   }
  ],
  "index_web_pages_for_search": 1,
  "is_submittable": 1,
  "links": [],
- "modified": "2024-10-29 15:48:28.764794",
+ "modified": "2024-10-30 09:03:31.726155",
  "modified_by": "Administrator",
  "module": "Optima Hr",
  "name": "Permissions",
