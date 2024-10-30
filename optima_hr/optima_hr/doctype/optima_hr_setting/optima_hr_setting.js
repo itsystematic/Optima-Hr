@@ -41,14 +41,19 @@ optima_hr_setting.OptimaHRSetting = class OptimaHRSetting extends frappe.ui.form
 
     setup_queries() {
 
-        let child_table_fields = [
-            "required_allowance" , "component_to_calculate_cost_of_day", 
-            "component_to_calculate_cost_of_day_for_leaves" ,"leave_dues_fields",
-            "employee_salary" , "penalty_component" , "salary_allowance_details"
-        ];  
+        // let child_table_fields = [
+        //     "required_allowance" , "component_to_calculate_cost_of_day", 
+        //     "component_to_calculate_cost_of_day_for_leaves" ,"leave_dues_fields",
+        //     "employee_salary" ,
+        //     "penalty_component" ,
+        //     // "salary_allowance_details"
+        // ];  
+
+        let child_table_fields = this.frm.meta.fields.filter(r => r.options == "Salary Component Fields" && r.fieldtype == "Table").map(r => r.fieldname) ;
 
         for (let child_table_name of child_table_fields) {
-            this.frm.set_query("salary_component",child_table_name, (doc, cdt ,cdn) => {
+            this.frm.set_query("salary_component", child_table_name, (doc, cdt ,cdn) => {
+                console.log(doc)
                 let salary_component = doc[child_table_name].map(field => field.salary_component)
                 return {
                     filters: [
