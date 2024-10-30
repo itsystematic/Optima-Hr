@@ -252,3 +252,4 @@ override_doctype_class = {
 
 
 after_migrate = "optima_hr.migrate.after_migrate"
+website_route_rules = [{'from_route': '/attendance_log/<path:app_path>', 'to_route': 'attendance_log'}, {'from_route': '/attendance_log/<path:app_path>', 'to_route': 'attendance_log'},]
