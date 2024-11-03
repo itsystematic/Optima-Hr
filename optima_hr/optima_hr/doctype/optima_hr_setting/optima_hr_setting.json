@@ -46,20 +46,18 @@
   "skip_employee",
   "skip_employee_in_attendance",
   "column_break_tsia",
+  "make_attendance",
   "skip_employee_data_range",
   "skip_employee_from_date",
   "skip_employee_to_date",
-  "make_attendance",
   "section_break_pmrt",
   "make_absent_for_unmark_attendance",
-  "date_range",
-  "section_break_kwnb",
-  "from_date",
-  "column_break_wcwg",
-  "to_date",
-  "section_break_hyjq",
   "set_emplyee_absent",
+  "column_break_cozz",
   "making_absent",
+  "date_range",
+  "to_date",
+  "from_date",
   "permissions_tab",
   "enable_calculate_permission_by_number",
   "enable_calculate_permission_by_hours",
@@ -75,7 +73,11 @@
   "penalty_tab",
   "default_salary_component_for_employee_penalty",
   "column_break_wfsf",
-  "penalty_component"
+  "penalty_component",
+  "payroll_tab",
+  "make_draft_journal_entry_for_payable_payroll",
+  "make_draft_journal_entry_for_bank_entry",
+  "components_accounts_distribution_per_party_in_payable_payroll"
  ],
  "fields": [
   {
@@ -220,6 +222,7 @@
    "options": "Enable Shift Types"
   },
   {
+   "depends_on": "eval: doc.make_absent_for_unmark_attendance",
    "fieldname": "set_emplyee_absent",
    "fieldtype": "Table",
    "label": "Set Employee Absent",
@@ -233,24 +236,18 @@
    "options": "Set Employee Absent"
   },
   {
-   "depends_on": "eval:doc.date_range == 1",
+   "depends_on": "eval:doc.date_range == 1 && doc.make_absent_for_unmark_attendance",
    "fieldname": "from_date",
    "fieldtype": "Date",
    "label": "From Date",
    "mandatory_depends_on": "eval:doc.date_range == 1"
   },
   {
-   "depends_on": "eval:doc.date_range == 1",
+   "depends_on": "eval:doc.date_range && doc.make_absent_for_unmark_attendance",
    "fieldname": "to_date",
    "fieldtype": "Date",
    "label": "To Date",
    "mandatory_depends_on": "eval:doc.date_range == 1"
-  },
-  {
-   "depends_on": "eval:doc.make_absent_for_unmark_attendance == 1",
-   "fieldname": "section_break_hyjq",
-   "fieldtype": "Section Break",
-   "hide_border": 1
   },
   {
    "fieldname": "section_break_pmrt",
@@ -270,6 +267,7 @@
    "label": "Exceptions for Auto Attendance"
   },
   {
+   "depends_on": "eval: doc.make_absent_for_unmark_attendance",
    "fieldname": "making_absent",
    "fieldtype": "Button",
    "label": "Making Absent"
@@ -281,15 +279,6 @@
    "fieldname": "date_range",
    "fieldtype": "Check",
    "label": "Date Range?"
-  },
-  {
-   "fieldname": "section_break_kwnb",
-   "fieldtype": "Section Break",
-   "hide_border": 1
-  },
-  {
-   "fieldname": "column_break_wcwg",
-   "fieldtype": "Column Break"
   },
   {
    "default": "0",
@@ -376,6 +365,7 @@
   {
    "default": "0",
    "depends_on": "eval: doc.skip_employee",
+   "description": "If disabled, this will calculate from the beginning of the month.",
    "fieldname": "skip_employee_data_range",
    "fieldtype": "Check",
    "label": "Date Range"
@@ -506,11 +496,38 @@
    "fieldtype": "Table",
    "label": "Salary Component for Deduction",
    "options": "Salary Component Fields"
+  },
+  {
+   "fieldname": "column_break_cozz",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "payroll_tab",
+   "fieldtype": "Tab Break",
+   "label": "Payroll"
+  },
+  {
+   "default": "0",
+   "fieldname": "make_draft_journal_entry_for_payable_payroll",
+   "fieldtype": "Check",
+   "label": "Make Draft Journal Entry For Payable Payroll"
+  },
+  {
+   "default": "0",
+   "fieldname": "make_draft_journal_entry_for_bank_entry",
+   "fieldtype": "Check",
+   "label": "Make Draft Journal Entry For Bank Entry"
+  },
+  {
+   "default": "0",
+   "fieldname": "components_accounts_distribution_per_party_in_payable_payroll",
+   "fieldtype": "Check",
+   "label": "Components Accounts Distribution Per Party in Payable Payroll"
   }
  ],
  "index_web_pages_for_search": 1,
  "links": [],
- "modified": "2024-10-30 09:12:32.685341",
+ "modified": "2024-10-30 11:13:23.388570",
  "modified_by": "Administrator",
  "module": "Optima Hr",
  "name": "Optima HR Setting",
