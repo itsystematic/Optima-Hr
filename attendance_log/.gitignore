@@ -1,0 +1,17 @@
+node_modules
+.DS_Store
+dist
+dist-ssr
+*.local
+
+
+# Build
+.vscode
+.vs
+node_modules
+*debug.log
+optima_hr/docs/current
+optima_hr/public/frontend
+optima_hr/www/optima_hr.html
+optima_hr/public/roster
+optima_hr/www/roster.html

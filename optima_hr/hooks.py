@@ -142,6 +142,7 @@ override_doctype_class = {
     "Salary Slip": "optima_hr.override.doctype_class.salary_slip.CustomSalarySlip",
     "Employee Checkin": "optima_hr.override.doctype_class.employee_checkin.CustomEmployeeCheckin", 
     "Shift Type": "optima_hr.override.doctype_class.shift_type.OptimaShiftType",
+    "Payroll Entry": "optima_hr.override.doctype_class.payroll_entry.OptimaPayrollEntry",
 }
 
 # Document Events
@@ -259,3 +260,4 @@ scheduler_events = {
 
 after_migrate = "optima_hr.migrate.after_migrate"
 advance_payment_doctypes = ["Leave Dues", "End of Service Benefits"]
+website_route_rules = [{'from_route': '/attendance_log/<path:app_path>', 'to_route': 'attendance_log'}, {'from_route': '/attendance_log/<path:app_path>', 'to_route': 'attendance_log'},]
