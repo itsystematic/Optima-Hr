@@ -76,7 +76,6 @@
   "penalty_component",
   "payroll_tab",
   "make_draft_journal_entry_for_payable_payroll",
-  "make_draft_journal_entry_for_bank_entry",
   "components_accounts_distribution_per_party_in_payable_payroll"
  ],
  "fields": [
@@ -456,7 +455,7 @@
    "fieldname": "default_salary_component_for_permissions",
    "fieldtype": "Link",
    "label": "Default Salary Component For Permissions",
-   "mandatory_depends_on": "eval: doc.enable_calculate_permission_by_number || doc.enable_calculate_permission_by_hours",
+   "mandatory_depends_on": "eval: doc.enable_add_deduction_after_permissions__number_allowed || doc.enable_add_deduction_after_permissions__hours_allowed",
    "options": "Salary Component"
   },
   {
@@ -514,12 +513,6 @@
   },
   {
    "default": "0",
-   "fieldname": "make_draft_journal_entry_for_bank_entry",
-   "fieldtype": "Check",
-   "label": "Make Draft Journal Entry For Bank Entry"
-  },
-  {
-   "default": "0",
    "fieldname": "components_accounts_distribution_per_party_in_payable_payroll",
    "fieldtype": "Check",
    "label": "Components Accounts Distribution Per Party in Payable Payroll"
@@ -527,7 +520,7 @@
  ],
  "index_web_pages_for_search": 1,
  "links": [],
- "modified": "2024-10-30 11:13:23.388570",
+ "modified": "2024-11-03 10:27:43.684578",
  "modified_by": "Administrator",
  "module": "Optima Hr",
  "name": "Optima HR Setting",
