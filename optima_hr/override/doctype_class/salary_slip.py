@@ -78,7 +78,8 @@ class CustomSalarySlip(SalarySlip):
         if not cint(payroll_settings.include_holidays_in_total_working_days):
             working_days_list = [i for i in working_days_list if i not in holidays]
 
-            working_days -= len(holidays)
+            # working_days -= len(holidays)
+            working_days = 30
             if working_days < 0:
                 frappe.throw(_("There are more holidays than working days this month."))
 
@@ -143,7 +144,8 @@ class CustomSalarySlip(SalarySlip):
 
         if not cint(include_holidays_in_total_working_days):
             holidays = self.get_holidays_for_employee(self.actual_start_date, self.actual_end_date)
-            payment_days -= len(holidays)
+            # payment_days -= len(holidays)
+            payment_days = 30
 
         return payment_days
 
