@@ -55,7 +55,6 @@ class Permissions(Document):
 
     def validate_allowed_hours(self):
         if self.type == "Exit":
-            print(self.time_difference , self.get_total_time_remaining(), 'time difference' )
             if self.time_difference > self.get_total_time_remaining():
                 if  self.get_settings().get("enable_add_deduction_after_permissions__hours_allowed") == 0:
                     frappe.throw(_("The Maximum Permission Hours {0}".format(self.get_settings().allowed_permission_hours))) 
@@ -68,14 +67,13 @@ class Permissions(Document):
         # if frappe.db.exists("Permissions", {"date" : self.date , "employee_name" : self.employee_name , "docstatus" : 1 , 'type' : "Exit"}, cache=True):
         if self.type =="Exit":
             filters = {
-            'date': ['>=',today()] ,
+            'date': ['>=',frappe.utils.getdate(self.date)] ,
             'docstatus' : 1 ,
             'employee_name' : self.employee_name ,
             'type' : "Exit"
             }
             number_of_permission = frappe.db.get_list('Permissions', filters=filters,  fields=["COUNT(name) as name"])
-            
-            if number_of_permission[0].get("name")> self.get_settings().get("default_permissions_per_day") :
+            if number_of_permission[0].get("name") >= self.get_settings().get("default_permissions_per_day") :
                 frappe.throw(_(f"Employee Must Have {self.get_settings().default_permissions_per_day} Permission Per Day"))
     
     def validate_number_of_permission_hours_allowed(self):
@@ -138,12 +136,12 @@ class Permissions(Document):
                 if self.type == "Exit":
                     if self.time_difference > total_delta:
                         
-                        # Case where requested time exceeds remaining allowed time
+                        # requested time exceeds remaining allowed time
                         if self.get_settings().get("enable_add_deduction_after_permissions__hours_allowed") == 0:
                             frappe.throw(_("The Maximum Working Hours have been Exhausted {0}".format(
                                 self.get_settings().allowed_permission_hours)))
                         
-                        # Calculate extra hours that exceed the allowed limit
+                        # Calculate extra hours that exceed the allowed
                         if all_times_for_employee > self.allowed_hour:
                             self.extra_hour = self.time_difference.total_seconds()
                             self.number_of_hours_for_deduction = round((self.extra_hour / 3600), 2)
@@ -153,7 +151,7 @@ class Permissions(Document):
                             self.number_of_hours_for_deduction = round((self.extra_hour / 3600), 2)
                             self.remaining_hours = None
                     else:
-                        # Case where requested time is within remaining allowed time
+                        # requested time is within remaining allowed time
                         self.remaining_hours = total_delta - self.time_difference
                         self.extra_hour = ""
                         self.number_of_hours_for_deduction = None
@@ -196,10 +194,11 @@ class Permissions(Document):
                 ref_docname=self.name
                 )
     def cancel_doctype_link(self):
-        if frappe.db.exists("Additional Salary" , {"ref_doctype" : self.doctype , "ref_docname" : self.name, "docstatus" : 1}) :
-            additional_salary = frappe.get_doc("Additional Salary" , {"ref_doctype" : self.doctype , "ref_docname" : self.name})
-            additional_salary.cancel()
-            
+        
+        if additional_salary := frappe.db.exists("Additional Salary" , {"ref_doctype" : self.doctype , "ref_docname" : self.name}) :
+            frappe.get_doc("Additional Salary", additional_salary).cancel()
+            frappe.delete_doc("Additional Salary", additional_salary)
+
     def get_salary_component_for_deductions_total_amount(self):
         if self.type == "Exit" and self.extra_hour :
             fields = get_fields_for_leave_dues(self.company, "salary_component_for_deduction")
@@ -207,7 +206,6 @@ class Permissions(Document):
             shift_duration = self.get_shift_settings()
             salary_per_hour = (total / 30) / shift_duration
             total_deductions = (self.extra_hour / 3600) * salary_per_hour
-            # print('total_deductions' , total_deductions , 'salary_per_hour' , salary_per_hour , 'self.extra_hour' , self.extra_hour , 'total' , total , 'shift_duration' , shift_duration)
             return total_deductions
     
     def get_employee_default_shift(self):        
@@ -247,7 +245,6 @@ class Permissions(Document):
             return shift_duration
         
         if self.shift_type :
-            print("shift_duration" , abs(shift_duration.total_seconds() / 3600) )
             return abs(shift_duration.total_seconds() / 3600)
         else :
             return 8.0

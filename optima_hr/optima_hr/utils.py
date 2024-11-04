@@ -15,10 +15,10 @@ def get_optima_hr_settings(company) :
     return {}
 
 def get_company_setting_with_employee(employee) :
-	
+    
     default_company = frappe.db.get_value("Employee" , employee , "company" , cache=True)
     optima_settings = get_optima_hr_settings(default_company)
-	
+    
     return optima_settings
 
 @frappe.whitelist()
@@ -265,17 +265,17 @@ def allow_edit_salary_slip(func):
 
 # This method is used in Scheduled Job
 def custom_get_earned_leaves():
-	return frappe.get_all(
-		"Leave Type",
-		fields=[
-			"name",
-			"max_leaves_allowed",
-			"earned_leave_frequency",
-			"rounding",
-			"allocate_on_day",
-		],
-		filters={"is_earned_leave": 1 , "earned_leave_frequency" : "Daily"},
-	)
+    return frappe.get_all(
+        "Leave Type",
+        fields=[
+            "name",
+            "max_leaves_allowed",
+            "earned_leave_frequency",
+            "rounding",
+            "allocate_on_day",
+        ],
+        filters={"is_earned_leave": 1 , "earned_leave_frequency" : "Daily"},
+    )
 
 
 def custom_check_effective_date(from_date, today, frequency, allocate_on_day):
@@ -292,68 +292,68 @@ def custom_check_effective_date(from_date, today, frequency, allocate_on_day):
 
 
 def custom_update_previous_leave_allocation(allocation, annual_allocation, e_leave_type, date_of_joining):
-	allocation = frappe.get_doc("Leave Allocation", allocation.name)
-	annual_allocation = flt(annual_allocation, allocation.precision("total_leaves_allocated"))
+    allocation = frappe.get_doc("Leave Allocation", allocation.name)
+    annual_allocation = flt(annual_allocation, allocation.precision("total_leaves_allocated"))
 
-	earned_leaves = custom_get_monthly_earned_leave(
-		date_of_joining,
-		annual_allocation,
-		e_leave_type.earned_leave_frequency,
-		e_leave_type.rounding,
-	)
+    earned_leaves = custom_get_monthly_earned_leave(
+        date_of_joining,
+        annual_allocation,
+        e_leave_type.earned_leave_frequency,
+        e_leave_type.rounding,
+    )
 
-	new_allocation = flt(allocation.total_leaves_allocated) + flt(earned_leaves)
-	new_allocation_without_cf = flt(
-		flt(allocation.get_existing_leave_count()) + flt(earned_leaves),
-		allocation.precision("total_leaves_allocated"),
-	)
+    new_allocation = flt(allocation.total_leaves_allocated) + flt(earned_leaves)
+    new_allocation_without_cf = flt(
+        flt(allocation.get_existing_leave_count()) + flt(earned_leaves),
+        allocation.precision("total_leaves_allocated"),
+    )
 
-	if new_allocation > e_leave_type.max_leaves_allowed and e_leave_type.max_leaves_allowed > 0:
-		new_allocation = e_leave_type.max_leaves_allowed
+    if new_allocation > e_leave_type.max_leaves_allowed and e_leave_type.max_leaves_allowed > 0:
+        new_allocation = e_leave_type.max_leaves_allowed
 
-	if (
-		new_allocation != allocation.total_leaves_allocated
-		# annual allocation as per policy should not be exceeded
-		and new_allocation_without_cf <= annual_allocation
-	):
-		today_date = frappe.flags.current_date or getdate()
+    if (
+        new_allocation != allocation.total_leaves_allocated
+        # annual allocation as per policy should not be exceeded
+        and new_allocation_without_cf <= annual_allocation
+    ):
+        today_date = frappe.flags.current_date or getdate()
 
-		allocation.db_set("total_leaves_allocated", new_allocation, update_modified=False)
-		create_additional_leave_ledger_entry(allocation, earned_leaves, today_date)
+        allocation.db_set("total_leaves_allocated", new_allocation, update_modified=False)
+        create_additional_leave_ledger_entry(allocation, earned_leaves, today_date)
 
-		if e_leave_type.allocate_on_day:
-			text = _(
-				"Allocated {0} leave(s) via scheduler on {1} based on the 'Allocate on Day' option set to {2}"
-			).format(
-				frappe.bold(earned_leaves), frappe.bold(formatdate(today_date)), e_leave_type.allocate_on_day
-			)
+        if e_leave_type.allocate_on_day:
+            text = _(
+                "Allocated {0} leave(s) via scheduler on {1} based on the 'Allocate on Day' option set to {2}"
+            ).format(
+                frappe.bold(earned_leaves), frappe.bold(formatdate(today_date)), e_leave_type.allocate_on_day
+            )
 
-		allocation.add_comment(comment_type="Info", text=text)
+        allocation.add_comment(comment_type="Info", text=text)
 
 def custom_get_monthly_earned_leave(
-	date_of_joining,
-	annual_leaves,
-	frequency,
-	rounding,
-	period_start_date=None,
-	period_end_date=None,
-	pro_rated=True,
+    date_of_joining,
+    annual_leaves,
+    frequency,
+    rounding,
+    period_start_date=None,
+    period_end_date=None,
+    pro_rated=True,
 ):
-	earned_leaves = 0.0
-	divide_by_frequency = {"Yearly": 1, "Half-Yearly": 2, "Quarterly": 4, "Monthly": 12 , "Daily": 365}
-	if annual_leaves:
-		earned_leaves = flt(annual_leaves) / divide_by_frequency[frequency]
+    earned_leaves = 0.0
+    divide_by_frequency = {"Yearly": 1, "Half-Yearly": 2, "Quarterly": 4, "Monthly": 12 , "Daily": 365}
+    if annual_leaves:
+        earned_leaves = flt(annual_leaves) / divide_by_frequency[frequency]
 
-		if pro_rated:
-			if not (period_start_date or period_end_date):
-				today_date = frappe.flags.current_date or getdate()
-				period_end_date = get_last_day(today_date)
-				period_start_date = get_first_day(today_date)
+        if pro_rated:
+            if not (period_start_date or period_end_date):
+                today_date = frappe.flags.current_date or getdate()
+                period_end_date = get_last_day(today_date)
+                period_start_date = get_first_day(today_date)
 
-			earned_leaves = calculate_pro_rated_leaves(
-				earned_leaves, date_of_joining, period_start_date, period_end_date, is_earned_leave=True
-			)
+            earned_leaves = calculate_pro_rated_leaves(
+                earned_leaves, date_of_joining, period_start_date, period_end_date, is_earned_leave=True
+            )
 
-		earned_leaves = round_earned_leaves(earned_leaves, rounding)
+        earned_leaves = round_earned_leaves(earned_leaves, rounding)
 
-	return earned_leaves
+    return earned_leaves
