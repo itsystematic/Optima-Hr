@@ -4,10 +4,10 @@ from frappe import _
 from frappe.utils import now
 from datetime import datetime
 from erpnext.accounts.party import get_party_account
-from frappe.utils import getdate , date_diff , get_year_start, flt
+from frappe.utils import getdate , date_diff , get_year_start, flt , get_first_day , get_last_day , get_datetime , formatdate
 from dateutil.relativedelta import relativedelta
 from hrms.hr.doctype.leave_application.leave_application import get_leave_balance_on
-
+from hrms.hr.utils import calculate_pro_rated_leaves , create_additional_leave_ledger_entry , round_earned_leaves
 
 def get_optima_hr_settings(company) :
     if settings:= frappe.db.exists("Optima HR Setting", {"company": company}) :
@@ -262,3 +262,98 @@ def allow_edit_salary_slip(func):
         # If setting is enabled, use the custom method
         return func(self, *args, **kwargs)
     return wrapper
+
+# This method is used in Scheduled Job
+def custom_get_earned_leaves():
+	return frappe.get_all(
+		"Leave Type",
+		fields=[
+			"name",
+			"max_leaves_allowed",
+			"earned_leave_frequency",
+			"rounding",
+			"allocate_on_day",
+		],
+		filters={"is_earned_leave": 1 , "earned_leave_frequency" : "Daily"},
+	)
+
+
+def custom_check_effective_date(from_date, today, frequency, allocate_on_day):
+
+    from_date = get_datetime(from_date)
+    today = frappe.flags.current_date or get_datetime(today)
+    expected_date = {
+        "First Day": get_first_day(today),
+        "Last Day": get_last_day(today),
+        "Date of Joining": from_date,
+    }[allocate_on_day]
+
+    return True if expected_date.day == today.day and frequency == "Daily"  else False
+
+
+def custom_update_previous_leave_allocation(allocation, annual_allocation, e_leave_type, date_of_joining):
+	allocation = frappe.get_doc("Leave Allocation", allocation.name)
+	annual_allocation = flt(annual_allocation, allocation.precision("total_leaves_allocated"))
+
+	earned_leaves = custom_get_monthly_earned_leave(
+		date_of_joining,
+		annual_allocation,
+		e_leave_type.earned_leave_frequency,
+		e_leave_type.rounding,
+	)
+
+	new_allocation = flt(allocation.total_leaves_allocated) + flt(earned_leaves)
+	new_allocation_without_cf = flt(
+		flt(allocation.get_existing_leave_count()) + flt(earned_leaves),
+		allocation.precision("total_leaves_allocated"),
+	)
+
+	if new_allocation > e_leave_type.max_leaves_allowed and e_leave_type.max_leaves_allowed > 0:
+		new_allocation = e_leave_type.max_leaves_allowed
+
+	if (
+		new_allocation != allocation.total_leaves_allocated
+		# annual allocation as per policy should not be exceeded
+		and new_allocation_without_cf <= annual_allocation
+	):
+		today_date = frappe.flags.current_date or getdate()
+
+		allocation.db_set("total_leaves_allocated", new_allocation, update_modified=False)
+		create_additional_leave_ledger_entry(allocation, earned_leaves, today_date)
+
+		if e_leave_type.allocate_on_day:
+			text = _(
+				"Allocated {0} leave(s) via scheduler on {1} based on the 'Allocate on Day' option set to {2}"
+			).format(
+				frappe.bold(earned_leaves), frappe.bold(formatdate(today_date)), e_leave_type.allocate_on_day
+			)
+
+		allocation.add_comment(comment_type="Info", text=text)
+
+def custom_get_monthly_earned_leave(
+	date_of_joining,
+	annual_leaves,
+	frequency,
+	rounding,
+	period_start_date=None,
+	period_end_date=None,
+	pro_rated=True,
+):
+	earned_leaves = 0.0
+	divide_by_frequency = {"Yearly": 1, "Half-Yearly": 2, "Quarterly": 4, "Monthly": 12 , "Daily": 365}
+	if annual_leaves:
+		earned_leaves = flt(annual_leaves) / divide_by_frequency[frequency]
+
+		if pro_rated:
+			if not (period_start_date or period_end_date):
+				today_date = frappe.flags.current_date or getdate()
+				period_end_date = get_last_day(today_date)
+				period_start_date = get_first_day(today_date)
+
+			earned_leaves = calculate_pro_rated_leaves(
+				earned_leaves, date_of_joining, period_start_date, period_end_date, is_earned_leave=True
+			)
+
+		earned_leaves = round_earned_leaves(earned_leaves, rounding)
+
+	return earned_leaves
