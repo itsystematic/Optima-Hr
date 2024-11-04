@@ -23,10 +23,10 @@ class OptimaPayrollEntry(PayrollEntry):
         optima_setting = get_optima_hr_settings(self.company)
 
         if optima_setting.components_accounts_distribution_per_party_in_payable_payroll:
-            self.make_optima_accrual_jv_entry(self, submitted_salary_slips , optima_setting)
+            self.make_optima_accrual_jv_entry( submitted_salary_slips , optima_setting)
         
         else :
-            super().make_accrual_jv_entry(self, submitted_salary_slips)
+            super().make_accrual_jv_entry(submitted_salary_slips)
 
 
 
