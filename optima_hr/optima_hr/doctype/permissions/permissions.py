@@ -55,6 +55,7 @@ class Permissions(Document):
 
     def validate_allowed_hours(self):
         if self.type == "Exit":
+            print(self.time_difference , self.get_total_time_remaining(), 'time difference' )
             if self.time_difference > self.get_total_time_remaining():
                 if  self.get_settings().get("enable_add_deduction_after_permissions__hours_allowed") == 0:
                     frappe.throw(_("The Maximum Permission Hours {0}".format(self.get_settings().allowed_permission_hours))) 
@@ -129,37 +130,39 @@ class Permissions(Document):
     def get_total_time_remaining(self):
         self.extra_hour = ""
         self.number_of_hours_for_deduction = None
-        
-        if self.allowed_hour and self.get_settings().get("enable_calculate_permission_by_hours") == 1:    
-            all_times_for_employee = self.get_total_hours_taken()   
-            total_delta = self.allowed_hour - all_times_for_employee   
-            
-            if self.type == "Exit":
-                if self.time_difference > total_delta:
-                    # Case where requested time exceeds remaining allowed time
-                    if self.get_settings().get("enable_add_deduction_after_permissions__hours_allowed") == 0:
-                        frappe.throw(_("The Maximum Working Hours have been Exhausted {0}".format(
-                            self.get_settings().allowed_permission_hours)))
-                    
-                    # Calculate extra hours that exceed the allowed limit
-                    if all_times_for_employee > self.allowed_hour:
-                        self.extra_hour = self.time_difference.total_seconds()
-                        self.number_of_hours_for_deduction = round((self.extra_hour / 3600), 2)
-                        self.remaining_hours = None
-                    else :
-                        self.extra_hour = self.time_difference.total_seconds() - total_delta.total_seconds()
-                        self.number_of_hours_for_deduction = round((self.extra_hour / 3600), 2)
-                        self.remaining_hours = None
-                else:
-                    # Case where requested time is within remaining allowed time
-                    self.remaining_hours = total_delta - self.time_difference
-                    self.extra_hour = ""
-                    self.number_of_hours_for_deduction = None
-            else:
-                self.remaining_hours = total_delta
-                self.extra_hour = ""
+        if self.time_difference:
+            if self.allowed_hour and self.get_settings().get("enable_calculate_permission_by_hours") == 1 or self.get_settings().get("enable_standard_shift") == 1:    
+                all_times_for_employee = self.get_total_hours_taken()   
+                total_delta = self.allowed_hour - all_times_for_employee   
                 
-            return total_delta
+                if self.type == "Exit":
+                    if self.time_difference > total_delta:
+                        
+                        # Case where requested time exceeds remaining allowed time
+                        if self.get_settings().get("enable_add_deduction_after_permissions__hours_allowed") == 0:
+                            frappe.throw(_("The Maximum Working Hours have been Exhausted {0}".format(
+                                self.get_settings().allowed_permission_hours)))
+                        
+                        # Calculate extra hours that exceed the allowed limit
+                        if all_times_for_employee > self.allowed_hour:
+                            self.extra_hour = self.time_difference.total_seconds()
+                            self.number_of_hours_for_deduction = round((self.extra_hour / 3600), 2)
+                            self.remaining_hours = None
+                        else :
+                            self.extra_hour = self.time_difference.total_seconds() - total_delta.total_seconds()
+                            self.number_of_hours_for_deduction = round((self.extra_hour / 3600), 2)
+                            self.remaining_hours = None
+                    else:
+                        # Case where requested time is within remaining allowed time
+                        self.remaining_hours = total_delta - self.time_difference
+                        self.extra_hour = ""
+                        self.number_of_hours_for_deduction = None
+                else:
+                    self.remaining_hours = total_delta
+                    self.extra_hour = ""
+                    
+                return total_delta
+        
     
     def get_total_hours_taken(self):
         filters = {
