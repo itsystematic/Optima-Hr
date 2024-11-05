@@ -45,10 +45,7 @@
   "column_break_kbzh",
   "paid_amount",
   "section_break_6xji",
-  "amended_from",
-  "reference_tab",
-  "payment_entry",
-  "payment_entry_created"
+  "amended_from"
  ],
  "fields": [
   {
@@ -169,23 +166,6 @@
    "label": "Labor Law",
    "options": "Labor Law",
    "reqd": 1
-  },
-  {
-   "fieldname": "reference_tab",
-   "fieldtype": "Tab Break",
-   "label": "Reference"
-  },
-  {
-   "fieldname": "payment_entry",
-   "fieldtype": "Link",
-   "label": "Payment Entry",
-   "options": "Payment Entry"
-  },
-  {
-   "default": "0",
-   "fieldname": "payment_entry_created",
-   "fieldtype": "Check",
-   "label": "Payment Entry Created"
   },
   {
    "fetch_from": "employee.company",
@@ -309,7 +289,7 @@
  "index_web_pages_for_search": 1,
  "is_submittable": 1,
  "links": [],
- "modified": "2024-11-04 11:07:08.934415",
+ "modified": "2024-11-04 15:10:36.651901",
  "modified_by": "Administrator",
  "module": "Optima Hr",
  "name": "End of Service Benefits",

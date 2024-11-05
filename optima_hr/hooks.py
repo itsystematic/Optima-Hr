@@ -264,6 +264,16 @@ scheduler_events = {
 # 	"Logging DocType Name": 30  # days to retain logs
 # }
 
+
+# fixtures=[
+#     {
+#         "dt": "Workspace",
+#         "filters": {
+#             "name": ["in", ["Shift & Attendance"]]
+#         }
+#     }
+# ]
+
 after_migrate = "optima_hr.migrate.after_migrate"
 advance_payment_doctypes = ["Leave Dues", "End of Service Benefits"]
 website_route_rules = [{'from_route': '/attendance_log/<path:app_path>', 'to_route': 'attendance_log'}, {'from_route': '/attendance_log/<path:app_path>', 'to_route': 'attendance_log'},]
