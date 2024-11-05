@@ -1,5 +1,5 @@
 <template>
-	<div class="flex mb-4">
+	<div class="flex mb-4 print:break-after-avoid">
 		<!-- Month Change -->
 		<Button icon="chevron-left" variant="ghost" @click="emit('addToMonth', -1)" />
 		<span class="px-1 w-24 text-center my-auto font-medium">

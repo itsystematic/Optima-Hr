@@ -1,7 +1,7 @@
 <template>
   <div class="hidden print:block w-full my-2 text-center font-medium text-3xl">Attendance Log</div>
   <div
-    class="rounded-lg border overflow-auto max-h-[45rem]"
+    class="rounded-lg border overflow-auto break-before-avoid"
     :class="loading && 'animate-pulse pointer-events-none'"
   >
     <table class="border-separate border-spacing-0">
