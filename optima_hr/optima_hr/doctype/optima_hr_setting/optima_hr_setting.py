@@ -139,8 +139,6 @@ def make_attendance(doc):
             # "shift" : get_shifts_for_date(e, date) 
         })
 
-  
-  
 @frappe.whitelist()
 def import_doc_by_csv(name_of_doctype:str="") :
     if name_of_doctype :

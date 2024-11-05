@@ -16,7 +16,8 @@
   "direct_manager",
   "remaining_hours",
   "allowed_hour",
-  "extra_hours",
+  "extra_hour",
+  "number_of_hours_for_deduction",
   "section_break_1iywy",
   "reason",
   "section_break_4",
@@ -147,22 +148,35 @@
    "read_only": 1
   },
   {
-   "fieldname": "extra_hours",
-   "fieldtype": "Data",
-   "label": "Extra Hours",
-   "read_only": 1
-  },
-  {
+   "fetch_from": "employee_name.default_shift",
    "fieldname": "shift_type",
    "fieldtype": "Link",
    "label": "Shift Type",
    "options": "Shift Type"
+  },
+  {
+   "fieldname": "extra_hour",
+   "fieldtype": "Data",
+   "hidden": 1,
+   "label": "Extra Hour",
+   "read_only": 1
+  },
+  {
+   "fieldname": "number_of_hours_for_deduction",
+   "fieldtype": "Data",
+   "label": "Number of Hours for Deduction",
+   "read_only": 1
   }
  ],
  "index_web_pages_for_search": 1,
  "is_submittable": 1,
- "links": [],
- "modified": "2024-10-30 09:03:31.726155",
+ "links": [
+  {
+   "link_doctype": "Additional Salary",
+   "link_fieldname": "ref_docname"
+  }
+ ],
+ "modified": "2024-10-30 13:56:33.605682",
  "modified_by": "Administrator",
  "module": "Optima Hr",
  "name": "Permissions",

@@ -136,13 +136,14 @@ after_install = "optima_hr.after_install.delete_genders"
 # Override standard doctype classes
 
 override_doctype_class = {
-
+    "Leave Allocation": "optima_hr.override.doctype_class.leave_allocation.OptimaLeaveAllocation",
     "Additional Salary": "optima_hr.override.doctype_class.additional_salary.CustomAdditionalSalary",
     "Payment Entry": "optima_hr.override.doctype_class.payment_entry.OptimaPaymentEntry",
     "Salary Slip": "optima_hr.override.doctype_class.salary_slip.CustomSalarySlip",
     "Employee Checkin": "optima_hr.override.doctype_class.employee_checkin.CustomEmployeeCheckin", 
     "Shift Type": "optima_hr.override.doctype_class.shift_type.OptimaShiftType",
     "Payroll Entry": "optima_hr.override.doctype_class.payroll_entry.OptimaPayrollEntry",
+    "Leave Policy Assignment": "optima_hr.override.doctype_class.leave_policy_assignment.OptimaHRLeavePolicyAssignment",
 }
 
 # Document Events
@@ -162,9 +163,9 @@ doc_events = {
 # ---------------
 
 scheduler_events = {
-    "Cron": {
+    # "Cron": {
         # "0 0 1 * *": "optima_hr.tasks.cron.make_attendance_absent_for_unmarked_employee",
-    },
+    # },
 # 	"all": [
 # 		"optima_hr.tasks.all"
 # 	],
@@ -180,6 +181,11 @@ scheduler_events = {
 # 	"monthly": [
 # 		"optima_hr.tasks.monthly"
 # 	],
+    "cron" : {
+        "1 0 * * *": [
+            "optima_hr.tasks.daily.daily_allocate_earned_leaves",
+        ]
+    }
 }
 
 # Testing
@@ -257,6 +263,16 @@ scheduler_events = {
 # default_log_clearing_doctypes = {
 # 	"Logging DocType Name": 30  # days to retain logs
 # }
+
+
+# fixtures=[
+#     {
+#         "dt": "Workspace",
+#         "filters": {
+#             "name": ["in", ["Shift & Attendance"]]
+#         }
+#     }
+# ]
 
 after_migrate = "optima_hr.migrate.after_migrate"
 advance_payment_doctypes = ["Leave Dues", "End of Service Benefits"]
