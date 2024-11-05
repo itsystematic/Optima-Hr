@@ -506,8 +506,8 @@ const createNewAttendace = createResource({
     raiseToast("success", "Attendance created successfully!");
     emit("fetchEvents");
   },
-  onError(error: { message: string[] }) {
-    raiseToast("error", error.message[0]);
+  onError(error: {messages: string[]}) {
+    raiseToast("error", error.messages[0]);
   },
 });
 
