@@ -1,5 +1,7 @@
 <template>
-  <div class="hidden print:block w-full my-2 text-center font-medium text-3xl">Attendance Log</div>
+  <div class="hidden print:block w-full my-2 text-center font-medium text-3xl">
+    Attendance Log
+  </div>
   <div
     class="rounded-lg border overflow-auto break-before-avoid"
     :class="loading && 'animate-pulse pointer-events-none'"
@@ -124,7 +126,7 @@
                     : events.data[employee.name][day.date].description
                 }}
               </span>
-			  <span class="print:block hidden font-bold">
+              <span class="print:block hidden font-bold">
                 {{
                   events.data[employee.name][day.date].weekly_off
                     ? "X"
@@ -138,7 +140,13 @@
               v-else-if="events.data?.[employee.name]?.[day.date]?.leave"
               class="blocked-cell"
             >
-              {{ events.data[employee.name][day.date].leave_type }}
+              <span class="print:hidden">
+                {{ events.data[employee.name][day.date].leave_type }}
+              </span>
+              <span class="print:block hidden">
+                L
+                <!-- {{ events.data[employee.name][day.date].leave_type.charAt(0) }} -->
+              </span>
             </div>
 
             <div
@@ -149,7 +157,7 @@
                 {{ events.data[employee.name][day.date][0].status }}
               </span>
               <span class="print:block hidden">
-                {{ events.data[employee.name][day.date][0].status.charAt(0) }}
+                {{events.data[employee.name][day.date][0].status === "On Leave" ? "L" :  events.data[employee.name][day.date][0].status.charAt(0) }}
               </span>
             </div>
             <!-- Shifts -->
@@ -338,7 +346,7 @@ const isAbsent = (employee: string, day: string) => {
 
 const isOnLeave = (employee: string, day: string) => {
   if (events.data?.[employee]?.[day]?.length) {
-    return events.data?.[employee]?.[day]?.[0].status === "On Leave";
+    return events.data?.[employee]?.[day]?.[0].leave_type || events.data?.[employee]?.[day]?.[0].status === "On Leave";
   }
 };
 
