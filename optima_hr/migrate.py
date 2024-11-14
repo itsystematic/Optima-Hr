@@ -238,7 +238,25 @@ def get_custom_fields():
                 "depends_on" : "eval: doc.is_salary_structure_assignment_componant ==1 ;" ,
                 "mandatory_depends_on" : "eval: doc.is_salary_structure_assignment_componant ==1 ;" ,
             } ,
-        ]
+        ],
+        "Bank" : [
+            {
+                "fieldname" : "salary_slip_export_configuration",
+                "fieldtype" : "Section Break" ,
+                "label"     : "Salary Slip Export Configuration" ,
+                "insert_after" : "bank_transaction_mapping" ,
+                "collapsible" : 1 ,
+            } ,
+
+            {
+                "fieldname" : "bank_salary_slip_mapping" ,
+                "fieldtype" : "Table" ,
+                "label"     : "Bank Salary Slip Mapping" ,
+                "options" : "Bank Salary Slip Mapping" ,
+                "insert_after" : "salary_slip_export_configuration"
+            } ,
+        ] ,
+        
     }
     return custom_fields
 

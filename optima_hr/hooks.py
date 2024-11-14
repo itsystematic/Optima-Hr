@@ -47,6 +47,7 @@ app_license = "mit"
 doctype_js = {
     "Leave Application" : "public/js/leave_application.js" ,
     "Employee Advance" : "public/js/employee_advance.js" ,
+    "Bank": "public/js/bank.js"
 }
 doctype_list_js = {
     "Attendance" : "public/js/list/attendance_list.js" ,

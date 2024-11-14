@@ -51,5 +51,12 @@ frappe.query_reports["Bank Salary Register"] = {
 			"default": "Submitted",
 			"width": "100px"
 		},
+		{
+			"fieldname" : "bank_syle",
+			"label" : __("Bank Style"),
+			"fieldtype" : "Link",
+			"options" : "Bank",
+			"default" : "",
+		},
 	]
 };

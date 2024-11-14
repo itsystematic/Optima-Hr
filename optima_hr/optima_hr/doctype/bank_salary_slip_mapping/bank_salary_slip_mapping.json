@@ -1,0 +1,40 @@
+{
+ "actions": [],
+ "allow_rename": 1,
+ "creation": "2024-11-07 16:48:09.265772",
+ "doctype": "DocType",
+ "editable_grid": 1,
+ "engine": "InnoDB",
+ "field_order": [
+  "field_in_salary_slip",
+  "column_in_bank_file"
+ ],
+ "fields": [
+  {
+   "fieldname": "field_in_salary_slip",
+   "fieldtype": "Select",
+   "in_list_view": 1,
+   "label": "Field in Salary Slip",
+   "reqd": 1
+  },
+  {
+   "fieldname": "column_in_bank_file",
+   "fieldtype": "Data",
+   "in_list_view": 1,
+   "label": "Column in Bank File",
+   "reqd": 1
+  }
+ ],
+ "index_web_pages_for_search": 1,
+ "istable": 1,
+ "links": [],
+ "modified": "2024-11-07 16:49:55.869303",
+ "modified_by": "Administrator",
+ "module": "Optima Hr",
+ "name": "Bank Salary Slip Mapping",
+ "owner": "Administrator",
+ "permissions": [],
+ "sort_field": "modified",
+ "sort_order": "DESC",
+ "states": []
+}
