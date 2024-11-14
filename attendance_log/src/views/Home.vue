@@ -19,31 +19,9 @@ export type User = {
   roles: string[];
 };
 
-// RESOURCES
-onBeforeMount(async () => {
-  try {
-    console.log("Updating CSRF Token....");
-    const base_url = window.api_url;
-    const response = await fetch(
-      `${base_url}/api/method/optima_hr.api.attendance_log.clear_cache_and_get_csrf_token`
-    );
-    const reformatted_response = await response.json();
-    if (response.ok) {
-      window.csrf_token = reformatted_response.message.csrf_token;
-      console.log("CSRF Token Updated");
-    } else {
-      console.error("Failed to update CSRF Token");
-    }
+//@ts-ignore
+const lang = window.frappe.boot.lang;
 
-  } catch (err) {
-    console.log(err);
-  }
-  finally {
-    console.log("Getting User Settings....");
-  }
-});
-
-const lang = frappe.boot.lang;
 const user = createResource({
   url: "optima_hr.api.get_current_user_info",
   auto: true,

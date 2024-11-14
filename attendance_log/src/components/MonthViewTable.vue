@@ -1,6 +1,6 @@
 <template>
   <div class="hidden print:block w-full my-2 text-center font-medium text-3xl">
-    {{__("Attendance Log")}}
+    {{ __("Attendance Log") }}
   </div>
   <div
     class="rounded-lg border overflow-auto break-before-avoid"
@@ -49,11 +49,11 @@
                 :image="employee.image"
                 size="2xl"
               />
-              <div class="flex flex-col ml-2 my-0.5 truncate">
-                <div class="truncate text-base">
+              <div class="flex flex-col ml-2 my-0.5 text-clip">
+                <div class="text-base">
                   {{ employee.employee_name }}
                 </div>
-                <div class="mt-auto text-xs text-gray-500 truncate">
+                <div class="mt-auto text-xs text-gray-500">
                   {{ employee.designation }}
                 </div>
               </div>
@@ -144,7 +144,7 @@
                 {{ events.data[employee.name][day.date].leave_type }}
               </span>
               <span class="print:block hidden">
-                L
+                {{ lang === "en" ? "L" : "ز" }}
                 <!-- {{ events.data[employee.name][day.date].leave_type.charAt(0) }} -->
               </span>
             </div>
@@ -154,13 +154,22 @@
               class="blocked-cell text-xs"
             >
               <span class="print:hidden">
-                {{ events.data[employee.name][day.date][0].status }}
+                {{ __(events.data[employee.name][day.date][0].status) }}
               </span>
               <span class="print:block hidden">
                 {{
                   events.data[employee.name][day.date][0].status === "On Leave"
-                    ? "L"
-                    : events.data[employee.name][day.date][0].status.charAt(0)
+                    ? lang === "en"
+                      ? "L"
+                      : "ز"
+                    : events.data[employee.name][day.date][0].status ===
+                        "Work From Home"
+                      ? lang === "en"
+                        ? "W"
+                        : "م"
+                      : __(
+                          events.data[employee.name][day.date][0].status
+                        ).charAt(0)
                 }}
               </span>
             </div>
@@ -210,13 +219,11 @@
 
 <script setup lang="ts">
 import { ref, computed, watch } from "vue";
-import colors from "tailwindcss/colors";
 import { Avatar, Autocomplete, createResource } from "frappe-ui";
 import { Dayjs } from "dayjs";
 
 import { dayjs, raiseToast } from "../utils";
 import { EmployeeFilters } from "../views/MonthView.vue";
-import ShiftAssignmentDialog from "./NewAttendanceDialog.vue";
 import NewAttendanceDialog from "./NewAttendanceDialog.vue";
 
 interface Holiday {

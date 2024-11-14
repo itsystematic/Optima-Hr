@@ -1,6 +1,6 @@
 import frappe
 from frappe.boot import load_translations
-
+from frappe.translate import get_all_translations
 @frappe.whitelist()
 def get_current_user_info() -> dict:
 	current_user = frappe.session.user
@@ -35,3 +35,7 @@ def get_boot():
 
 def get_default_route():
 	return "/attendace_log"
+
+@frappe.whitelist(methods=['POST'])
+def get_translations(**kwargs):
+	return get_all_translations(kwargs.get("lang"))

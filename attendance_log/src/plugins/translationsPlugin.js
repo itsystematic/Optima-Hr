@@ -10,22 +10,24 @@ function makeTranslationFunction() {
 
 	async function setup() {
 		if (window.frappe?.boot?.__messages) {
-			console.log('yes');
 			messages = window.frappe?.boot?.__messages;
 			return;
 		}
 
-		console.log('no');
-		const url = new URL("/api/method/frappe.translate.load_all_translations", location.origin);
-		url.searchParams.append("lang", window.frappe?.boot?.lang ?? navigator.language);
-		url.searchParams.append("hash", window.frappe?.boot?.translations_hash || window._version_number || Math.random()); // for cache busting
+		// const url = new URL("/api/method/frappe.translate.get_all_translations", location.origin);
+		// url.searchParams.append("hash", window.frappe?.boot?.translations_hash || window._version_number || Math.random()); // for cache busting
 		// url.searchParams.append("app", "hrms");
+		const url = '/api/method/optima_hr.api.get_translations';
+		const formData = new FormData();
+		formData.append('lang', window.frappe?.boot?.lang);
+		const headers = new Headers();
+		headers.append('X-Frappe-CSRF-Token', window.csrf_token);
 
 		try {
-			console.log('Here');
-			const response = await fetch(url);
-			console.log(response);
-			messages = await response.json() || {}
+			const response = await fetch(url, { method: 'POST', body: formData, headers });
+			const jsonResponse = await response.json();
+			messages = jsonResponse.message || {}
+			window.frappe.boot.__messages = messages
 		} catch (error) {
 			console.error("Failed to fetch translations:", error)
 		}
