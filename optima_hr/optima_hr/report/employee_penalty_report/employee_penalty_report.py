@@ -15,19 +15,19 @@ def get_columns(filters: dict) -> list[dict]:
 	columns = [
 		{
 			"fieldname": "penalty",
-			"label": "Penalty",
+			"label": _("Penalty"),
 			"fieldtype": "Currency",
 			"width": 200,
 		},
 		{
 			"fieldname": "posting_date",
-			"label": "Posting Date",
+			"label": _("Posting Date"),
 			"fieldtype": "Date",
 			"width": 200,
 		},
 		{
 			"fieldname": "employee",
-			"label": "Employee",
+			"label": _("Employee"),
 			"fieldtype": "Link",
 			"options": "Employee",
 			"width": 200,
@@ -48,19 +48,19 @@ def get_columns(filters: dict) -> list[dict]:
 		},
 		{
 			"fieldname": "penalty_description",
-			"label": "Penalty Description",
+			"label": _("Penalty Description"),
 			"fieldtype": "Small Text",
 			"width": 200,
 		},
 		{
 			"fieldname": "subject", 
-			"label": "Subject",
+			"label": _("Subject"),
 			"fieldtype": "Small Text",
 			"width": 200,
 		},
 		{
 			"fieldname": "status",
-			"label": "Status",
+			"label": _("Status"),
 			"fieldtype": "Select",
 			"options": "Open\nApproved\nRejected",
 			"width": 200,

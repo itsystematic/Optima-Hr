@@ -15,6 +15,7 @@
   "allow_to_edit_salary_slip_component",
   "column_break_odfc",
   "company",
+  "default_travel_ticket_type",
   "section_break_uzfw",
   "required_allowance",
   "last_work_days_salary_section",
@@ -516,11 +517,17 @@
    "fieldname": "components_accounts_distribution_per_party_in_payable_payroll",
    "fieldtype": "Check",
    "label": "Components Accounts Distribution Per Party in Payable Payroll"
+  },
+  {
+   "fieldname": "default_travel_ticket_type",
+   "fieldtype": "Link",
+   "label": "Default Travel Ticket Type",
+   "options": "Travel Ticket Type"
   }
  ],
  "index_web_pages_for_search": 1,
  "links": [],
- "modified": "2024-11-03 10:27:43.684578",
+ "modified": "2024-11-07 09:49:32.184192",
  "modified_by": "Administrator",
  "module": "Optima Hr",
  "name": "Optima HR Setting",

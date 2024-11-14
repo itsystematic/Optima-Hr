@@ -1,5 +1,5 @@
 import frappe
-
+from frappe import _
 from erpnext.setup.doctype.employee.employee import get_holiday_list_for_employee
 
 
@@ -37,7 +37,7 @@ def create_attendance(
         return attendance_doc.name
 
     except frappe.exceptions.ValidationError as e:
-        frappe.log_error(message=str(e), title="Attendance Creation Failed")
+        frappe.log_error(message=str(e), title=_("Attendance Creation Failed"))
         frappe.throw(("Attendance creation failed: {0}").format(str(e)))
     except Exception as e:
         frappe.log_error(message=str(e), title="Unknown Error in Attendance Creation")

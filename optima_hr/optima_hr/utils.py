@@ -111,7 +111,7 @@ def get_closing_balances(company, to_date, party):
     employee_advance_account = get_optima_hr_employee_advance_account(company)
     
     if not employee_advance_account:
-        frappe.throw("Employee Advance Account not set in Optima HR Setting for this company.")
+        frappe.throw(_("Employee Advance Account not set in Optima HR Setting for this company."))
 
     gle = frappe.db.sql(
         """
@@ -136,7 +136,6 @@ def get_closing_balances(company, to_date, party):
         },
         as_dict=True,
     )
-
     if gle:
         total_debit = flt(gle[0].total_debit)
         total_credit = flt(gle[0].total_credit)

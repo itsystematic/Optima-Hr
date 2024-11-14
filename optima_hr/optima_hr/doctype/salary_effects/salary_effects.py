@@ -3,7 +3,7 @@
 
 import frappe
 from frappe.model.document import Document
-
+from frappe import _
 
 class SalaryEffects(Document):
     def validate(self) :

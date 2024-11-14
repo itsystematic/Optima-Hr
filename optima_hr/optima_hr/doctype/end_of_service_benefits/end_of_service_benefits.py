@@ -124,3 +124,8 @@ def get_optima_hr_settings(name):
         return settings
 
     return None
+
+
+@frappe.whitelist()
+def get_travel_cost(travel_ticket_type):
+    return frappe.db.get_value("Travel Ticket Type", travel_ticket_type, "ticket_cost")

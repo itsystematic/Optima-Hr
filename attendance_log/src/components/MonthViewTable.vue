@@ -157,7 +157,11 @@
                 {{ events.data[employee.name][day.date][0].status }}
               </span>
               <span class="print:block hidden">
-                {{events.data[employee.name][day.date][0].status === "On Leave" ? "L" :  events.data[employee.name][day.date][0].status.charAt(0) }}
+                {{
+                  events.data[employee.name][day.date][0].status === "On Leave"
+                    ? "L"
+                    : events.data[employee.name][day.date][0].status.charAt(0)
+                }}
               </span>
             </div>
             <!-- Shifts -->
@@ -346,7 +350,10 @@ const isAbsent = (employee: string, day: string) => {
 
 const isOnLeave = (employee: string, day: string) => {
   if (events.data?.[employee]?.[day]?.length) {
-    return events.data?.[employee]?.[day]?.[0].leave_type || events.data?.[employee]?.[day]?.[0].status === "On Leave";
+    return (
+      events.data?.[employee]?.[day]?.[0].leave_type ||
+      events.data?.[employee]?.[day]?.[0].status === "On Leave"
+    );
   }
 };
 
