@@ -1,0 +1,68 @@
+Auto Attendance Settings,
+Early Checkout,
+Overtime,
+Late Checkin,
+Late or Early Checkin,
+Is vacationer,
+Identification,
+Nationality,
+Identification Document Type,
+Identification Document Number,
+Issue Date,
+Expire Date,
+Identification Place Of Issue,
+Is Saudi Arabia,
+Guarantor Data
+Guarantor Name
+Guarantor Number
+Guarantor Email
+Guarantor Phone
+Guarantor Address
+Is vacation
+Salary Effect
+Absent
+Hours
+Percent
+Is Account Total In Salary Effect
+Is Salary Structure Assignment Componant
+SSA Name
+Missing Company Settings In Optima HR Setting : {0}
+Please Set {0} In Optima HR Setting
+Employee Not have Salary Structure Assignment
+Status Must be Approved
+Row {0}# Paid Amount cannot be greater than Final Result
+Row {0}# Paid Amount cannot be greater than Total Dues amount
+Attendance marked as 'Absent' for employees with unmarked days.
+Attendance Marked Successfully
+Salary Component in Setting is required
+The Maximum Permission Hours {0}
+The Maximum Working Hours have been Exhausted {0}
+To Time Must be Greater Than From Time
+The Maximum Working Hours have been Exhausted {0}
+The Maximum Permsission Available {0}
+The Maximum Working Hours have been Exhausted {0}
+There is no leave due for this employee
+Start Work Date cannot be less than End Work Date
+Salary Slip ID
+Employee ID
+Employee Name
+Employee Bank ID
+Employee Passport ID
+Employee Account number
+Payment Amount
+Employee Basic Salary
+Deductions
+Beneficiary Narration
+Return Amount
+Status
+Claimed Amount
+Advance Amount
+Penalty
+Penalty Description
+Repeat Status
+Penalty Type
+Employee Advance Account not set in Optima HR Setting for this company.
+Log Type is required for check-ins falling in the shift: {0}.
+No Shifts assigned for Employee: {0} in time: {1}
+Leave Without Pay does not match with approved {} records
+Return in One Payment

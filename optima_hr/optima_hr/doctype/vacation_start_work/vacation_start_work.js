@@ -21,6 +21,6 @@ frappe.ui.form.on("Vacation Start Work", {
   },
   start_work_date(frm) {
     if (frm.doc.start_work_date < frm.doc.vacation_end_date) {
-      frappe.throw(__("Start Work Date cannot be less than End Work Date"));
+      frappe.throw(_("Start Work Date cannot be less than End Work Date"));
 }}
 })

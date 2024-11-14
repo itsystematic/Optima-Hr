@@ -45,7 +45,9 @@ app_license = "mit"
 
 # include js in doctype views
 doctype_js = {
-    "Leave Application" : "public/js/leave_application.js"
+    "Leave Application" : "public/js/leave_application.js" ,
+    "Employee Advance" : "public/js/employee_advance.js" ,
+    "Bank": "public/js/bank.js"
 }
 doctype_list_js = {
     "Attendance" : "public/js/list/attendance_list.js" ,
@@ -265,14 +267,14 @@ scheduler_events = {
 # }
 
 
-# fixtures=[
-#     {
-#         "dt": "Workspace",
-#         "filters": {
-#             "name": ["in", ["Shift & Attendance"]]
-#         }
-#     }
-# ]
+fixtures=[
+    {
+        "dt": "Workspace",
+        "filters": {
+            "name": ["in", ["Salary Payout"]]
+        }
+    }
+]
 
 after_migrate = "optima_hr.migrate.after_migrate"
 advance_payment_doctypes = ["Leave Dues", "End of Service Benefits"]

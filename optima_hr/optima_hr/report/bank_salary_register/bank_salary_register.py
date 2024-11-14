@@ -72,8 +72,26 @@ def get_data(filters :dict ) -> list[dict] :
     return salary_slip_data
     #ss.mode_of_payment ="Bank"
     
-def get_columns(filters):
+def get_columns(filters: dict) -> list[dict] :
 
+    if filters.get("bank_syle"):
+        columns_to_field_map = get_field_mapping(filters)
+        print(columns_to_field_map)
+
+        sorted_items = sort_items_by_key(columns_to_field_map)
+        print(type(sorted_items))
+        columns = [
+            {
+                "label": " ".join(word.capitalize() for word in value.replace("_", " ").split()), # spit the column name by underscore and capitalize each word
+                "fieldname": value,
+                "fieldtype": "Data",
+                "width": 150,
+            }
+            for _, value in sorted_items
+        ]
+
+
+        return columns
     # get salary component included in salary structure, to show in report as columns
     salary_struture_assignment_component =  frappe.get_all('Salary Component' , {'is_salary_structure_assignment_componant' : 1} , pluck='name')
     columns = [
@@ -181,3 +199,14 @@ def get_columns(filters):
     )   
     
     return columns
+
+def get_field_mapping(filters):
+    column_to_field_map = {}
+    bank = frappe.get_doc("Bank", filters.get("bank_syle"))
+    for i in bank.bank_salary_slip_mapping:
+        column_to_field_map[i.column_in_bank_file] = i.field_in_salary_slip
+
+    return column_to_field_map
+
+def sort_items_by_key(mapping):
+    return sorted(mapping.items(), key=lambda x: x[0])
