@@ -1,2 +1,9 @@
 @import "frappe-ui/src/style.css";
 @import url('https://fonts.googleapis.com/css2?family=Almarai:wght@300;400;700;800&display=swap');
+
+@media print {
+    @page {
+      size: A4 landscape;
+      margin-top: 3mm;
+    }
+  }
