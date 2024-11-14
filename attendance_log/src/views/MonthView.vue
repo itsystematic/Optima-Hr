@@ -2,38 +2,56 @@
   <div class="px-12 py-6 space-y-6">
     <div class="flex items-center">
       <FeatherIcon name="calendar" class="h-7 w-7 text-gray-500 mr-3" />
-      <span class="font-semibold text-2xl mr-1">Month View</span>
-      <Dropdown
+      <span class="font-semibold text-2xl mr-1">{{ __("Month View") }}</span>
+      <Button
+        :class="lang === 'ar' ? 'mr-auto' : 'ml-auto'"
+        class="px-4"
+        :variant="'solid'"
+        :ref_for="true"
+        theme="gray"
+        size="md"
+        label="Button"
+        :loading="false"
+        :loadingText="null"
+        :disabled="false"
+        :link="null"
+        :onclick="handlePrint"
+      >
+        {{__("Print")}}
+      </Button>
+      <!-- <Dropdown
         :options="[
           {
-            label: 'Shift Assignment',
+            label: __('New Attendace'),
             onClick: () => {
               showShiftAssignmentDialog = true;
             },
           },
           {
-            label: 'Print',
+            label: __('Print'),
             onClick: () => {
               handlePrint();
             },
           },
         ]"
         :button="{
-          label: 'Create',
+          label: __('Create'),
           variant: 'solid',
           iconRight: 'chevron-down',
           size: 'md',
         }"
-        class="ml-auto"
-      />
+        :class="lang === 'ar' ? 'mr-auto' : 'ml-auto'"
+      /> -->
     </div>
-    <div ref="print" class="bg-white rounded-lg border p-4">
+    <div ref="print" :dir="lang === 'ar' ? 'rtl' : 'ltr'" class="bg-white rounded-lg border p-4">
       <MonthViewHeader
+        :lang="lang"
         :firstOfMonth="firstOfMonth"
         @updateFilters="updateFilters"
         @addToMonth="addToMonth"
       />
       <MonthViewTable
+        :lang="lang"
         ref="monthViewTable"
         :firstOfMonth="firstOfMonth"
         :shift_types="shift_types.data || []"
@@ -57,7 +75,7 @@
 
 <script setup lang="ts">
 import { ref, reactive, render, h } from "vue";
-import { Dropdown, FeatherIcon, createListResource } from "frappe-ui";
+import { Dropdown, FeatherIcon, createListResource, Button } from "frappe-ui";
 import { useVueToPrint } from "vue-to-print";
 import { dayjs, raiseToast } from "../utils";
 import MonthViewTable from "../components/MonthViewTable.vue";
@@ -84,6 +102,8 @@ const print = ref();
 const addToMonth = (change: number) => {
   firstOfMonth.value = firstOfMonth.value.add(change, "M");
 };
+
+const lang = frappe.boot.lang;
 
 const { handlePrint } = useVueToPrint({
   content: print,

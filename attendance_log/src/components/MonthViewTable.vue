@@ -1,6 +1,6 @@
 <template>
   <div class="hidden print:block w-full my-2 text-center font-medium text-3xl">
-    Attendance Log
+    {{__("Attendance Log")}}
   </div>
   <div
     class="rounded-lg border overflow-auto break-before-avoid"
@@ -15,7 +15,7 @@
               class="print:hidden"
               :options="employeeSearchOptions"
               v-model="employeeSearch"
-              placeholder="Search Employee"
+              :placeholder="__('Search Employee')"
               :multiple="true"
             />
           </th>
@@ -27,7 +27,7 @@
             class="font-medium border-b"
             :class="{ 'border-l': idx }"
           >
-            {{ day.dayName }} {{ dayjs(day.date).format("DD") }}
+            {{ __(day.dayName) }} {{ dayjs(day.date).format("DD") }}
           </th>
         </tr>
       </thead>
@@ -157,7 +157,11 @@
                 {{ events.data[employee.name][day.date][0].status }}
               </span>
               <span class="print:block hidden">
-                {{events.data[employee.name][day.date][0].status === "On Leave" ? "L" :  events.data[employee.name][day.date][0].status.charAt(0) }}
+                {{
+                  events.data[employee.name][day.date][0].status === "On Leave"
+                    ? "L"
+                    : events.data[employee.name][day.date][0].status.charAt(0)
+                }}
               </span>
             </div>
             <!-- Shifts -->
@@ -190,6 +194,7 @@
   </div>
 
   <NewAttendanceDialog
+    :lang="lang"
     v-model="showShiftAssignmentDialog"
     :isDialogOpen="showShiftAssignmentDialog"
     :shiftAssignmentName="shiftAssignment"
@@ -273,6 +278,7 @@ const props = defineProps<{
   employeeFilters: { [K in keyof EmployeeFilters]?: string };
   shift_types: { [K in "name"]: string }[];
   shiftTypeFilter: string;
+  lang: string;
 }>();
 
 const loading = ref(true);
@@ -346,7 +352,10 @@ const isAbsent = (employee: string, day: string) => {
 
 const isOnLeave = (employee: string, day: string) => {
   if (events.data?.[employee]?.[day]?.length) {
-    return events.data?.[employee]?.[day]?.[0].leave_type || events.data?.[employee]?.[day]?.[0].status === "On Leave";
+    return (
+      events.data?.[employee]?.[day]?.[0].leave_type ||
+      events.data?.[employee]?.[day]?.[0].status === "On Leave"
+    );
   }
 };
 

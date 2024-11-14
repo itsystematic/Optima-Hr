@@ -1,22 +1,23 @@
 <template>
 	<div class="flex mb-4 print:break-after-avoid">
 		<!-- Month Change -->
-		<Button icon="chevron-left" variant="ghost" @click="emit('addToMonth', -1)" />
+		<Button :icon="props.lang === 'en' ? 'chevron-left' : 'chevron-right'" variant="ghost" @click="emit('addToMonth', -1)" />
 		<span class="px-1 w-24 text-center my-auto font-medium">
-			{{ props.firstOfMonth.format("MMM") }} {{ firstOfMonth.format("YYYY") }}
+			{{ __(props.firstOfMonth.format("MMM")) }} {{ firstOfMonth.format("YYYY") }}
 		</span>
-		<Button icon="chevron-right" variant="ghost" @click="emit('addToMonth', 1)" />
+		<Button :icon="props.lang === 'ar' ? 'chevron-left' : 'chevron-right'" variant="ghost" @click="emit('addToMonth', 1)" />
 
 		<!-- Filters -->
-		<div class="ml-auto px-2 overflow-x-clip">
+		<div :class=" lang === 'ar' ? 'mr-auto px-2 overflow-x-clip' : 'ml-auto px-2 overflow-x-clip'">
 			<div
-				class="ml-auto space-x-2 flex transition-all"
-				:class="showFilters ? 'w-full' : 'w-0 overflow-hidden'"
+				class="space-x-2 flex transition-all"
+				:class="{'w-full': showFilters, 'w-0 overflow-hidden': !showFilters,'ml-auto': lang === 'en', 'mr-auto': lang !== 'en'}"
+
 			>
 				<div v-for="[key, value] of Object.entries(filters)" :key="key" class="w-40" :class="!value.model?.value ? 'print:hidden' : ''">
 					<FormControl
 						type="autocomplete"
-						:placeholder="toTitleCase(key)"
+						:placeholder="__(toTitleCase(key))"
 						:options="value.options"
 						v-model="value.model"
 						:disabled="!value.options.length"
@@ -48,6 +49,7 @@ import { raiseToast } from "../utils";
 export type FilterField = "company" | "department" | "branch" | "designation" | "shift_type";
 
 const props = defineProps<{
+	lang: string;
 	firstOfMonth: Dayjs;
 }>();
 

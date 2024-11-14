@@ -1,34 +1,44 @@
 <template>
-  <Dialog :options="{ title: dialog.title, size: '4xl' }">
+  <Dialog
+    :dir="lang === 'ar' ? 'rtl' : 'ltr'"
+    :options="{ title: dialog.title, size: '4xl' }"
+  >
     <template #body-content>
-      <div class="grid grid-cols-2 gap-6">
+      <div
+        class="grid grid-cols-2 gap-6"
+        :class="lang === 'en' ? 'text-left' : 'text-right'"
+      >
         <FormControl
           type="autocomplete"
-          label="Employee"
+          :label="__('Employee')"
           v-model="form.employee"
           :disabled="!!props.shiftAssignmentName"
           :options="employees"
         />
         <FormControl
           type="text"
-          label="Company"
+          :label="__('Company')"
           v-model="form.company"
           :disabled="true"
         />
         <FormControl
           type="text"
-          label="Employee Name"
+          :label="__('Employee Name')"
           v-model="form.employee_name"
           :disabled="true"
         />
-        <DatePicker
-          label="Attendance Date"
-          v-model="form.attendance_date"
-          :disabled="true"
-        />
+        <div class="space-y-2 text-xs">
+          <label for="date">{{__('Attendance Date')}}</label>
+          <DatePicker
+            id="date"
+            class="text-center"
+            v-model="form.attendance_date"
+            disabled
+          />
+        </div>
         <FormControl
           type="autocomplete"
-          label="Attendance Status"
+          :label="__('Attendance Status')"
           v-model="form.status"
           :disabled="!!props.shiftAssignmentName"
           :options="[
@@ -41,7 +51,7 @@
         />
         <FormControl
           type="autocomplete"
-          label="Shift Type"
+          :label="__('Shift Type')"
           v-model="form.shift_type"
           :disabled="!!props.shiftAssignmentName"
           :options="shift_types"
@@ -153,7 +163,7 @@ type Form = {
     | "attendance_date"
     | "shift_type"]: string | { value: string; label?: string };
 } & {
-  status: Status | { value: Status; label?: Status };
+  status: Status | string | { value: Status; label?: Status };
   // schedule?: string;
 };
 
@@ -177,6 +187,8 @@ const props = withDefaults(defineProps<Props>(), {
   employees: () => [],
   shift_types: () => [],
 });
+
+const lang = frappe.boot.lang;
 
 const emit = defineEmits<{
   (e: "fetchEvents"): void;
@@ -219,8 +231,8 @@ const dialog = computed(() => {
       actionDisabled: form.status === shiftAssignment.value?.doc?.status,
     };
   return {
-    title: "New Attendance",
-    button: "Submit",
+    title: lang === "ar" ? "إضافة حضور" : "New Attendance",
+    button: lang === "ar" ? "إضافة" : "Submit",
     action: createAttendance,
     actionDisabled: false,
   };
@@ -424,7 +436,7 @@ const employee = createResource({
   }) => {
     form.employee_name = data.employee_name;
     form.company = data.company;
-    form.shift_type = data.default_shift
+    form.shift_type = data.default_shift;
   },
   onError(error: { messages: string[] }) {
     raiseToast("error", error.messages[0]);
@@ -498,7 +510,8 @@ const createNewAttendace = createResource({
       employee: (form.employee as { value: string }).value,
       company: form.company,
       attendance_date: form.attendance_date,
-      shift_type: (form.shift_type as { value: string }).value || form.shift_type  ,
+      shift_type:
+        (form.shift_type as { value: string }).value || form.shift_type,
       status: (form.status as { value: string }).value || form.status,
     };
   },
@@ -506,7 +519,7 @@ const createNewAttendace = createResource({
     raiseToast("success", "Attendance created successfully!");
     emit("fetchEvents");
   },
-  onError(error: {messages: string[]}) {
+  onError(error: { messages: string[] }) {
     raiseToast("error", error.messages[0]);
   },
 });

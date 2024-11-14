@@ -1,5 +1,5 @@
 <template>
-  <div v-if="user.data" class="bg-gray-50 min-h-screen">
+  <div :dir="lang === 'ar' ? 'rtl' : 'ltr'" v-if="user.data" class="bg-gray-50 min-h-screen">
     <NavBar :user="user.data" />
     <MonthView />
     <Toasts />
@@ -35,16 +35,25 @@ onBeforeMount(async () => {
       console.error("Failed to update CSRF Token");
     }
 
-    console.log("Getting User Settings....");
   } catch (err) {
     console.log(err);
   }
+  finally {
+    console.log("Getting User Settings....");
+  }
 });
+
+const lang = frappe.boot.lang;
 const user = createResource({
-  url: "hrms.api.get_current_user_info",
+  url: "optima_hr.api.get_current_user_info",
   auto: true,
   onError() {
     window.location.href = "/login?redirect-to=%2Fattendance_log";
   },
 });
 </script>
+<style>
+*{
+  font-family: "Almarai", serif;
+}
+</style>
