@@ -1,68 +1,75 @@
-Auto Attendance Settings,
-Early Checkout,
-Overtime,
-Late Checkin,
+Auto Attendance Settings,اعدادات الحضور التلقائية
+Early Checkout,الخروج المبكر
+Overtime,الوقت الاضافي
+Late Checkin,الخول المتأخر
 Late or Early Checkin,
-Is vacationer,
-Identification,
-Nationality,
-Identification Document Type,
-Identification Document Number,
-Issue Date,
-Expire Date,
-Identification Place Of Issue,
-Is Saudi Arabia,
-Guarantor Data
-Guarantor Name
-Guarantor Number
-Guarantor Email
-Guarantor Phone
-Guarantor Address
-Is vacation
-Salary Effect
-Absent
-Hours
-Percent
-Is Account Total In Salary Effect
-Is Salary Structure Assignment Componant
-SSA Name
-Missing Company Settings In Optima HR Setting : {0}
-Please Set {0} In Optima HR Setting
-Employee Not have Salary Structure Assignment
-Status Must be Approved
-Row {0}# Paid Amount cannot be greater than Final Result
-Row {0}# Paid Amount cannot be greater than Total Dues amount
-Attendance marked as 'Absent' for employees with unmarked days.
-Attendance Marked Successfully
-Salary Component in Setting is required
-The Maximum Permission Hours {0}
-The Maximum Working Hours have been Exhausted {0}
-To Time Must be Greater Than From Time
-The Maximum Working Hours have been Exhausted {0}
-The Maximum Permsission Available {0}
-The Maximum Working Hours have been Exhausted {0}
-There is no leave due for this employee
-Start Work Date cannot be less than End Work Date
-Salary Slip ID
-Employee ID
-Employee Name
-Employee Bank ID
-Employee Passport ID
-Employee Account number
-Payment Amount
-Employee Basic Salary
-Deductions
-Beneficiary Narration
-Return Amount
-Status
-Claimed Amount
-Advance Amount
-Penalty
-Penalty Description
-Repeat Status
-Penalty Type
-Employee Advance Account not set in Optima HR Setting for this company.
-Log Type is required for check-ins falling in the shift: {0}.
-No Shifts assigned for Employee: {0} in time: {1}
-Leave Without Pay does not match with approved {} records
-Return in One Payment
+Is vacationer,هو مجاز
+Identification,بيانات التعريف
+Nationality,الجنسية
+Identification Document Type,نوع بطاقة التعريف
+Identification Document Number,رقم بطاقة التعريف
+Issue Date,تاريخ الاصدار
+Expire Date,تاريخ الانتهاء
+Identification Place Of Issue,مكان الاصدار
+Is Saudi Arabia,المملكة العربية السعودية
+Guarantor Data,بيانات الكفيل
+Guarantor Name,اسم الكفيل
+Guarantor Number,رقم جوال الكفيل
+Guarantor Email,البريد الالكتروني للكفيل
+Guarantor Phone,رقم هاتف الكفيل
+Guarantor Address,عنوان الكفيل
+Is vacation, هي اجازة
+Salary Effect,مؤثرات الرواتب
+Absent,غائب
+Hours,ساعات
+Percent,حاضر
+Is Account Total In Salary Effect,هو يدخل في حساب الاجمالي في مؤثرات الرواتب
+Is Salary Structure Assignment Componant,هو من مكونات تعين هيكل الرواتب
+SSA Name,اسم الحقل في تعين هيكل الرواتب
+Missing Company Settings In Optima HR Setting : {0},إعدادات الشركة المفقودة في إعدادات التطبيق: {0}
+Please Set {0} In Optima HR Setting,يرجى ضبط {0} في إعدادات التطبيق
+Employee Not have Salary Structure Assignment,الموظف ليس لديه هيكل راتب محدد
+Status Must be Approved,يجب الموافقة على الحالة
+Row {0}# Paid Amount cannot be greater than Final Result,الصف {0}# لا يمكن أن يكون المبلغ المدفوع أكبر من النتيجة النهائية
+Row {0}# Paid Amount cannot be greater than Total Dues amount,الصف {0}# لا يمكن أن يكون المبلغ المدفوع أكبر من إجمالي مبلغ المستحقات،
+Attendance marked as 'Absent' for employees with unmarked days.,يتم وضع علامة "غياب" على الحضور للموظفين الذين لديهم أيام غير محددة.
+Attendance Marked Successfully,تم تسجيل الحضور بنجاح
+Salary Component in Setting is required,مكون الراتب في اعدادات التطبيق مطلوب
+The Maximum Permission Hours {0},الحد الأقصى لساعات الأذونات {0}
+To Time Must be Greater Than From Time,يجب أن يكون بداية الوقت اكبر من نهاية الوقت
+The Maximum Permsission Available {0},الحد الأقصى المسموح به من الأذونات {0}
+The Maximum Working Hours have been Exhausted {0},لقد تم استنفاد الحد الأقصى لساعات العمل {0}
+There is no leave due for this employee,لايوجد مستحقات اجازات لهذا الموظف
+Start Work Date cannot be less than End Work Date,تاريخ بداية العمل لايمكن ان يكون اقل من تاريخ انتهاء العمل
+Salary Slip ID,رقم كشف الحساب
+Employee ID,رقم الموظف
+Employee Name,اسم الموظف
+Employee Bank ID,رقم الحساب البنكي
+Employee Passport ID,رقم جواز السفر
+Employee Account number,رقم حساب الموظف
+Payment Amount,المبلغ المدفوع
+Employee Basic Salary,الراتب الاساسي للموظف
+Deductions,استقطاعات
+Beneficiary Narration,صيغية المستفيد
+Return Amount,المبلغ المسترد
+Status,الحالة
+Claimed Amount,مبلغ العهدة
+Advance Amount,مبلغ السلفة
+Penalty,الجزاء
+Penalty Description,وصف الجزاء
+Repeat Status,حالة التكرار
+Penalty Type,نوع الجزاء
+Employee Advance Account not set in Optima HR Setting for this company.,حساب سلف الموظفين غير موجود في اعدادت التطبيق لهذه الشركة 
+Log Type is required for check-ins falling in the shift: {0}.,
+No Shifts assigned for Employee: {0} in time: {1},لا يوجد تعين للورديات عند الموظف {0} في الوقت {1}
+Leave Without Pay does not match with approved {} records,عدد ايام الاجازة الغير مدفوعة الاجر لا يطابق سجلات الاجازات الموافق عليها {}
+Return in One Payment,استرداد دفعة واحدة
+Month View, العرض الشهري
+Attendance Log, سجل الحضور
+Sun,أحد
+Mon,اثنين
+Tue,ثلاثاء
+Wed,أربعاء
+Thu,خميس
+Fri,جمعة
+Sat,سبت

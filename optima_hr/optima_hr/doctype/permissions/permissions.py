@@ -49,12 +49,12 @@ class Permissions(Document):
             frappe.throw(_("To Time Must be Greater Than From Time"))
     
     def validate_remaining_hours(self):
-        if self.type == "Exit" and self.get_settings().get("enable_add_deduction_after_permissions__hours_allowed") == 0:
+        if self.type == "Exit" and self.get_settings().get("enable_add_deduction_after_permissions__hours_allowed") == 1:
             if self.time_difference > self.get_total_time_remaining():
                 frappe.throw(_("The Maximum Working Hours have been Exhausted {0}".format(self.get_settings().allowed_permission_hours)))
 
     def validate_allowed_hours(self):
-        if self.type == "Exit":
+        if self.type == "Exit" and self.get_settings().get("enable_add_deduction_after_permissions__hours_allowed") == 1:
             if self.time_difference > self.get_total_time_remaining():
                 if  self.get_settings().get("enable_add_deduction_after_permissions__hours_allowed") == 0:
                     frappe.throw(_("The Maximum Permission Hours {0}".format(self.get_settings().allowed_permission_hours))) 
