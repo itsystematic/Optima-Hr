@@ -1,110 +1,123 @@
 {
-    "actions": [],
-    "autoname": "field:salary_effect_name",
-    "creation": "2024-02-26 17:32:52.476061",
-    "doctype": "DocType",
-    "engine": "InnoDB",
-    "field_order": [
-        "salary_effect_name",
-        "column_break_eqyf",
-        "date",
-        "section_break_1e0h",
-        "employees_component",
-        "amended_from"
-    ],
-    "fields": [
-        {
-            "fieldname": "section_break_1e0h",
-            "fieldtype": "Section Break"
-        },
-        {
-            "fieldname": "amended_from",
-            "fieldtype": "Link",
-            "label": "Amended From",
-            "no_copy": 1,
-            "options": "Salary Effects",
-            "print_hide": 1,
-            "read_only": 1,
-            "search_index": 1
-        },
-        {
-            "default": "Today",
-            "fieldname": "date",
-            "fieldtype": "Date",
-            "label": "Date"
-        },
-        {
-            "allow_bulk_edit": 1,
-            "fieldname": "employees_component",
-            "fieldtype": "Table",
-            "label": "Employees Component",
-            "options": "Employees Salary Effect"
-        },
-        {
-            "fieldname": "column_break_eqyf",
-            "fieldtype": "Column Break"
-        },
-        {
-            "fieldname": "salary_effect_name",
-            "fieldtype": "Data",
-            "in_list_view": 1,
-            "label": "Salary Effect Name",
-            "reqd": 1,
-            "unique": 1
-        }
-    ],
-    "index_web_pages_for_search": 1,
-    "is_submittable": 1,
-    "links": [],
-    "modified": "2024-10-10 13:44:58.205356",
-    "modified_by": "Administrator",
-    "module": "Optima Hr",
-    "name": "Salary Effects",
-    "naming_rule": "By fieldname",
-    "owner": "Administrator",
-    "permissions": [
-        {
-            "create": 1,
-            "delete": 1,
-            "email": 1,
-            "export": 1,
-            "print": 1,
-            "read": 1,
-            "report": 1,
-            "role": "System Manager",
-            "share": 1,
-            "submit": 1,
-            "write": 1
-        },
-        {
-            "amend": 1,
-            "cancel": 1,
-            "create": 1,
-            "delete": 1,
-            "email": 1,
-            "export": 1,
-            "print": 1,
-            "read": 1,
-            "report": 1,
-            "role": "HR Manager",
-            "share": 1,
-            "submit": 1,
-            "write": 1
-        },
-        {
-            "create": 1,
-            "email": 1,
-            "export": 1,
-            "print": 1,
-            "read": 1,
-            "report": 1,
-            "role": "HR User",
-            "share": 1,
-            "write": 1
-        }
-    ],
-    "sort_field": "modified",
-    "sort_order": "DESC",
-    "states": [],
-    "track_changes": 1
+ "actions": [],
+ "autoname": "field:salary_effect_name",
+ "creation": "2024-02-26 17:32:52.476061",
+ "doctype": "DocType",
+ "engine": "InnoDB",
+ "field_order": [
+  "salary_effect_name",
+  "company",
+  "column_break_eqyf",
+  "date",
+  "section_break_1e0h",
+  "employees_component",
+  "amended_from"
+ ],
+ "fields": [
+  {
+   "fieldname": "section_break_1e0h",
+   "fieldtype": "Section Break"
+  },
+  {
+   "fieldname": "amended_from",
+   "fieldtype": "Link",
+   "label": "Amended From",
+   "no_copy": 1,
+   "options": "Salary Effects",
+   "print_hide": 1,
+   "read_only": 1,
+   "search_index": 1
+  },
+  {
+   "default": "Today",
+   "fieldname": "date",
+   "fieldtype": "Date",
+   "label": "Date"
+  },
+  {
+   "allow_bulk_edit": 1,
+   "fieldname": "employees_component",
+   "fieldtype": "Table",
+   "label": "Employees Component",
+   "options": "Employees Salary Effect"
+  },
+  {
+   "fieldname": "column_break_eqyf",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "salary_effect_name",
+   "fieldtype": "Data",
+   "in_list_view": 1,
+   "label": "Salary Effect Name",
+   "reqd": 1,
+   "unique": 1
+  },
+  {
+   "fieldname": "company",
+   "fieldtype": "Link",
+   "label": "Company",
+   "options": "Company",
+   "reqd": 1
+  }
+ ],
+ "index_web_pages_for_search": 1,
+ "is_submittable": 1,
+ "links": [
+  {
+   "link_doctype": "Additional Salary",
+   "link_fieldname": "ref_docname"
+  }
+ ],
+ "modified": "2024-11-18 12:31:11.916078",
+ "modified_by": "Administrator",
+ "module": "Optima Hr",
+ "name": "Salary Effects",
+ "naming_rule": "By fieldname",
+ "owner": "Administrator",
+ "permissions": [
+  {
+   "create": 1,
+   "delete": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "System Manager",
+   "share": 1,
+   "submit": 1,
+   "write": 1
+  },
+  {
+   "amend": 1,
+   "cancel": 1,
+   "create": 1,
+   "delete": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "HR Manager",
+   "share": 1,
+   "submit": 1,
+   "write": 1
+  },
+  {
+   "create": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "HR User",
+   "share": 1,
+   "write": 1
+  }
+ ],
+ "sort_field": "modified",
+ "sort_order": "DESC",
+ "states": [],
+ "track_changes": 1
 }

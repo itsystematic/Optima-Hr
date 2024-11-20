@@ -41,14 +41,7 @@ optima_hr_setting.OptimaHRSetting = class OptimaHRSetting extends frappe.ui.form
 
     setup_queries() {
 
-        // let child_table_fields = [
-        //     "required_allowance" , "component_to_calculate_cost_of_day", 
-        //     "component_to_calculate_cost_of_day_for_leaves" ,"leave_dues_fields",
-        //     "employee_salary" ,
-        //     "penalty_component" ,
-        //     // "salary_allowance_details"
-        // ];  
-
+        let deduction_salary_component_fields = ["default_salary_component_for_deduction","salary_component_for_deduction" , "default_salary_component_for_check_in_late" , "default_salary_component_for_check_out_early"]
         let child_table_fields = this.frm.meta.fields.filter(r => r.options == "Salary Component Fields" && r.fieldtype == "Table").map(r => r.fieldname) ;
 
         for (let child_table_name of child_table_fields) {
@@ -76,16 +69,32 @@ optima_hr_setting.OptimaHRSetting = class OptimaHRSetting extends frappe.ui.form
                 ]
             }
         })
-
-        this.frm.set_query("salary_component_for_deduction", () => {
+        this.frm.set_query("default_salary_component_for_over_time", () => {
             return {
                 filters: [
                     ["disabled", "=", 0],
-                    ["type", "=", "Deduction"],
+                    ["type", "=", "Earning"],
                     ["Salary Component Account", "company", "=", this.frm.doc.company]
                 ]
             }
         })
+
+        
+
+        for (let field of deduction_salary_component_fields) {
+            this.frm.set_query(field, () => {
+                return {
+                    filters: [
+                        ["disabled", "=", 0],
+                        ["type", "=", "Deduction"],
+                        ["Salary Component Account", "company", "=", this.frm.doc.company]
+                    ]
+                }
+            })
+        }
+
+
+
 
         this.frm.set_query("employee", "skip_employee_in_attendance", () => {
             let employee = this.frm.doc.skip_employee_in_attendance.map(employee => employee.employee);

@@ -1,109 +1,133 @@
 {
-    "actions": [],
-    "allow_rename": 1,
-    "autoname": "format:{penalty_relation}-{###}",
-    "creation": "2023-01-16 13:56:19.504978",
-    "doctype": "DocType",
-    "editable_grid": 1,
-    "engine": "InnoDB",
-    "field_order": [
-        "penalty_relation",
-        "penalty",
-        "column_break_4",
-        "first",
-        "second",
-        "third",
-        "fourth",
-        "column_break_ztltw",
-        "first_value",
-        "second_value",
-        "third_value",
-        "fourth_value"
-    ],
-    "fields": [
-        {
-            "fieldname": "penalty",
-            "fieldtype": "Small Text",
-            "label": "Penalty"
-        },
-        {
-            "fieldname": "penalty_relation",
-            "fieldtype": "Data",
-            "label": "Penalty Relation"
-        },
-        {
-            "fieldname": "first",
-            "fieldtype": "Data",
-            "label": "First"
-        },
-        {
-            "fieldname": "second",
-            "fieldtype": "Data",
-            "label": "Second"
-        },
-        {
-            "fieldname": "third",
-            "fieldtype": "Data",
-            "label": "Third"
-        },
-        {
-            "fieldname": "fourth",
-            "fieldtype": "Data",
-            "label": "Fourth"
-        },
-        {
-            "fieldname": "column_break_4",
-            "fieldtype": "Column Break"
-        },
-        {
-            "fieldname": "column_break_ztltw",
-            "fieldtype": "Column Break"
-        },
-        {
-            "fieldname": "first_value",
-            "fieldtype": "Float",
-            "label": "First Value"
-        },
-        {
-            "fieldname": "second_value",
-            "fieldtype": "Float",
-            "label": "Second Value"
-        },
-        {
-            "fieldname": "third_value",
-            "fieldtype": "Float",
-            "label": "Third Value"
-        },
-        {
-            "fieldname": "fourth_value",
-            "fieldtype": "Float",
-            "label": "Fourth Value"
-        }
-    ],
-    "index_web_pages_for_search": 1,
-    "links": [],
-    "modified": "2023-09-14 19:47:30.695623",
-    "modified_by": "Administrator",
-    "module": "Optima Hr",
-    "name": "Penalty type",
-    "naming_rule": "Expression",
-    "owner": "Administrator",
-    "permissions": [
-        {
-            "create": 1,
-            "delete": 1,
-            "email": 1,
-            "export": 1,
-            "print": 1,
-            "read": 1,
-            "report": 1,
-            "role": "System Manager",
-            "share": 1,
-            "write": 1
-        }
-    ],
-    "sort_field": "modified",
-    "sort_order": "DESC",
-    "states": [],
-    "title_field": "penalty"
+ "actions": [],
+ "allow_import": 1,
+ "allow_rename": 1,
+ "autoname": "format:{penalty_relation}-{###}",
+ "creation": "2023-01-16 13:56:19.504978",
+ "doctype": "DocType",
+ "editable_grid": 1,
+ "engine": "InnoDB",
+ "field_order": [
+  "penalty_relation",
+  "penalty",
+  "column_break_4",
+  "first",
+  "second",
+  "third",
+  "fourth",
+  "column_break_ztltw",
+  "first_value",
+  "second_value",
+  "third_value",
+  "fourth_value"
+ ],
+ "fields": [
+  {
+   "fieldname": "penalty",
+   "fieldtype": "Small Text",
+   "label": "Penalty"
+  },
+  {
+   "fieldname": "penalty_relation",
+   "fieldtype": "Data",
+   "label": "Penalty Relation"
+  },
+  {
+   "fieldname": "first",
+   "fieldtype": "Data",
+   "label": "First"
+  },
+  {
+   "fieldname": "second",
+   "fieldtype": "Data",
+   "label": "Second"
+  },
+  {
+   "fieldname": "third",
+   "fieldtype": "Data",
+   "label": "Third"
+  },
+  {
+   "fieldname": "fourth",
+   "fieldtype": "Data",
+   "label": "Fourth"
+  },
+  {
+   "fieldname": "column_break_4",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "column_break_ztltw",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "first_value",
+   "fieldtype": "Float",
+   "label": "First Value"
+  },
+  {
+   "fieldname": "second_value",
+   "fieldtype": "Float",
+   "label": "Second Value"
+  },
+  {
+   "fieldname": "third_value",
+   "fieldtype": "Float",
+   "label": "Third Value"
+  },
+  {
+   "fieldname": "fourth_value",
+   "fieldtype": "Float",
+   "label": "Fourth Value"
+  }
+ ],
+ "index_web_pages_for_search": 1,
+ "links": [],
+ "modified": "2024-11-20 12:03:07.073143",
+ "modified_by": "Administrator",
+ "module": "Optima Hr",
+ "name": "Penalty type",
+ "naming_rule": "Expression",
+ "owner": "Administrator",
+ "permissions": [
+  {
+   "create": 1,
+   "delete": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "System Manager",
+   "share": 1,
+   "write": 1
+  },
+  {
+   "create": 1,
+   "delete": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "HR Manager",
+   "share": 1,
+   "write": 1
+  },
+  {
+   "create": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "HR User",
+   "share": 1,
+   "write": 1
+  }
+ ],
+ "sort_field": "modified",
+ "sort_order": "DESC",
+ "states": [],
+ "title_field": "penalty"
 }

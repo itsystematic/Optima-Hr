@@ -2,14 +2,23 @@
 // For license information, please see license.txt
 
 frappe.ui.form.on("Leave Dues", {
+        setup(frm) {
+                // frm.ignore_doctypes_on_cancel_all = ["Payment Entry" , "GL Entry"];
+        },
         refresh(frm) {
+                // frm.ignore_doctypes_on_cancel_all = ["Payment Entry"];
                 frm.trigger("add_buttons");
+                if (frm.is_new() && !frm.doc.leave_application) {
+                        frm.disable_form();
+                        frm.dashboard.set_headline(__("This Doctype is Secondary, It Depends on a Valid Leave, Please Create It from The Leave Application"), "yellow");    
+                }
+
         },
 
         add_buttons(frm) {
                 if (
                         frm.doc.docstatus === 1 &&
-                        frm.doc.paid_amount >= frm.doc.leave_dues_amount
+                        frm.doc.paid_amount < frm.doc.leave_dues_amount
                 ) {
                         // frm.page.clear_primary_action();
                         frm.add_custom_button(__("Create Payment Entry"), () => {

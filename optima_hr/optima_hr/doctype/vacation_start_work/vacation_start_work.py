@@ -52,6 +52,6 @@ class VacationStartWork(Document):
         
         frappe.db.set_value("Employee" , self.employee ,{
             "status" : status ,
-            "custom_is_vacationer" : submit
+            "is_vacationer" : submit
         }, update_modified=False)
         

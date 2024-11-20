@@ -26,7 +26,6 @@ class LeaveDues(Document):
             frappe.throw(_("This Leave Application Already Submitted"))
 
 
-
     def before_save(self) :	
         self.set_total_dues_amount()
 
@@ -42,9 +41,10 @@ class LeaveDues(Document):
 
 
     def on_cancel(self) :
-        
+        self.ignore_linked_doctypes = ("GL Entry" , "Payment Entry")
         self.make_attendance_vacation("On Leave" , submit=False)
         self.make_employee_vecationer_as_left("Active" , submit=False)
+        self.cancel_linked_doctypes()
 
     def make_attendance_vacation(self , status , submit=True) :
 
@@ -103,6 +103,21 @@ class LeaveDues(Document):
             )
         self.db_set("paid_amount", paid_amount)
         # self.set_status(update=True)
+
+    def cancel_linked_doctypes(self) :
+
+        self.cancel_payment_entry()
+
+    def cancel_payment_entry(self):
+        
+        list_of_payment_entry = frappe.db.get_all("Payment Entry Reference" , { 
+            "docstatus" : 1 ,
+            "reference_doctype" : self.doctype , 
+            "reference_name" : self.name
+        } , pluck="parent")
+
+        for pay in list_of_payment_entry :
+            frappe.get_doc("Payment Entry" , pay).cancel()
 
 
 

@@ -2,8 +2,8 @@
 # For license information, please see license.txt
 
 import frappe
-from frappe.model.document import Document
 from frappe import _
+from frappe.model.document import Document
 
 class SalaryEffects(Document):
     def validate(self) :
@@ -92,17 +92,36 @@ class SalaryEffects(Document):
             return employee_shift
         
     def get_shift_hours(self,employee_shift):
-            start_time , end_time =frappe.db.get_value("Shift Type" , {"name" : employee_shift} , ["start_time" , "end_time"])
-            shift_hours = (end_time - start_time).total_seconds() / 3600
-            return shift_hours
+            
+        shift_duration = get_shift_propertise(self.company , employee_shift )
+
+        return shift_duration
+        #     pass
+
+        # else :
+        #     start_time , end_time =frappe.db.get_value("Shift Type" , {"name" : employee_shift} , ["start_time" , "end_time"])
+        #     shift_hours = (end_time - start_time).total_seconds() / 3600
+        #     return shift_hours
         
     def get_hour_price(self,employee_base_amount,shift_hours):
-            hour_price = (employee_base_amount/30) / shift_hours
-            return hour_price
+        hour_price = (employee_base_amount/30) / shift_hours
+        return hour_price
         
     def get_day_price(self,employee_base_amount):
-            day_price = (employee_base_amount/30)
-            return day_price
+        day_price = (employee_base_amount/30)
+        return day_price
 
-        
-            
+def get_shift_propertise(company , shift_type) :
+    shift_duration = None
+    if settings := frappe.db.exists("Optima HR Setting" , {"company" : company}):
+        hr_settings = frappe.get_doc("Optima HR Setting" , settings)
+
+        if hr_settings.enable_shift_duration :
+            row = next(filter(lambda x : x.get("shift_type") == shift_type , hr_settings.enable_shift_types))
+            shift_duration = row.get("shift_duration")
+
+    if not shift_duration :
+        start_time , end_time = frappe.db.get_value("Shift Type" , {"name" : shift_type } , ["start_time" , "end_time"])
+        shift_duration = ( end_time - start_time ).total_seconds() / 3600
+
+    return shift_duration

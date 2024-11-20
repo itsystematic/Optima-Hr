@@ -1,5 +1,5 @@
 
-from hrms.payroll.doctype.salary_slip.salary_slip import SalarySlip, set_loan_repayment, get_period_factor
+from hrms.payroll.doctype.salary_slip.salary_slip import SalarySlip, set_loan_repayment, get_period_factor , get_salary_component_data
 import frappe
 from frappe import _
 from frappe.utils import flt , cint , getdate,add_days  ,rounded,date_diff
@@ -216,3 +216,103 @@ class CustomSalarySlip(SalarySlip):
             self.custom_cost_to_company_ctc = sum(map(lambda x : x.get("amount" , 0) if x.get("salary_component") in ctc_componenet  else 0 , self.earnings)) + self.net_pay
             # print(sum(map(lambda x : x.get("amount" , 0) if x.get("salary_component") in ctc_componenet  else 0 , self.earnings)))
             # print(self.custom_is_ctc_component)
+
+    def add_additional_salary_components(self, component_type):
+            # Update Addtionaal Salary Remove Employee Advaance if Returned or Claimed Or Partly Claimed and Returned
+            # Last aamount not constent but caalculaation 
+
+        
+
+        additional_salaries = get_additional_salaries(
+            self.employee, self.start_date, self.end_date, component_type
+        )
+
+        for additional_salary in additional_salaries:
+            total_amount = additional_salary.amount
+            if additional_salary.ref_doctype == "Employee Advance" :
+                employee_advance = frappe.get_doc("Employee Advance" , additional_salary.ref_docname )
+                total_receieved_amount = employee_advance.paid_amount - ( employee_advance.return_amount + employee_advance.claimed_amount )
+                if additional_salary.amount > total_receieved_amount :
+                    total_amount = total_receieved_amount
+
+
+            self.update_component_row(
+                get_salary_component_data(additional_salary.component),
+                total_amount,
+                component_type,
+                additional_salary,
+                is_recurring=additional_salary.is_recurring,
+            )
+
+
+
+def get_additional_salaries(employee, start_date, end_date, component_type):
+	from frappe.query_builder import Criterion
+
+	comp_type = "Earning" if component_type == "earnings" else "Deduction"
+
+	additional_sal = frappe.qb.DocType("Additional Salary")
+	component_field = additional_sal.salary_component.as_("component")
+	overwrite_field = additional_sal.overwrite_salary_structure_amount.as_("overwrite")
+	returned_employee_advance = frappe.db.get_all("Employee Advance", {"employee": employee , "docstatus" : 1 , "status" : ["in", ["Returned", "Claimed" , "Partly Claimed and Returned" ]]} , pluck="name") + ["leave"]
+
+	additional_salary_list = (
+		frappe.qb.from_(additional_sal)
+		.select(
+			additional_sal.name,
+			component_field,
+			additional_sal.type,
+			additional_sal.amount,
+			additional_sal.is_recurring,
+			overwrite_field,
+			additional_sal.deduct_full_tax_on_selected_payroll_date,
+			additional_sal.ref_docname ,
+			additional_sal.ref_doctype
+		)
+		.where(
+			(additional_sal.employee == employee)
+			& (additional_sal.docstatus == 1)
+			& (additional_sal.type == comp_type)
+			& (additional_sal.disabled == 0)
+			& ~(additional_sal.ref_docname.isin(returned_employee_advance))
+		)
+		.where(
+			Criterion.any(
+				[
+					Criterion.all(
+						[  # is recurring and additional salary dates fall within the payroll period
+							additional_sal.is_recurring == 1,
+							additional_sal.from_date <= end_date,
+							additional_sal.to_date >= end_date,
+						]
+					),
+					Criterion.all(
+						[  # is not recurring and additional salary's payroll date falls within the payroll period
+							additional_sal.is_recurring == 0,
+							additional_sal.payroll_date[start_date:end_date],
+						]
+					),
+				]
+			)
+		)
+		.run(as_dict=True)
+	)
+
+	additional_salaries = []
+	components_to_overwrite = []
+
+	for d in additional_salary_list:
+		if d.overwrite:
+			if d.component in components_to_overwrite:
+				frappe.throw(
+					_(
+						"Multiple Additional Salaries with overwrite property exist for Salary Component {0} between {1} and {2}."
+					).format(frappe.bold(d.component), start_date, end_date),
+					title=_("Error"),
+				)
+
+			components_to_overwrite.append(d.component)
+
+		additional_salaries.append(d)
+
+	return additional_salaries

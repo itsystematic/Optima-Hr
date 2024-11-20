@@ -10,6 +10,13 @@ frappe.ui.form.on("Salary Effects", {
                 }
             }
         })
+        frm.set_query('employee_id', 'employees_component', () => {
+            return {
+                filters: {
+                    company : frm.doc.company
+                }
+            }
+        })
         
     },
     

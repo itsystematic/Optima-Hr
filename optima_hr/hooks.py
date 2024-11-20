@@ -26,7 +26,7 @@ app_license = "mit"
 # ------------------
 
 # include js, css files in header of desk.html
-# app_include_css = "/assets/optima_hr/css/optima_hr.css"
+app_include_css = "/assets/optima_hr/css/css-rtl/almarai.css"
 # app_include_js = "/assets/optima_hr/js/optima_hr.js"
 
 # include js, css files in header of web template
@@ -91,7 +91,7 @@ doctype_list_js = {
 # ------------
 
 # before_install = "optima_hr.install.before_install"
-after_install = "optima_hr.after_install.delete_genders"
+# after_install = "optima_hr.after_install.delete_genders"
 
 # Uninstallation
 # ------------
@@ -105,7 +105,7 @@ after_install = "optima_hr.after_install.delete_genders"
 # Name of the app being installed is passed as an argument
 
 # before_app_install = "optima_hr.utils.before_app_install"
-# after_app_install = "optima_hr.utils.after_app_install"
+after_app_install = "optima_hr.after_install.delete_genders"
 
 # Integration Cleanup
 # -------------------
@@ -268,14 +268,15 @@ scheduler_events = {
 
 
 fixtures=[
-    {
-        "dt": "Workspace",
-        "filters": {
-            "name": ["in", ["Salary Payout"]]
-        }
-    }
+    # {
+    #     "dt": "Workspace",
+    #     "filters": {
+    #         "name": ["in", ["HR","Salary Payout" , "Employee Lifecycle" , "Shift & Attendance" , "Leaves"]]
+    #     }
+    # }
+    # "Penalty type"
 ]
 
 after_migrate = "optima_hr.migrate.after_migrate"
-advance_payment_doctypes = ["Leave Dues", "End of Service Benefits"]
+advance_payment_doctypes = ["Leave Dues", "End of Service Benefits" , "Employee Advance"]
 website_route_rules = [{'from_route': '/attendance_log/<path:app_path>', 'to_route': 'attendance_log'}, {'from_route': '/attendance_log/<path:app_path>', 'to_route': 'attendance_log'},]

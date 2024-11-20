@@ -29,11 +29,12 @@ class OptimaShiftType(ShiftType) :
             or not self.process_attendance_after
             or not self.last_sync_of_checkin
         ):
+            print("Heeloo" * 50)
             return
-
+        print("shift")
         skip_employee = get_skip_employees()
         logs = self.get_employee_checkins(skip_employee)
-
+        print(logs)
         for key, group in groupby(logs, key=lambda x: (x["employee"], x["shift_start"])):
             employee = key[0]
             attendance_date = key[1].date()
@@ -66,7 +67,8 @@ class OptimaShiftType(ShiftType) :
         frappe.db.commit() 
         
         assigned_employees = self.get_assigned_employees(self.process_attendance_after, True)
-        
+        print(assigned_employees)
+
         for batch in create_batch(assigned_employees, EMPLOYEE_CHUNK_SIZE):
             for employee in batch :
                 if employee in skip_employee :
@@ -117,7 +119,7 @@ def get_skip_employees() :
     return frappe.db.sql("""
 
         SELECT se.employee
-        FROM `tabOptima Hr Setting` ohs
+        FROM `tabOptima HR Setting` ohs
         INNER JOIN `tabSet Employee Absent` se
         WHERE ohs.skip_employee = 1
     """ ,pluck=True)
