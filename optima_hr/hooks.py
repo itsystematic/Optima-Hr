@@ -274,7 +274,7 @@ fixtures=[
     #         "name": ["in", ["HR","Salary Payout" , "Employee Lifecycle" , "Shift & Attendance" , "Leaves"]]
     #     }
     # }
-    # "Penalty type"
+    # "Penalty type" , "Leave Type"
 ]
 
 after_migrate = "optima_hr.migrate.after_migrate"
