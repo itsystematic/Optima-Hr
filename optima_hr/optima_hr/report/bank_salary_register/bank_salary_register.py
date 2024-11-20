@@ -74,15 +74,14 @@ def get_data(filters :dict ) -> list[dict] :
     
 def get_columns(filters: dict) -> list[dict] :
 
-    if filters.get("bank_syle"):
+    if filters.get("bank_syle"): # apply the mapping colums according to bank style
         columns_to_field_map = get_field_mapping(filters)
-        print(columns_to_field_map)
 
         sorted_items = sort_items_by_key(columns_to_field_map)
-        print(type(sorted_items))
+
         columns = [
             {
-                "label": " ".join(word.capitalize() for word in value.replace("_", " ").split()), # spit the column name by underscore and capitalize each word
+                "label": "{}".format(frappe._(value.replace("_", " ").title())), # split the column name by underscore and capitalize each word
                 "fieldname": value,
                 "fieldtype": "Data",
                 "width": 150,
@@ -103,11 +102,11 @@ def get_columns(filters: dict) -> list[dict] :
             "width": 200,
         },
         {
-            "label": _("Employee ID"),
+            "label": frappe._("Employee ID"),
             "fieldname": "employee_id_name",
             "fieldtype": "Link",
 			"options": "Employee",
-            "width": 70,
+            "width": 150,
         },
         {
             "label": _("Employee Name"),
@@ -140,14 +139,14 @@ def get_columns(filters: dict) -> list[dict] :
             "width": 60,
         },
         {
-            "label": ("Payment Amount"),
+            "label": _("Payment Amount"),
             "fieldname": "net_pay",
             "fieldtype": "Currency",
             "options": "currency",
             "width": 120,
         },
         {
-            "label": ("Employee Basic Salary"),
+            "label": _("Employee Basic Salary"),
             "fieldname": "base_salary",
             "fieldtype": "Currency",
             "options": "currency",
@@ -167,14 +166,14 @@ def get_columns(filters: dict) -> list[dict] :
                 "width": 150,
             })
         # {
-        #     "label": ("Housing Allowance"),
+        #     "label": _("Housing Allowance"),
         #     "fieldname": "house_allowance",
         #     "fieldtype": "Currency",
         #     "options": "currency",
         #     "width":150,
         # },
         # {
-        #     "label": ("Other Earnings"),
+        #     "label": _("Other Earnings"),
         #     "fieldname": "other_earnings",
         #     "fieldtype": "Currency",
         #     "options": "currency",
@@ -183,14 +182,14 @@ def get_columns(filters: dict) -> list[dict] :
     columns.extend(
         [
             {
-                "label": ("Deductions"),
+                "label": _("Deductions"),
                 "fieldname": "total_deduction",
                 "fieldtype": "Currency",
                 "options": "currency",
                 "width": 120,
             },
             {
-                "label": ("Beneficiary Narration"),
+                "label": _("Beneficiary Narration"),
                 "fieldname": "beneficiary_narration",
                 "fieldtype": "Data",
                 "width":140,
