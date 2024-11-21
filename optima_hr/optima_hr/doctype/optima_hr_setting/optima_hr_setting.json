@@ -77,7 +77,11 @@
   "payroll_tab",
   "allow_to_edit_salary_slip_component",
   "make_draft_journal_entry_for_payable_payroll",
-  "components_accounts_distribution_per_party_in_payable_payroll"
+  "components_accounts_distribution_per_party_in_payable_payroll",
+  "salary_effect_tab",
+  "effect_in_salary_in_journal_entry",
+  "effect_in_salary_in_additional_salary",
+  "credit_account_in_journal_entry"
  ],
  "fields": [
   {
@@ -523,11 +527,38 @@
    "fieldtype": "Link",
    "label": "Default Travel Ticket Type",
    "options": "Travel Ticket Type"
+  },
+  {
+   "fieldname": "salary_effect_tab",
+   "fieldtype": "Tab Break",
+   "label": "Salary Effect"
+  },
+  {
+   "default": "0",
+   "depends_on": "eval: doc.effect_in_salary_in_additional_salary ==0",
+   "fieldname": "effect_in_salary_in_journal_entry",
+   "fieldtype": "Check",
+   "label": "Effect in Salary in Journal Entry"
+  },
+  {
+   "default": "0",
+   "depends_on": "eval: doc.effect_in_salary_in_journal_entry ==0",
+   "fieldname": "effect_in_salary_in_additional_salary",
+   "fieldtype": "Check",
+   "label": "Effect in Salary in Additional Salary"
+  },
+  {
+   "depends_on": "eval: doc.effect_in_salary_in_journal_entry",
+   "fieldname": "credit_account_in_journal_entry",
+   "fieldtype": "Link",
+   "label": "Credit Account in Journal Entry",
+   "mandatory_depends_on": "eval: doc.effect_in_salary_in_journal_entry",
+   "options": "Account"
   }
  ],
  "index_web_pages_for_search": 1,
  "links": [],
- "modified": "2024-11-20 09:42:45.378550",
+ "modified": "2024-11-21 14:40:51.681107",
  "modified_by": "Administrator",
  "module": "Optima Hr",
  "name": "Optima HR Setting",

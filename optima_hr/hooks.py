@@ -275,7 +275,8 @@ fixtures=[
     #     }
     # }
     # "Penalty type" , "Leave Type"
-    "Nationality" ,
+    "HR Letter Template"
+
 ]
 
 after_migrate = "optima_hr.migrate.after_migrate"

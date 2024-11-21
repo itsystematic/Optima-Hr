@@ -7,8 +7,21 @@ from frappe.model.document import Document
 
 class SalaryEffects(Document):
     def validate(self) :
+        self.validate_optima_setting()
         self.validate_mendatory_field()
-        
+
+    def validate_optima_setting(self):
+
+        if not frappe.db.exists("Optima HR Setting" , {"company" : self.company}):
+            frappe.throw(_("Missing Company Settings In Optima HR Setting : {0}").format(self.company))
+
+        optima_hr_setting = frappe.db.get_value("Optima HR Setting" , self.company , ["effect_in_salary_in_journal_entry" , "effect_in_salary_in_additional_salary"] , as_dict=True)
+
+
+        if optima_hr_setting.get("effect_in_salary_in_journal_entry") == 0 and optima_hr_setting.get("effect_in_salary_in_additional_salary") == 0 :
+            frappe.throw(_("You Must Choose Way To Make Effect In Salary"))
+
+
 
     def validate_employee_salary_structure(self) :
         """
@@ -26,7 +39,53 @@ class SalaryEffects(Document):
 
     def on_submit(self):
         self.validate_employee_salary_structure()
-        self.create_additional_salary()
+        self.make_effects_to_employee()
+
+
+    def make_effects_to_employee(self) :
+
+        optima_hr_setting = frappe.db.get_value("Optima HR Setting" , self.company , ["effect_in_salary_in_journal_entry" , "effect_in_salary_in_additional_salary" , "credit_account_in_journal_entry"] , as_dict=True)
+
+        if optima_hr_setting.get("effect_in_salary_in_journal_entry") == 1 :
+            credit_account = optima_hr_setting.get("credit_account_in_journal_entry")
+            self.create_journal_entry(credit_account)
+
+        if optima_hr_setting.get("effect_in_salary_in_additional_salary") == 1 :
+            self.create_additional_salary()
+
+
+    def create_journal_entry(self,credit_account):
+        journal_entry = frappe.new_doc("Journal Entry")
+        journal_entry.voucher_type = "Journal Entry"
+        journal_entry.user_remark = "Salary Effect : {0}".format(self.name)
+        journal_entry.company = self.company
+        journal_entry.posting_date = self.date
+
+        for row in self.employees_component :
+            debit_account = get_salary_component_account(self.company , row.procedure)
+            
+            if not debit_account :
+                frappe.throw(_("Please Set Account In Salary Component {0} To Company {1}").format(row.procedure , self.company))
+
+            journal_entry.append("accounts",{
+                "account" : debit_account,
+                "debit" : row.amount,
+                "debit_in_account_currency" : row.amount,
+                "party_type" : "Employee",
+                "party" : row.employee_id
+            })
+
+            journal_entry.append("accounts",{
+                "account" : credit_account,
+                "credit" : row.amount,
+                "credit_in_account_currency" : row.amount,
+                "party_type" : "Employee",
+                "party" : row.employee_id
+            })
+            print(row.amount)
+        journal_entry.save()
+        journal_entry.submit()
+
 
     def create_additional_salary(self):
         for row in self.employees_component:
@@ -125,3 +184,10 @@ def get_shift_propertise(company , shift_type) :
         shift_duration = ( end_time - start_time ).total_seconds() / 3600
 
     return shift_duration
+
+
+
+
+def get_salary_component_account(company ,component):
+
+    return frappe.db.get_value("Salary Component Account" , {"company" : company ,"parent" : component} , "account")
