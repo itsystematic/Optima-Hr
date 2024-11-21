@@ -267,17 +267,14 @@ scheduler_events = {
 # }
 
 
-fixtures=[
-    # {
-    #     "dt": "Workspace",
-    #     "filters": {
-    #         "name": ["in", ["HR","Salary Payout" , "Employee Lifecycle" , "Shift & Attendance" , "Leaves"]]
-    #     }
-    # }
-    # "Penalty type" , "Leave Type"
-    "HR Letter Template"
-
-]
+#fixtures=[
+#    {
+#        "dt": "Workspace",
+#        "filters": {
+#            "name": ["in", ["HR","Salary Payout" , "Employee Lifecycle" , "Shift & Attendance" , "Leaves"]]
+#        }
+#    }
+#]
 
 after_migrate = "optima_hr.migrate.after_migrate"
 advance_payment_doctypes = ["Leave Dues", "End of Service Benefits" , "Employee Advance"]
