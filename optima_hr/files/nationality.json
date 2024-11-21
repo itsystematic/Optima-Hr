@@ -1,0 +1,898 @@
+[
+    {
+        "docstatus": 0,
+        "doctype": "Nationality",
+        "is_saudi_arabia": 0,
+        "modified": "2024-11-18 11:44:12.549689",
+        "name": "Afghan",
+        "nationality": "Afghan"
+    },
+    {
+        "docstatus": 0,
+        "doctype": "Nationality",
+        "is_saudi_arabia": 0,
+        "modified": "2024-11-18 11:44:12.568789",
+        "name": "American",
+        "nationality": "American"
+    },
+    {
+        "docstatus": 0,
+        "doctype": "Nationality",
+        "is_saudi_arabia": 0,
+        "modified": "2024-11-18 11:44:12.580346",
+        "name": "Albanian",
+        "nationality": "Albanian"
+    },
+    {
+        "docstatus": 0,
+        "doctype": "Nationality",
+        "is_saudi_arabia": 0,
+        "modified": "2024-11-18 11:44:12.592042",
+        "name": "Algerian",
+        "nationality": "Algerian"
+    },
+    {
+        "docstatus": 0,
+        "doctype": "Nationality",
+        "is_saudi_arabia": 0,
+        "modified": "2024-11-18 11:44:12.603737",
+        "name": "Argentine",
+        "nationality": "Argentine"
+    },
+    {
+        "docstatus": 0,
+        "doctype": "Nationality",
+        "is_saudi_arabia": 0,
+        "modified": "2024-11-18 11:44:12.615200",
+        "name": "Argentinian",
+        "nationality": "Argentinian"
+    },
+    {
+        "docstatus": 0,
+        "doctype": "Nationality",
+        "is_saudi_arabia": 0,
+        "modified": "2024-11-18 11:44:12.627067",
+        "name": "Australian",
+        "nationality": "Australian"
+    },
+    {
+        "docstatus": 0,
+        "doctype": "Nationality",
+        "is_saudi_arabia": 0,
+        "modified": "2024-11-18 11:44:12.638976",
+        "name": "Austrian",
+        "nationality": "Austrian"
+    },
+    {
+        "docstatus": 0,
+        "doctype": "Nationality",
+        "is_saudi_arabia": 0,
+        "modified": "2024-11-18 11:44:12.650809",
+        "name": "Bangladeshi",
+        "nationality": "Bangladeshi"
+    },
+    {
+        "docstatus": 0,
+        "doctype": "Nationality",
+        "is_saudi_arabia": 0,
+        "modified": "2024-11-18 11:44:12.662276",
+        "name": "Belgian",
+        "nationality": "Belgian"
+    },
+    {
+        "docstatus": 0,
+        "doctype": "Nationality",
+        "is_saudi_arabia": 0,
+        "modified": "2024-11-18 11:44:12.674362",
+        "name": "Bolivian",
+        "nationality": "Bolivian"
+    },
+    {
+        "docstatus": 0,
+        "doctype": "Nationality",
+        "is_saudi_arabia": 0,
+        "modified": "2024-11-18 11:44:12.686785",
+        "name": "Batswana",
+        "nationality": "Batswana"
+    },
+    {
+        "docstatus": 0,
+        "doctype": "Nationality",
+        "is_saudi_arabia": 0,
+        "modified": "2024-11-18 11:44:12.699317",
+        "name": "Brazilian",
+        "nationality": "Brazilian"
+    },
+    {
+        "docstatus": 0,
+        "doctype": "Nationality",
+        "is_saudi_arabia": 0,
+        "modified": "2024-11-18 11:44:12.711759",
+        "name": "Bulgarian",
+        "nationality": "Bulgarian"
+    },
+    {
+        "docstatus": 0,
+        "doctype": "Nationality",
+        "is_saudi_arabia": 0,
+        "modified": "2024-11-18 11:44:12.724508",
+        "name": "Cambodian",
+        "nationality": "Cambodian"
+    },
+    {
+        "docstatus": 0,
+        "doctype": "Nationality",
+        "is_saudi_arabia": 0,
+        "modified": "2024-11-18 11:44:12.737232",
+        "name": "Cameroonian",
+        "nationality": "Cameroonian"
+    },
+    {
+        "docstatus": 0,
+        "doctype": "Nationality",
+        "is_saudi_arabia": 0,
+        "modified": "2024-11-18 11:44:12.749676",
+        "name": "Canadian",
+        "nationality": "Canadian"
+    },
+    {
+        "docstatus": 0,
+        "doctype": "Nationality",
+        "is_saudi_arabia": 0,
+        "modified": "2024-11-18 11:44:12.761949",
+        "name": "Chilean",
+        "nationality": "Chilean"
+    },
+    {
+        "docstatus": 0,
+        "doctype": "Nationality",
+        "is_saudi_arabia": 0,
+        "modified": "2024-11-18 11:44:12.775215",
+        "name": "Chinese",
+        "nationality": "Chinese"
+    },
+    {
+        "docstatus": 0,
+        "doctype": "Nationality",
+        "is_saudi_arabia": 0,
+        "modified": "2024-11-18 11:44:12.788256",
+        "name": "Colombian",
+        "nationality": "Colombian"
+    },
+    {
+        "docstatus": 0,
+        "doctype": "Nationality",
+        "is_saudi_arabia": 0,
+        "modified": "2024-11-18 11:44:12.801120",
+        "name": "Costa Rican",
+        "nationality": "Costa Rican"
+    },
+    {
+        "docstatus": 0,
+        "doctype": "Nationality",
+        "is_saudi_arabia": 0,
+        "modified": "2024-11-18 11:44:12.814051",
+        "name": "Croatian",
+        "nationality": "Croatian"
+    },
+    {
+        "docstatus": 0,
+        "doctype": "Nationality",
+        "is_saudi_arabia": 0,
+        "modified": "2024-11-18 11:44:12.828366",
+        "name": "Cuban",
+        "nationality": "Cuban"
+    },
+    {
+        "docstatus": 0,
+        "doctype": "Nationality",
+        "is_saudi_arabia": 0,
+        "modified": "2024-11-18 11:44:12.842265",
+        "name": "Czech",
+        "nationality": "Czech"
+    },
+    {
+        "docstatus": 0,
+        "doctype": "Nationality",
+        "is_saudi_arabia": 0,
+        "modified": "2024-11-18 11:44:12.856142",
+        "name": "Danish",
+        "nationality": "Danish"
+    },
+    {
+        "docstatus": 0,
+        "doctype": "Nationality",
+        "is_saudi_arabia": 0,
+        "modified": "2024-11-18 11:44:12.869137",
+        "name": "Dominican",
+        "nationality": "Dominican"
+    },
+    {
+        "docstatus": 0,
+        "doctype": "Nationality",
+        "is_saudi_arabia": 0,
+        "modified": "2024-11-18 11:44:12.882907",
+        "name": "Ecuadorian",
+        "nationality": "Ecuadorian"
+    },
+    {
+        "docstatus": 0,
+        "doctype": "Nationality",
+        "is_saudi_arabia": 0,
+        "modified": "2024-11-18 11:44:12.896622",
+        "name": "Egyptian",
+        "nationality": "Egyptian"
+    },
+    {
+        "docstatus": 0,
+        "doctype": "Nationality",
+        "is_saudi_arabia": 0,
+        "modified": "2024-11-18 11:44:12.910070",
+        "name": "Salvadorian",
+        "nationality": "Salvadorian"
+    },
+    {
+        "docstatus": 0,
+        "doctype": "Nationality",
+        "is_saudi_arabia": 0,
+        "modified": "2024-11-18 11:44:12.922918",
+        "name": "English",
+        "nationality": "English"
+    },
+    {
+        "docstatus": 0,
+        "doctype": "Nationality",
+        "is_saudi_arabia": 0,
+        "modified": "2024-11-18 11:44:12.936525",
+        "name": "Estonian",
+        "nationality": "Estonian"
+    },
+    {
+        "docstatus": 0,
+        "doctype": "Nationality",
+        "is_saudi_arabia": 0,
+        "modified": "2024-11-18 11:44:12.950079",
+        "name": "Ethiopian",
+        "nationality": "Ethiopian"
+    },
+    {
+        "docstatus": 0,
+        "doctype": "Nationality",
+        "is_saudi_arabia": 0,
+        "modified": "2024-11-18 11:44:12.963854",
+        "name": "Fijian",
+        "nationality": "Fijian"
+    },
+    {
+        "docstatus": 0,
+        "doctype": "Nationality",
+        "is_saudi_arabia": 0,
+        "modified": "2024-11-18 11:44:12.977122",
+        "name": "Finnish",
+        "nationality": "Finnish"
+    },
+    {
+        "docstatus": 0,
+        "doctype": "Nationality",
+        "is_saudi_arabia": 0,
+        "modified": "2024-11-18 11:44:12.990840",
+        "name": "French",
+        "nationality": "French"
+    },
+    {
+        "docstatus": 0,
+        "doctype": "Nationality",
+        "is_saudi_arabia": 0,
+        "modified": "2024-11-18 11:44:13.004515",
+        "name": "German",
+        "nationality": "German"
+    },
+    {
+        "docstatus": 0,
+        "doctype": "Nationality",
+        "is_saudi_arabia": 0,
+        "modified": "2024-11-18 11:44:13.017789",
+        "name": "Ghanaian",
+        "nationality": "Ghanaian"
+    },
+    {
+        "docstatus": 0,
+        "doctype": "Nationality",
+        "is_saudi_arabia": 0,
+        "modified": "2024-11-18 11:44:13.031687",
+        "name": "Greek",
+        "nationality": "Greek"
+    },
+    {
+        "docstatus": 0,
+        "doctype": "Nationality",
+        "is_saudi_arabia": 0,
+        "modified": "2024-11-18 11:44:13.045412",
+        "name": "Guatemalan",
+        "nationality": "Guatemalan"
+    },
+    {
+        "docstatus": 0,
+        "doctype": "Nationality",
+        "is_saudi_arabia": 0,
+        "modified": "2024-11-18 11:44:13.059102",
+        "name": "Haitian",
+        "nationality": "Haitian"
+    },
+    {
+        "docstatus": 0,
+        "doctype": "Nationality",
+        "is_saudi_arabia": 0,
+        "modified": "2024-11-18 11:44:13.072581",
+        "name": "Honduran",
+        "nationality": "Honduran"
+    },
+    {
+        "docstatus": 0,
+        "doctype": "Nationality",
+        "is_saudi_arabia": 0,
+        "modified": "2024-11-18 11:44:13.086474",
+        "name": "Hungarian",
+        "nationality": "Hungarian"
+    },
+    {
+        "docstatus": 0,
+        "doctype": "Nationality",
+        "is_saudi_arabia": 0,
+        "modified": "2024-11-18 11:44:13.100296",
+        "name": "Icelandic",
+        "nationality": "Icelandic"
+    },
+    {
+        "docstatus": 0,
+        "doctype": "Nationality",
+        "is_saudi_arabia": 0,
+        "modified": "2024-11-18 11:44:13.113857",
+        "name": "Indian",
+        "nationality": "Indian"
+    },
+    {
+        "docstatus": 0,
+        "doctype": "Nationality",
+        "is_saudi_arabia": 0,
+        "modified": "2024-11-18 11:44:13.127603",
+        "name": "Indonesian",
+        "nationality": "Indonesian"
+    },
+    {
+        "docstatus": 0,
+        "doctype": "Nationality",
+        "is_saudi_arabia": 0,
+        "modified": "2024-11-18 11:44:13.141511",
+        "name": "Iranian",
+        "nationality": "Iranian"
+    },
+    {
+        "docstatus": 0,
+        "doctype": "Nationality",
+        "is_saudi_arabia": 0,
+        "modified": "2024-11-18 11:44:13.156003",
+        "name": "Iraqi",
+        "nationality": "Iraqi"
+    },
+    {
+        "docstatus": 0,
+        "doctype": "Nationality",
+        "is_saudi_arabia": 0,
+        "modified": "2024-11-18 11:44:13.169473",
+        "name": "Irish",
+        "nationality": "Irish"
+    },
+    {
+        "docstatus": 0,
+        "doctype": "Nationality",
+        "is_saudi_arabia": 0,
+        "modified": "2024-11-18 11:44:13.182822",
+        "name": "Italian",
+        "nationality": "Italian"
+    },
+    {
+        "docstatus": 0,
+        "doctype": "Nationality",
+        "is_saudi_arabia": 0,
+        "modified": "2024-11-18 11:44:13.196742",
+        "name": "Jamaican",
+        "nationality": "Jamaican"
+    },
+    {
+        "docstatus": 0,
+        "doctype": "Nationality",
+        "is_saudi_arabia": 0,
+        "modified": "2024-11-18 11:44:13.210975",
+        "name": "Japanese",
+        "nationality": "Japanese"
+    },
+    {
+        "docstatus": 0,
+        "doctype": "Nationality",
+        "is_saudi_arabia": 0,
+        "modified": "2024-11-18 11:44:13.224780",
+        "name": "Jordanian",
+        "nationality": "Jordanian"
+    },
+    {
+        "docstatus": 0,
+        "doctype": "Nationality",
+        "is_saudi_arabia": 0,
+        "modified": "2024-11-18 11:44:13.237694",
+        "name": "Kenyan",
+        "nationality": "Kenyan"
+    },
+    {
+        "docstatus": 0,
+        "doctype": "Nationality",
+        "is_saudi_arabia": 0,
+        "modified": "2024-11-18 11:44:13.251207",
+        "name": "Kuwaiti",
+        "nationality": "Kuwaiti"
+    },
+    {
+        "docstatus": 0,
+        "doctype": "Nationality",
+        "is_saudi_arabia": 0,
+        "modified": "2024-11-18 11:44:13.265666",
+        "name": "Lao",
+        "nationality": "Lao"
+    },
+    {
+        "docstatus": 0,
+        "doctype": "Nationality",
+        "is_saudi_arabia": 0,
+        "modified": "2024-11-18 11:44:13.279197",
+        "name": "Latvian",
+        "nationality": "Latvian"
+    },
+    {
+        "docstatus": 0,
+        "doctype": "Nationality",
+        "is_saudi_arabia": 0,
+        "modified": "2024-11-18 11:44:13.292478",
+        "name": "Lebanese",
+        "nationality": "Lebanese"
+    },
+    {
+        "docstatus": 0,
+        "doctype": "Nationality",
+        "is_saudi_arabia": 0,
+        "modified": "2024-11-18 11:44:13.306118",
+        "name": "Libyan",
+        "nationality": "Libyan"
+    },
+    {
+        "docstatus": 0,
+        "doctype": "Nationality",
+        "is_saudi_arabia": 0,
+        "modified": "2024-11-18 11:44:13.319698",
+        "name": "Lithuanian",
+        "nationality": "Lithuanian"
+    },
+    {
+        "docstatus": 0,
+        "doctype": "Nationality",
+        "is_saudi_arabia": 0,
+        "modified": "2024-11-18 11:44:13.332998",
+        "name": "Malagasy",
+        "nationality": "Malagasy"
+    },
+    {
+        "docstatus": 0,
+        "doctype": "Nationality",
+        "is_saudi_arabia": 0,
+        "modified": "2024-11-18 11:44:13.346377",
+        "name": "Malaysian",
+        "nationality": "Malaysian"
+    },
+    {
+        "docstatus": 0,
+        "doctype": "Nationality",
+        "is_saudi_arabia": 0,
+        "modified": "2024-11-18 11:44:13.360438",
+        "name": "Malian",
+        "nationality": "Malian"
+    },
+    {
+        "docstatus": 0,
+        "doctype": "Nationality",
+        "is_saudi_arabia": 0,
+        "modified": "2024-11-18 11:44:13.374008",
+        "name": "Maltese",
+        "nationality": "Maltese"
+    },
+    {
+        "docstatus": 0,
+        "doctype": "Nationality",
+        "is_saudi_arabia": 0,
+        "modified": "2024-11-18 11:44:13.387559",
+        "name": "Mexican",
+        "nationality": "Mexican"
+    },
+    {
+        "docstatus": 0,
+        "doctype": "Nationality",
+        "is_saudi_arabia": 0,
+        "modified": "2024-11-18 11:44:13.400904",
+        "name": "Mongolian",
+        "nationality": "Mongolian"
+    },
+    {
+        "docstatus": 0,
+        "doctype": "Nationality",
+        "is_saudi_arabia": 0,
+        "modified": "2024-11-18 11:44:13.414648",
+        "name": "Moroccan",
+        "nationality": "Moroccan"
+    },
+    {
+        "docstatus": 0,
+        "doctype": "Nationality",
+        "is_saudi_arabia": 0,
+        "modified": "2024-11-18 11:44:13.428512",
+        "name": "Mozambican",
+        "nationality": "Mozambican"
+    },
+    {
+        "docstatus": 0,
+        "doctype": "Nationality",
+        "is_saudi_arabia": 0,
+        "modified": "2024-11-18 11:44:13.442103",
+        "name": "Namibian",
+        "nationality": "Namibian"
+    },
+    {
+        "docstatus": 0,
+        "doctype": "Nationality",
+        "is_saudi_arabia": 0,
+        "modified": "2024-11-18 11:44:13.458120",
+        "name": "Nepalese",
+        "nationality": "Nepalese"
+    },
+    {
+        "docstatus": 0,
+        "doctype": "Nationality",
+        "is_saudi_arabia": 0,
+        "modified": "2024-11-18 11:44:13.471728",
+        "name": "Dutch",
+        "nationality": "Dutch"
+    },
+    {
+        "docstatus": 0,
+        "doctype": "Nationality",
+        "is_saudi_arabia": 0,
+        "modified": "2024-11-18 11:44:13.485153",
+        "name": "New Zealand",
+        "nationality": "New Zealand"
+    },
+    {
+        "docstatus": 0,
+        "doctype": "Nationality",
+        "is_saudi_arabia": 0,
+        "modified": "2024-11-18 11:44:13.498499",
+        "name": "Nicaraguan",
+        "nationality": "Nicaraguan"
+    },
+    {
+        "docstatus": 0,
+        "doctype": "Nationality",
+        "is_saudi_arabia": 0,
+        "modified": "2024-11-18 11:44:13.511859",
+        "name": "Nigerian",
+        "nationality": "Nigerian"
+    },
+    {
+        "docstatus": 0,
+        "doctype": "Nationality",
+        "is_saudi_arabia": 0,
+        "modified": "2024-11-18 11:44:13.524658",
+        "name": "Norwegian",
+        "nationality": "Norwegian"
+    },
+    {
+        "docstatus": 0,
+        "doctype": "Nationality",
+        "is_saudi_arabia": 0,
+        "modified": "2024-11-18 11:44:13.537824",
+        "name": "Pakistani",
+        "nationality": "Pakistani"
+    },
+    {
+        "docstatus": 0,
+        "doctype": "Nationality",
+        "is_saudi_arabia": 0,
+        "modified": "2024-11-18 11:44:13.551539",
+        "name": "Panamanian",
+        "nationality": "Panamanian"
+    },
+    {
+        "docstatus": 0,
+        "doctype": "Nationality",
+        "is_saudi_arabia": 0,
+        "modified": "2024-11-18 11:44:13.565005",
+        "name": "Paraguayan",
+        "nationality": "Paraguayan"
+    },
+    {
+        "docstatus": 0,
+        "doctype": "Nationality",
+        "is_saudi_arabia": 0,
+        "modified": "2024-11-18 11:44:13.578268",
+        "name": "Peruvian",
+        "nationality": "Peruvian"
+    },
+    {
+        "docstatus": 0,
+        "doctype": "Nationality",
+        "is_saudi_arabia": 0,
+        "modified": "2024-11-18 11:44:13.592205",
+        "name": "Philippine",
+        "nationality": "Philippine"
+    },
+    {
+        "docstatus": 0,
+        "doctype": "Nationality",
+        "is_saudi_arabia": 0,
+        "modified": "2024-11-18 11:44:13.605929",
+        "name": "Polish",
+        "nationality": "Polish"
+    },
+    {
+        "docstatus": 0,
+        "doctype": "Nationality",
+        "is_saudi_arabia": 0,
+        "modified": "2024-11-18 11:44:13.619740",
+        "name": "Portuguese",
+        "nationality": "Portuguese"
+    },
+    {
+        "docstatus": 0,
+        "doctype": "Nationality",
+        "is_saudi_arabia": 0,
+        "modified": "2024-11-18 11:44:13.632788",
+        "name": "Romanian",
+        "nationality": "Romanian"
+    },
+    {
+        "docstatus": 0,
+        "doctype": "Nationality",
+        "is_saudi_arabia": 0,
+        "modified": "2024-11-18 11:44:13.646701",
+        "name": "Russian",
+        "nationality": "Russian"
+    },
+    {
+        "docstatus": 0,
+        "doctype": "Nationality",
+        "is_saudi_arabia": 0,
+        "modified": "2024-11-18 11:44:13.674311",
+        "name": "Scottish",
+        "nationality": "Scottish"
+    },
+    {
+        "docstatus": 0,
+        "doctype": "Nationality",
+        "is_saudi_arabia": 0,
+        "modified": "2024-11-18 11:44:13.687943",
+        "name": "Senegalese",
+        "nationality": "Senegalese"
+    },
+    {
+        "docstatus": 0,
+        "doctype": "Nationality",
+        "is_saudi_arabia": 0,
+        "modified": "2024-11-18 11:44:13.701739",
+        "name": "Serbian",
+        "nationality": "Serbian"
+    },
+    {
+        "docstatus": 0,
+        "doctype": "Nationality",
+        "is_saudi_arabia": 0,
+        "modified": "2024-11-18 11:44:13.715713",
+        "name": "Singaporean",
+        "nationality": "Singaporean"
+    },
+    {
+        "docstatus": 0,
+        "doctype": "Nationality",
+        "is_saudi_arabia": 0,
+        "modified": "2024-11-18 11:44:13.729148",
+        "name": "Slovak",
+        "nationality": "Slovak"
+    },
+    {
+        "docstatus": 0,
+        "doctype": "Nationality",
+        "is_saudi_arabia": 0,
+        "modified": "2024-11-18 11:44:13.742113",
+        "name": "South African",
+        "nationality": "South African"
+    },
+    {
+        "docstatus": 0,
+        "doctype": "Nationality",
+        "is_saudi_arabia": 0,
+        "modified": "2024-11-18 11:44:13.755866",
+        "name": "Korean",
+        "nationality": "Korean"
+    },
+    {
+        "docstatus": 0,
+        "doctype": "Nationality",
+        "is_saudi_arabia": 0,
+        "modified": "2024-11-18 11:44:13.769621",
+        "name": "Spanish",
+        "nationality": "Spanish"
+    },
+    {
+        "docstatus": 0,
+        "doctype": "Nationality",
+        "is_saudi_arabia": 0,
+        "modified": "2024-11-18 11:44:13.783313",
+        "name": "Sri Lankan",
+        "nationality": "Sri Lankan"
+    },
+    {
+        "docstatus": 0,
+        "doctype": "Nationality",
+        "is_saudi_arabia": 0,
+        "modified": "2024-11-18 11:44:13.796272",
+        "name": "Sudanese",
+        "nationality": "Sudanese"
+    },
+    {
+        "docstatus": 0,
+        "doctype": "Nationality",
+        "is_saudi_arabia": 0,
+        "modified": "2024-11-18 11:44:13.810192",
+        "name": "Swedish",
+        "nationality": "Swedish"
+    },
+    {
+        "docstatus": 0,
+        "doctype": "Nationality",
+        "is_saudi_arabia": 0,
+        "modified": "2024-11-18 11:44:13.823949",
+        "name": "Swiss",
+        "nationality": "Swiss"
+    },
+    {
+        "docstatus": 0,
+        "doctype": "Nationality",
+        "is_saudi_arabia": 0,
+        "modified": "2024-11-18 11:44:13.842718",
+        "name": "Syrian",
+        "nationality": "Syrian"
+    },
+    {
+        "docstatus": 0,
+        "doctype": "Nationality",
+        "is_saudi_arabia": 0,
+        "modified": "2024-11-18 11:44:13.856713",
+        "name": "Taiwanese",
+        "nationality": "Taiwanese"
+    },
+    {
+        "docstatus": 0,
+        "doctype": "Nationality",
+        "is_saudi_arabia": 0,
+        "modified": "2024-11-18 11:44:13.870433",
+        "name": "Tajikistani",
+        "nationality": "Tajikistani"
+    },
+    {
+        "docstatus": 0,
+        "doctype": "Nationality",
+        "is_saudi_arabia": 0,
+        "modified": "2024-11-18 11:44:13.884085",
+        "name": "Thai",
+        "nationality": "Thai"
+    },
+    {
+        "docstatus": 0,
+        "doctype": "Nationality",
+        "is_saudi_arabia": 0,
+        "modified": "2024-11-18 11:44:13.897535",
+        "name": "Tongan",
+        "nationality": "Tongan"
+    },
+    {
+        "docstatus": 0,
+        "doctype": "Nationality",
+        "is_saudi_arabia": 0,
+        "modified": "2024-11-18 11:44:13.911118",
+        "name": "Tunisian",
+        "nationality": "Tunisian"
+    },
+    {
+        "docstatus": 0,
+        "doctype": "Nationality",
+        "is_saudi_arabia": 0,
+        "modified": "2024-11-18 11:44:13.925013",
+        "name": "Turkish",
+        "nationality": "Turkish"
+    },
+    {
+        "docstatus": 0,
+        "doctype": "Nationality",
+        "is_saudi_arabia": 0,
+        "modified": "2024-11-18 11:44:13.938752",
+        "name": "Ukrainian",
+        "nationality": "Ukrainian"
+    },
+    {
+        "docstatus": 0,
+        "doctype": "Nationality",
+        "is_saudi_arabia": 0,
+        "modified": "2024-11-18 11:44:13.952417",
+        "name": "Emirati",
+        "nationality": "Emirati"
+    },
+    {
+        "docstatus": 0,
+        "doctype": "Nationality",
+        "is_saudi_arabia": 0,
+        "modified": "2024-11-18 11:44:13.968573",
+        "name": "British",
+        "nationality": "British"
+    },
+    {
+        "docstatus": 0,
+        "doctype": "Nationality",
+        "is_saudi_arabia": 0,
+        "modified": "2024-11-18 11:44:14.000678",
+        "name": "Venezuelan",
+        "nationality": "Venezuelan"
+    },
+    {
+        "docstatus": 0,
+        "doctype": "Nationality",
+        "is_saudi_arabia": 0,
+        "modified": "2024-11-18 11:44:14.011908",
+        "name": "Vietnamese",
+        "nationality": "Vietnamese"
+    },
+    {
+        "docstatus": 0,
+        "doctype": "Nationality",
+        "is_saudi_arabia": 0,
+        "modified": "2024-11-18 11:44:14.022820",
+        "name": "Welsh",
+        "nationality": "Welsh"
+    },
+    {
+        "docstatus": 0,
+        "doctype": "Nationality",
+        "is_saudi_arabia": 0,
+        "modified": "2024-11-18 11:44:14.034139",
+        "name": "Zambian",
+        "nationality": "Zambian"
+    },
+    {
+        "docstatus": 0,
+        "doctype": "Nationality",
+        "is_saudi_arabia": 0,
+        "modified": "2024-11-18 11:44:14.045027",
+        "name": "Zimbabwean",
+        "nationality": "Zimbabwean"
+    },
+    {
+        "docstatus": 0,
+        "doctype": "Nationality",
+        "is_saudi_arabia": 1,
+        "modified": "2024-11-18 11:44:49.794426",
+        "name": "Saudi",
+        "nationality": "Saudi"
+    },
+    {
+        "docstatus": 0,
+        "doctype": "Nationality",
+        "is_saudi_arabia": 0,
+        "modified": "2024-11-18 11:44:13.989697",
+        "name": "Uruguayan",
+        "nationality": "Uruguayan"
+    }
+]
