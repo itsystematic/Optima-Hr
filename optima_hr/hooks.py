@@ -105,7 +105,7 @@ doctype_list_js = {
 # Name of the app being installed is passed as an argument
 
 # before_app_install = "optima_hr.utils.before_app_install"
-after_app_install = "optima_hr.utils.after_app_install"
+after_app_install = "optima_hr.install.after_app_install"
 
 # Integration Cleanup
 # -------------------
