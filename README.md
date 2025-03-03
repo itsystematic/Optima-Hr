@@ -86,7 +86,7 @@ Follow these steps to install **Optima HR** on your Frappe HRMS setup:
    ```
 3. Build the app:
    ```bash
-   bench build --app optima_hr
+   bench build --app Optima-Hr
    ```
 4. Restart the bench:
    ```bash
@@ -94,7 +94,7 @@ Follow these steps to install **Optima HR** on your Frappe HRMS setup:
    ```
 5. Install the app on your site:
    ```bash
-   bench --site [your.site.name] install-app optima_hr
+   bench --site [your.site.name] install-app Optima-Hr
    ```
 6. Run migrations:
    ```bash
