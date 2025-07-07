@@ -1,0 +1,129 @@
+{
+ "actions": [],
+ "allow_rename": 1,
+ "autoname": "field:device_id",
+ "creation": "2025-06-29 14:23:21.961998",
+ "doctype": "DocType",
+ "engine": "InnoDB",
+ "field_order": [
+  "disabled",
+  "device_id",
+  "ip",
+  "port",
+  "site_name",
+  "punch_direction",
+  "column_break_rvqi",
+  "clear_on_fetch",
+  "last_sync",
+  "branch",
+  "last_synced_record_datetime"
+ ],
+ "fields": [
+  {
+   "default": "0",
+   "fieldname": "disabled",
+   "fieldtype": "Check",
+   "label": "Disabled"
+  },
+  {
+   "fieldname": "device_id",
+   "fieldtype": "Data",
+   "label": "Name",
+   "unique": 1
+  },
+  {
+   "fieldname": "ip",
+   "fieldtype": "Data",
+   "in_list_view": 1,
+   "label": "Ip"
+  },
+  {
+   "default": "4370",
+   "fieldname": "port",
+   "fieldtype": "Int",
+   "label": "port"
+  },
+  {
+   "default": "Feedco",
+   "fieldname": "site_name",
+   "fieldtype": "Data",
+   "label": "Site Name"
+  },
+  {
+   "default": "AUTO",
+   "fieldname": "punch_direction",
+   "fieldtype": "Select",
+   "label": "Punch Direction",
+   "options": "AUTO\nIN\nOUT"
+  },
+  {
+   "default": "0",
+   "fieldname": "clear_on_fetch",
+   "fieldtype": "Check",
+   "label": "Clear on fetch"
+  },
+  {
+   "fieldname": "last_sync",
+   "fieldtype": "Datetime",
+   "in_list_view": 1,
+   "label": "Last Sync",
+   "read_only": 1
+  },
+  {
+   "fieldname": "branch",
+   "fieldtype": "Link",
+   "in_standard_filter": 1,
+   "label": "Branch",
+   "options": "Branch"
+  },
+  {
+   "fieldname": "last_synced_record_datetime",
+   "fieldtype": "Datetime",
+   "label": "Last Synced Record Datetime"
+  },
+  {
+   "fieldname": "column_break_rvqi",
+   "fieldtype": "Column Break"
+  }
+ ],
+ "grid_page_length": 50,
+ "index_web_pages_for_search": 1,
+ "links": [
+  {
+   "link_doctype": "Employee Checkin",
+   "link_fieldname": "device_id"
+  },
+  {
+   "link_doctype": "Machine Log",
+   "link_fieldname": "device"
+  },
+  {
+   "link_doctype": "Fingerprint Sync Log",
+   "link_fieldname": "fingerprint_device"
+  }
+ ],
+ "modified": "2025-06-29 14:49:10.177517",
+ "modified_by": "Administrator",
+ "module": "Optima Hr",
+ "name": "Fingerprint Machine",
+ "naming_rule": "By fieldname",
+ "owner": "Administrator",
+ "permissions": [
+  {
+   "create": 1,
+   "delete": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "System Manager",
+   "share": 1,
+   "write": 1
+  }
+ ],
+ "row_format": "Dynamic",
+ "sort_field": "modified",
+ "sort_order": "DESC",
+ "states": []
+}
