@@ -1,7 +1,7 @@
 import frappe
 from frappe.utils import nowdate, add_days
 
-def dail():
+def daily():
     """Daily task to delete old device logs."""
     delete_old_devices_logs()
 
