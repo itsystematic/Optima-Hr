@@ -239,7 +239,7 @@ def create_employee_checkin():
                 doc.log_type = log.log_type
                 doc.latitude = None
                 doc.longitude = None
-                doc.skip_auto_attendance = "0"
+                doc.skip_auto_attendance = 0
 
                 doc.fetch_shift()
 
