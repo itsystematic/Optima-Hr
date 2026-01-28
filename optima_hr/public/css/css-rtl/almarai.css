@@ -1,0 +1,22 @@
+@font-face {
+    font-family: "BlinkMacSystemFont";
+    src: url("Almarai-Regular.ttf");
+    font-weight: normal;
+    font-style: normal;
+}
+
+.chart-container {
+    position: relative;
+    /* for absolutely positioned tooltip */
+    font-family: -apple-system, BlinkMacSystemFont, "Almarai", "Segoe UI", "Roboto", "Oxygen", "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue", sans-serif;
+}
+
+:root,
+[data-theme="light"] {
+    --font-stack: "Inter", "-apple-system", "BlinkMacSystemFont", "Almarai", "Segoe UI", "Roboto", "Oxygen", "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue", sans-serif;
+}
+
+:root {
+    --font-family-sans-serif: -apple-system, BlinkMacSystemFont, "Almarai", "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+    --font-family-monospace: SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+}
