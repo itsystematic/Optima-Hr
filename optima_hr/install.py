@@ -15,6 +15,7 @@ def after_app_install(app_name) :
         return 
     
     delete_genders()
+    delete_conflicting_date_fields()
     add_standard_data()
     add_additional_fields()
 
@@ -26,7 +27,41 @@ def delete_genders():
     
     for gender in genders:
         if gender not in accepted:
-            frappe.delete_doc("Gender", gender , ignore_permissions=True)
+            # Update all linked records to None before deleting
+            for doctype in ['Customer', 'Employee', 'User', 'Lead', 'Contact']:
+                try:
+                    frappe.db.sql(f"""
+                        UPDATE `tab{doctype}` 
+                        SET gender = NULL 
+                        WHERE gender = %s
+                    """, (gender,))
+                except Exception:
+                    pass  # Table might not exist
+            
+            frappe.db.commit()
+            frappe.delete_doc("Gender", gender, ignore_permissions=True, force=True)
+
+
+def delete_conflicting_date_fields():
+    """Delete custom fields that have Data fieldtype but need to be Date"""
+    date_fields_to_delete = [
+        ('Employee', 'issue_date'),
+        ('Employee', 'expire_date'),
+    ]
+    
+    for doctype, fieldname in date_fields_to_delete:
+        try:
+            existing_field = frappe.db.get_value('Custom Field', 
+                {'dt': doctype, 'fieldname': fieldname}, 
+                ['name', 'fieldtype'], as_dict=True)
+            
+            if existing_field and existing_field.fieldtype == 'Data':
+                frappe.delete_doc('Custom Field', existing_field.name, 
+                    ignore_permissions=True, force=True)
+        except Exception:
+            pass
+    
+    frappe.db.commit()
 
 
 def add_standard_data() :
