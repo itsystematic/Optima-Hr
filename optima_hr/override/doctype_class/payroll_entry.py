@@ -22,7 +22,7 @@ class OptimaPayrollEntry(PayrollEntry):
 
         optima_setting = get_optima_hr_settings(self.company)
 
-        if optima_setting.components_accounts_distribution_per_party_in_payable_payroll:
+        if optima_setting and optima_setting.get("components_accounts_distribution_per_party_in_payable_payroll"):
             self.make_optima_accrual_jv_entry( submitted_salary_slips , optima_setting)
         
         else :
@@ -105,7 +105,7 @@ class OptimaPayrollEntry(PayrollEntry):
                 ),
                 submit_journal_entry=True,
                 submitted_salary_slips=submitted_salary_slips,
-                enable_submit = False if optima_setting.make_draft_journal_entry_for_payable_payroll else True
+                enable_submit = False if optima_setting.get("make_draft_journal_entry_for_payable_payroll") else True
             )
 
     def get_optima_salary_component_total(
