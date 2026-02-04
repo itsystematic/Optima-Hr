@@ -140,7 +140,7 @@ after_app_install = "optima_hr.install.after_app_install"
 override_doctype_class = {
     "Leave Allocation": "optima_hr.override.doctype_class.leave_allocation.OptimaLeaveAllocation",
     "Additional Salary": "optima_hr.override.doctype_class.additional_salary.CustomAdditionalSalary",
-    "Payment Entry": "optima_hr.override.doctype_class.payment_entry.OptimaPaymentEntry",
+    # "Payment Entry": "optima_hr.override.doctype_class.payment_entry.OptimaPaymentEntry",  # Moved to cheque app
     "Salary Slip": "optima_hr.override.doctype_class.salary_slip.CustomSalarySlip",
     "Employee Checkin": "optima_hr.override.doctype_class.employee_checkin.CustomEmployeeCheckin", 
     "Shift Type": "optima_hr.override.doctype_class.shift_type.OptimaShiftType",
