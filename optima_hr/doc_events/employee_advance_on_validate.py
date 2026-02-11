@@ -13,6 +13,10 @@ def employee_advance_on_validate(doc, method):
 def validate_advance_amount_against_allowed_percentage(doc): 
     """Validate that advance amount does not exceed allowed percentage of basic salary"""
     
+    # Check if the custom field exists
+    if not frappe.db.has_column("Employee", "employee_advance_allowed"):
+        return
+    
     # Get employee advance allowed percentage
     employee_advance_allowed = frappe.db.get_value("Employee", doc.employee, "employee_advance_allowed")
     
