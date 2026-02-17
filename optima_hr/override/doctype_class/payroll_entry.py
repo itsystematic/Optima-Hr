@@ -290,8 +290,8 @@ class OptimaPayrollEntry(PayrollEntry):
         voucher_type="Journal Entry",
         user_remark="",
         submitted_salary_slips: list | None = None,
-        submit_journal_entry=False,
-        enable_submit = True
+        submit_journal_entry=True,
+        employee_wise_accounting_enabled=False,
     ) -> str:
         multi_currency = 0
         if len(currencies) > 1:
@@ -302,6 +302,9 @@ class OptimaPayrollEntry(PayrollEntry):
         journal_entry.user_remark = user_remark
         journal_entry.company = self.company
         journal_entry.posting_date = self.posting_date
+        journal_entry.cheque_no = self.name
+        journal_entry.cheque_date = self.posting_date
+        journal_entry.party_not_required = True if not employee_wise_accounting_enabled else False
 
         journal_entry.set("accounts", accounts)
         journal_entry.multi_currency = multi_currency
@@ -312,8 +315,19 @@ class OptimaPayrollEntry(PayrollEntry):
         journal_entry.save(ignore_permissions=True)
 
         try:
-            if submit_journal_entry and enable_submit: 
-                journal_entry.submit()
+            # Check optima settings for draft journal entry preference
+            optima_setting = get_optima_hr_settings(self.company)
+            make_draft = optima_setting and optima_setting.get("make_draft_journal_entry_for_payable_payroll")
+
+            if submit_journal_entry and make_draft == False:
+                try:
+
+                    journal_entry.submit()
+                    
+                except Exception as submit_error:
+                    frappe.msgprint(f"Warning: Could not submit Journal Entry. Error: {str(submit_error)}")
+                    raise
+
 
             if submitted_salary_slips:
                 self.set_journal_entry_in_salary_slips(submitted_salary_slips, jv_name=journal_entry.name)
