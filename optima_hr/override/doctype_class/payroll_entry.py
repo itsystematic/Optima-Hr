@@ -105,7 +105,6 @@ class OptimaPayrollEntry(PayrollEntry):
                 ),
                 submit_journal_entry=True,
                 submitted_salary_slips=submitted_salary_slips,
-                enable_submit = False if optima_setting.get("make_draft_journal_entry_for_payable_payroll") else True
             )
 
     def get_optima_salary_component_total(
