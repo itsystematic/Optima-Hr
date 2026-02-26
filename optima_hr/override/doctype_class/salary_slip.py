@@ -8,6 +8,17 @@ from optima_hr.optima_hr.utils import allow_edit_salary_slip
 
 class CustomSalarySlip(SalarySlip):
     
+    '''
+    20/2/2026
+    
+    this class for :
+            - Allow to Edit Salary Slip for specific users based on setting
+            - working_days = 30
+            - Calculate Employee Advance Deduction Based on Received Amount and Return Amount and Claimed Amount
+            - Calculate Custom Cost To Company CTC Based on Custom Field in Salary Component and Salary Slip
+    '''
+
+    
     @allow_edit_salary_slip
     def calculate_net_pay(self, skip_tax_breakup_computation: bool = False):
         def set_gross_pay_and_base_gross_pay():

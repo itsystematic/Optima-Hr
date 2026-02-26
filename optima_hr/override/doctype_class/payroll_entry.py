@@ -10,12 +10,15 @@ from hrms.payroll.doctype.payroll_entry.payroll_entry import PayrollEntry , get_
 class OptimaPayrollEntry(PayrollEntry):
 
     """ 
+    26-02-2026
+    
         Override PayrollEntry make_accrual_jv_entry 
             - Optima Payroll Entry Work if Enable In Setting 
 
-        This Updates in Payroll Entry alone not in Payroll Entry
-        This Additions not in Payroll Entry 
-    
+        This Additions not in orginal Payroll Entry 
+                - Employee Wise Accounting Entries for Earnings and Deductions if Enable in Setting
+                - Cost Center Wise Distribution of Earnings and Deductions if Enable in Setting
+                - Option to Make Draft Journal Entry for Payable Payroll
     """
 
     def make_accrual_jv_entry(self , submitted_salary_slips):

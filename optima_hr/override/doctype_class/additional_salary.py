@@ -3,16 +3,26 @@ import frappe
 from frappe import _
 
 class CustomAdditionalSalary(AdditionalSalary):
+    
+    '''
+    26/02/2026
+    
+    This class for :
+            - Allow multi additional salary (employee advance) in the same month by the same component
+            - Disable Update  TO make sure return amount get from gl not just from additional salary doctype to avoid any mismatch
+            - Validate Amount wise advance amount
+    '''
+    
     def validate(self):
         super().validate()
         self.validate_amount_wise_advance_amount()
 
     def validate_recurring_additional_salary_overlap(self):
-        """ pass it for now to allow multi additional salary for same month"""
+        """ pass it for now to allow multi additional salary (employee advance) in the same month by the same component """
         pass
 
     def update_return_amount_in_employee_advance(self) :
-        """ Disable Update  TO make sure return amount get from gl """
+        """ Disable Update  TO make sure return amount get from gl not just from additional salary doctype to avoid any mismatch """
         pass
 
 
