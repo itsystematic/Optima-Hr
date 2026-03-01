@@ -17,8 +17,67 @@ class CustomSalarySlip(SalarySlip):
             - Calculate Employee Advance Deduction Based on Received Amount and Return Amount and Claimed Amount
             - Calculate Custom Cost To Company CTC Based on Custom Field in Salary Component and Salary Slip
     '''
-
     
+    
+    def validate(self):
+        super().validate()
+        self.validate_conponent_amount_wise_employee_advance()
+    
+    def validate_conponent_amount_wise_employee_advance(self):
+        """
+        Efficiently validate that employee advance deduction does not exceed outstanding amount.
+        Batch fetches Additional Salary and Employee Advance documents for performance.
+        """
+
+        # Collect all additional_salary references from deduction rows
+        additional_salary_names = [row.additional_salary for row in self.deductions if row.additional_salary and row.amount > 0]
+        if not additional_salary_names:
+            return
+        # Fetch all Additional Salary docs in one go
+        additional_salary_docs = frappe.get_all(
+            "Additional Salary",
+            filters={"name": ["in", additional_salary_names]},
+            fields=["name", "ref_doctype", "ref_docname"]
+        )
+        additional_salary_map = {d["name"]: d for d in additional_salary_docs}
+
+        # Collect all Employee Advance docnames needed
+        employee_advance_names = set()
+        for d in additional_salary_docs:
+            if d["ref_doctype"] == "Employee Advance" and d["ref_docname"]:
+                employee_advance_names.add(d["ref_docname"])
+
+        # Fetch all Employee Advance docs in one go
+        employee_advance_docs = {}
+        if employee_advance_names:
+            advance_list = frappe.get_all(
+                "Employee Advance",
+                filters={"name": ["in", list(employee_advance_names)]},
+                fields=["name", "paid_amount", "return_amount", "claimed_amount"]
+            )
+            employee_advance_docs = {d["name"]: d for d in advance_list}
+        # Validate each deduction row
+        for row in self.deductions:
+            if row.additional_salary and row.amount > 0:
+                add_sal = additional_salary_map.get(row.additional_salary)
+                if not add_sal:
+                    continue  # skip if not found
+
+                if add_sal["ref_doctype"] == "Employee Advance" and add_sal["ref_docname"]:
+                    adv_doc = employee_advance_docs.get(add_sal["ref_docname"])
+                    if not adv_doc:
+                        continue  # skip if not found
+                    
+                    total_receieved_amount = flt(adv_doc.get("paid_amount")) - (flt(adv_doc.get("return_amount")) + flt(adv_doc.get("claimed_amount")))
+                    if row.amount > total_receieved_amount:
+                        frappe.throw(
+                            _(
+                                "It seems that the amount not valid for this advance, Please check the advance amount in Employee Advance {0}"
+                            ).format(add_sal["ref_docname"])
+                        )
+                        
+                        
+                        
     @allow_edit_salary_slip
     def calculate_net_pay(self, skip_tax_breakup_computation: bool = False):
         def set_gross_pay_and_base_gross_pay():
