@@ -1,0 +1,72 @@
+{
+ "actions": [],
+ "allow_rename": 1,
+ "creation": "2026-03-01 10:18:06.093787",
+ "doctype": "DocType",
+ "editable_grid": 1,
+ "engine": "InnoDB",
+ "field_order": [
+  "employee",
+  "present",
+  "overtime",
+  "deduction",
+  "employee_project"
+ ],
+ "fields": [
+  {
+   "fieldname": "employee",
+   "fieldtype": "Link",
+   "in_list_view": 1,
+   "in_standard_filter": 1,
+   "label": "Employee",
+   "options": "Employee",
+   "reqd": 1
+  },
+  {
+   "default": "1",
+   "fieldname": "present",
+   "fieldtype": "Check",
+   "in_list_view": 1,
+   "in_standard_filter": 1,
+   "label": "Present"
+  },
+  {
+   "fieldname": "overtime",
+   "fieldtype": "Select",
+   "in_list_view": 1,
+   "label": "Overtime",
+   "options": "\n1\n2\n3\n4\n5\n6\n7\n8"
+  },
+  {
+   "fieldname": "deduction",
+   "fieldtype": "Select",
+   "in_list_view": 1,
+   "label": "Deduction",
+   "options": "\n1\n2\n3\n4\n5\n6\n7\n8"
+  },
+  {
+   "fetch_from": "employee.custom_employee_project",
+   "fieldname": "employee_project",
+   "fieldtype": "Link",
+   "label": "Employee Project",
+   "options": "Employee Project",
+   "read_only": 1,
+   "reqd": 1
+  }
+ ],
+ "grid_page_length": 50,
+ "index_web_pages_for_search": 1,
+ "istable": 1,
+ "links": [],
+ "modified": "2026-03-06 17:50:14.704746",
+ "modified_by": "Administrator",
+ "module": "Optima Hr",
+ "name": "Daily Checklist Details",
+ "owner": "Administrator",
+ "permissions": [],
+ "row_format": "Dynamic",
+ "rows_threshold_for_grid_search": 20,
+ "sort_field": "modified",
+ "sort_order": "DESC",
+ "states": []
+}
