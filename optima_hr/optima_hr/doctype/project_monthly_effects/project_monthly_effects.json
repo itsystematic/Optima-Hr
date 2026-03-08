@@ -1,5 +1,6 @@
 {
  "actions": [],
+ "allow_import": 1,
  "allow_rename": 1,
  "autoname": "format:{employee_project}-{month}",
  "creation": "2026-03-01 10:27:48.150070",
@@ -83,7 +84,7 @@
  "index_web_pages_for_search": 1,
  "is_submittable": 1,
  "links": [],
- "modified": "2026-03-07 00:25:21.649603",
+ "modified": "2026-03-08 10:26:02.175056",
  "modified_by": "Administrator",
  "module": "Optima Hr",
  "name": "Project Monthly Effects",
@@ -99,6 +100,22 @@
    "read": 1,
    "report": 1,
    "role": "System Manager",
+   "share": 1,
+   "submit": 1,
+   "write": 1
+  },
+  {
+   "amend": 1,
+   "cancel": 1,
+   "create": 1,
+   "email": 1,
+   "export": 1,
+   "import": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "HR Manager",
+   "select": 1,
    "share": 1,
    "submit": 1,
    "write": 1
