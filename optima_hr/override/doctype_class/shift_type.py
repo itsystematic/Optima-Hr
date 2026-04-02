@@ -3,24 +3,16 @@ from hrms.hr.doctype.shift_type.shift_type import ShiftType
 from itertools import groupby
 from frappe.utils import cint, create_batch
 from hrms.hr.doctype.employee_checkin.employee_checkin import (
-	calculate_working_hours,
 	mark_attendance_and_link_log,
 )
-# from optima_hr.optima_hr.utils import get_company_setting_with_employee
-
 
 EMPLOYEE_CHUNK_SIZE = 50
 
-
 class OptimaShiftType(ShiftType) :
-
-    
-
     """
     Override the get_employee_checkins method of ShiftType
     """
-    
-    
+
     @frappe.whitelist()
     def process_auto_attendance(self):
 
@@ -77,8 +69,8 @@ class OptimaShiftType(ShiftType) :
                 self.mark_absent_for_dates_with_no_attendance(employee)
 
             frappe.db.commit()  # nosemgrep
-        
-            
+
+
     def get_employee_checkins(self , skip_employee=None) -> list[dict]:
         
         employee = frappe.qb.DocType("Employee")
@@ -116,10 +108,11 @@ class OptimaShiftType(ShiftType) :
 
 def get_skip_employees() :
 
-    return frappe.db.sql("""
-
+    return frappe.db.sql(
+        """
         SELECT se.employee
         FROM `tabOptima HR Setting` ohs
         INNER JOIN `tabSet Employee Absent` se
         WHERE ohs.skip_employee = 1
-    """ ,pluck=True)
+        """ , pluck=True
+    )
