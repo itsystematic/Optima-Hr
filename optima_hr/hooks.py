@@ -171,7 +171,7 @@ scheduler_events = {
     "cron": {
         # "0 0 1 * *": "optima_hr.tasks.cron.make_attendance_absent_for_unmarked_employee",
         "*/15 * * * *": [
-            "optima_hr.fingerprint.utils.create_employee_checkin",
+            "optima_hr.fingerprint.api.create_employee_checkin",
         ],
     },
 # 	"all": [
