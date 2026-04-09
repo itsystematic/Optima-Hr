@@ -168,7 +168,7 @@ doc_events = {
 # ---------------
 
 scheduler_events = {
-    "Cron": {
+    "cron": {
         # "0 0 1 * *": "optima_hr.tasks.cron.make_attendance_absent_for_unmarked_employee",
         "0 0,8,16 * * *": "optima_hr.fingerprint.utils.create_employee_checkin",
     },
