@@ -69,6 +69,7 @@ def sync_employee_checkins():
             checkin.fetch_shift()
             checkin.insert()
 
+            # Machine logs are the source of truth for retry state, not Employee Checkin rows.
             processed_log_names.append(log.name)
             _track_device_last_sync(device_sync_updates, log.device, log.timestamp)
             _track_shift_last_sync(shift_sync_updates, checkin.shift, checkin.shift_actual_end)
@@ -91,6 +92,7 @@ def _mark_machine_logs_processed(processed_log_names):
     if not processed_log_names:
         return
 
+    # Batch update keeps one sync run from doing hundreds of small writes.
     frappe.db.sql(
         """
         UPDATE `tabMachine Log`

@@ -10,6 +10,7 @@ from optima_hr.fingerprint.services.machine_log import (
 
 @frappe.whitelist()
 def create_machine_log(enroll_no, timestamp, device_id, punch_code, batch_id=None, force_create=False):
+    # Keep the API thin so business rules stay testable outside the transport layer.
     return create_machine_log_service(
         enroll_no=enroll_no,
         timestamp=timestamp,
@@ -27,6 +28,7 @@ def create_bulk_machine_logs(logs_data):
 
 @frappe.whitelist()
 def create_employee_checkin():
+    # Scheduler and UI both enter through one route to avoid drift in sync behavior.
     return sync_employee_checkins()
 
 

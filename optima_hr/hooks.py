@@ -202,9 +202,13 @@ scheduler_events = {
 # Overriding Methods
 # ------------------------------
 #
-# override_whitelisted_methods = {
-# 	"frappe.desk.doctype.event.event.get_events": "optima_hr.event.get_events"
-# }
+override_whitelisted_methods = {
+    # Keep old device executables working after fingerprint moved out of hr_ksa.
+    "hr_ksa.fingerprint.utils.create_machine_log": "optima_hr.fingerprint.api.create_machine_log",
+    "hr_ksa.fingerprint.utils.create_bulk_machine_logs": "optima_hr.fingerprint.api.create_bulk_machine_logs",
+    "hr_ksa.fingerprint.utils.create_employee_checkin": "optima_hr.fingerprint.api.create_employee_checkin",
+    "hr_ksa.fingerprint.utils.update_lastsynced_recodrd_log_timestamp": "optima_hr.fingerprint.api.update_lastsynced_recodrd_log_timestamp",
+}
 #
 # each overriding function accepts a `data` argument;
 # generated from the base implementation of the doctype dashboard,
