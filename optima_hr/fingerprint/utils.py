@@ -202,68 +202,147 @@ def _get_device_config(device_id):
         return None
     
     
-@frappe.whitelist(allow_guest=True)
+@frappe.whitelist()
 def create_employee_checkin():
-    logs = frappe.db.sql("""
+    """Convert unprocessed Machine Log entries to Employee Checkin records."""
+    limit_count = 200
+    machine_logs = frappe.db.sql(
+        """
         SELECT name, employee, time as timestamp, type as log_type, device
         FROM `tabMachine Log`
         WHERE employee IS NOT NULL AND employee_check_in_created = 0
-        ORDER BY time
-    """, as_dict=True)
+        ORDER BY time ASC
+        LIMIT %(limit)s
+        """,
+        {"limit": limit_count},
+        as_dict=True,
+    )
+
+    if not machine_logs:
+        return
 
     failed_logs = []
+    processed_log_names = []
+    shift_sync_updates = {}
+    device_sync_updates = {}
 
-    # Track the last successful timestamp for creating check-ins
-    last_successful_timestamp = None
-
-    for log in logs:
+    for log in machine_logs:
         try:
             employee = frappe.get_doc("Employee", log.employee)
+            if frappe.db.get_value("Employee", employee.name, "status") != "Active":
+                continue
 
-            if frappe.db.get_value("Employee", employee.name, "status") == "Active":
-                # Check for existing checkin with same employee, time, and type
-                exists = frappe.db.exists("Employee Checkin", {
+            existing_checkin = frappe.db.exists(
+                "Employee Checkin",
+                {
                     "employee": log.employee,
                     "time": log.timestamp,
-                    "log_type": log.log_type
-                })
+                    "log_type": log.log_type,
+                },
+            )
 
-                if exists:
-                    continue  # Skip if already exists
+            if existing_checkin:
+                processed_log_names.append(log.name)
+                _track_device_last_sync(device_sync_updates, log.device, log.timestamp)
 
-                doc = frappe.new_doc("Employee Checkin")
-                doc.employee = employee.name
-                doc.employee_name = employee.employee_name
-                doc.time = last_successful_timestamp = log.timestamp
-                doc.device_id = log.device
-                doc.log_type = log.log_type
-                doc.latitude = None
-                doc.longitude = None
-                doc.skip_auto_attendance = 0
+                existing_checkin_details = frappe.db.get_value(
+                    "Employee Checkin",
+                    existing_checkin,
+                    ["shift", "shift_actual_end"],
+                    as_dict=True,
+                )
+                if existing_checkin_details:
+                    _track_shift_last_sync(
+                        shift_sync_updates,
+                        existing_checkin_details.shift,
+                        existing_checkin_details.shift_actual_end,
+                    )
+                continue
 
-                doc.fetch_shift()
+            doc = frappe.new_doc("Employee Checkin")
+            doc.employee = employee.name
+            doc.employee_name = employee.employee_name
+            doc.time = log.timestamp
+            doc.device_id = log.device
+            doc.log_type = log.log_type
+            doc.latitude = None
+            doc.longitude = None
+            doc.skip_auto_attendance = 0
 
-                doc.insert()
+            doc.fetch_shift()
+            doc.insert()
 
-                frappe.db.sql("""
-                    UPDATE `tabMachine Log`
-                    SET employee_check_in_created = 1
-                    WHERE name = %s
-                """, (log.name,))
-                frappe.db.commit()
-                frappe.msgprint(_("Check-in created for {0} at {1}").format(employee.employee_name, log.timestamp))
-        
+            processed_log_names.append(log.name)
+            _track_device_last_sync(device_sync_updates, log.device, log.timestamp)
+            _track_shift_last_sync(shift_sync_updates, doc.shift, doc.shift_actual_end)
+
         except Exception as e:
             failed_logs.append(f"[{log.name}] {str(e)}")
 
-        if failed_logs:
-            frappe.log_error(
-                title="Employee Checkin Creation Errors",
-                message="Failed Logs:\n" + "\n".join(failed_logs)
-            )
+    if processed_log_names:
+        frappe.db.sql(
+            """
+            UPDATE `tabMachine Log`
+            SET employee_check_in_created = 1
+            WHERE name IN ({})
+            """.format(",".join(["%s"] * len(processed_log_names))),
+            processed_log_names,
+        )
+        frappe.db.commit()
 
-        if last_successful_timestamp: # Track last Check-in creation timestamp from Machine Logs
-            frappe.db.set_value("Fingerprint Machine", doc.device_id, "last_sync", last_successful_timestamp)
+    _update_shift_last_syncs(shift_sync_updates)
+    _update_fingerprint_machine_last_syncs(device_sync_updates)
+
+    if failed_logs:
+        frappe.log_error(
+            title="Employee Checkin Creation Errors",
+            message="Failed Logs:\n" + "\n".join(failed_logs),
+        )
+
+
+def _track_shift_last_sync(shift_sync_updates, shift_name, shift_actual_end):
+    if not shift_name or not shift_actual_end:
+        return
+
+    new_sync_time = get_datetime(shift_actual_end) + timedelta(minutes=1)
+    current_sync_time = shift_sync_updates.get(shift_name)
+
+    if not current_sync_time or new_sync_time > current_sync_time:
+        shift_sync_updates[shift_name] = new_sync_time
+
+
+def _track_device_last_sync(device_sync_updates, device_id, timestamp):
+    if not device_id or not timestamp:
+        return
+
+    sync_time = get_datetime(timestamp)
+    current_sync_time = device_sync_updates.get(device_id)
+
+    if not current_sync_time or sync_time > current_sync_time:
+        device_sync_updates[device_id] = sync_time
+
+
+def _update_shift_last_syncs(shift_sync_updates):
+    for shift_name, max_timestamp in shift_sync_updates.items():
+        try:
+            current_last_sync = frappe.db.get_value("Shift Type", shift_name, "last_sync_of_checkin")
+            if not current_last_sync or get_datetime(max_timestamp) > get_datetime(current_last_sync):
+                frappe.db.set_value("Shift Type", shift_name, "last_sync_of_checkin", max_timestamp)
+                frappe.logger().info(
+                    f"[FINGERPRINT] Updated last sync for shift {shift_name} to {max_timestamp}"
+                )
+        except Exception as e:
+            frappe.log_error(f"Error updating shift sync for {shift_name}: {str(e)}")
+
+
+def _update_fingerprint_machine_last_syncs(device_sync_updates):
+    for device_id, max_timestamp in device_sync_updates.items():
+        try:
+            current_last_sync = frappe.db.get_value("Fingerprint Machine", device_id, "last_sync")
+            if not current_last_sync or get_datetime(max_timestamp) > get_datetime(current_last_sync):
+                frappe.db.set_value("Fingerprint Machine", device_id, "last_sync", max_timestamp)
+        except Exception as e:
+            frappe.log_error(f"Error updating machine sync for {device_id}: {str(e)}")
 
 
 @frappe.whitelist()
