@@ -173,6 +173,9 @@ scheduler_events = {
         "*/15 * * * *": [
             "optima_hr.fingerprint.api.create_employee_checkin",
         ],
+        "1 0 * * *": [
+            "optima_hr.tasks.daily.daily_allocate_earned_leaves",
+        ],
     },
 # 	"all": [
 # 		"optima_hr.tasks.all"
@@ -189,11 +192,6 @@ scheduler_events = {
 # 	"monthly": [
 # 		"optima_hr.tasks.monthly"
 # 	],
-    "cron" : {
-        "1 0 * * *": [
-            "optima_hr.tasks.daily.daily_allocate_earned_leaves",
-        ]
-    }
 }
 
 # Testing
