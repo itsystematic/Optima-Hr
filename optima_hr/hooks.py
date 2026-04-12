@@ -140,7 +140,6 @@ after_app_install = "optima_hr.install.after_app_install"
 override_doctype_class = {
     "Leave Allocation": "optima_hr.override.doctype_class.leave_allocation.OptimaLeaveAllocation",
     "Additional Salary": "optima_hr.override.doctype_class.additional_salary.CustomAdditionalSalary",
-    # "Payment Entry": "optima_hr.override.doctype_class.payment_entry.OptimaPaymentEntry",  # Moved to cheque app
     "Salary Slip": "optima_hr.override.doctype_class.salary_slip.CustomSalarySlip",
     "Employee Checkin": "optima_hr.override.doctype_class.employee_checkin.CustomEmployeeCheckin", 
     "Payroll Entry": "optima_hr.override.doctype_class.payroll_entry.OptimaPayrollEntry",
@@ -168,7 +167,6 @@ doc_events = {
 
 scheduler_events = {
     "cron": {
-        # "0 0 1 * *": "optima_hr.tasks.cron.make_attendance_absent_for_unmarked_employee",
         "*/15 * * * *": [ # Every 15 minutes, to keep up with frequent check-ins and avoid long syncs.
             "optima_hr.fingerprint.api.create_employee_checkin",
         ],
