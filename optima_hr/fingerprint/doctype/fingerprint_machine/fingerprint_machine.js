@@ -9,14 +9,11 @@ frappe.ui.form.on("Fingerprint Machine", {
             frappe.call({
                 method: 'optima_hr.fingerprint.api.create_employee_checkin',
                 callback: function (r) {
-                    frappe.msgprint(__('Employee check-ins created successfully.'));
+                    frappe.msgprint(__(r.message));
                 },
-                error: function () {
-                    frappe.msgprint(__('Failed to create check-ins.'));
+                error: function (r) {
+                    frappe.msgprint(__(r.message));
                 },
-                always: function () {
-                    frappe.hide_alert();
-                }
             });
         });
 	},
