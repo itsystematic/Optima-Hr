@@ -7,7 +7,7 @@ frappe.ui.form.on("Fingerprint Machine", {
             frappe.show_alert({ message: __('Processing check-ins...'), indicator: 'blue' });
 
             frappe.call({
-                method: 'optima_hr.fingerprint.utils.create_employee_checkin',
+                method: 'optima_hr.fingerprint.api.create_employee_checkin',
                 callback: function (r) {
                     frappe.msgprint(__('Employee check-ins created successfully.'));
                 },

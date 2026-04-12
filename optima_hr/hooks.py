@@ -143,7 +143,6 @@ override_doctype_class = {
     # "Payment Entry": "optima_hr.override.doctype_class.payment_entry.OptimaPaymentEntry",  # Moved to cheque app
     "Salary Slip": "optima_hr.override.doctype_class.salary_slip.CustomSalarySlip",
     "Employee Checkin": "optima_hr.override.doctype_class.employee_checkin.CustomEmployeeCheckin", 
-    "Shift Type": "optima_hr.override.doctype_class.shift_type.OptimaShiftType",
     "Payroll Entry": "optima_hr.override.doctype_class.payroll_entry.OptimaPayrollEntry",
     "Leave Policy Assignment": "optima_hr.override.doctype_class.leave_policy_assignment.OptimaHRLeavePolicyAssignment",
 }
@@ -168,9 +167,14 @@ doc_events = {
 # ---------------
 
 scheduler_events = {
-    "Cron": {
+    "cron": {
         # "0 0 1 * *": "optima_hr.tasks.cron.make_attendance_absent_for_unmarked_employee",
-        "0 0,8,16 * * *": "optima_hr.fingerprint.utils.create_employee_checkin",
+        "*/15 * * * *": [ # Every 15 minutes, to keep up with frequent check-ins and avoid long syncs.
+            "optima_hr.fingerprint.api.create_employee_checkin",
+        ],
+        "1 0 * * *": [
+            "optima_hr.tasks.daily.daily_allocate_earned_leaves",
+        ],
     },
 # 	"all": [
 # 		"optima_hr.tasks.all"
@@ -187,11 +191,6 @@ scheduler_events = {
 # 	"monthly": [
 # 		"optima_hr.tasks.monthly"
 # 	],
-    "cron" : {
-        "1 0 * * *": [
-            "optima_hr.tasks.daily.daily_allocate_earned_leaves",
-        ]
-    }
 }
 
 # Testing
@@ -202,9 +201,13 @@ scheduler_events = {
 # Overriding Methods
 # ------------------------------
 #
-# override_whitelisted_methods = {
-# 	"frappe.desk.doctype.event.event.get_events": "optima_hr.event.get_events"
-# }
+override_whitelisted_methods = {
+    # Keep old device executables working after fingerprint moved out of hr_ksa.
+    "hr_ksa.fingerprint.utils.create_machine_log": "optima_hr.fingerprint.api.create_machine_log",
+    "hr_ksa.fingerprint.utils.create_bulk_machine_logs": "optima_hr.fingerprint.api.create_bulk_machine_logs",
+    "hr_ksa.fingerprint.utils.create_employee_checkin": "optima_hr.fingerprint.api.create_employee_checkin",
+    "hr_ksa.fingerprint.utils.update_lastsynced_recodrd_log_timestamp": "optima_hr.fingerprint.api.update_lastsynced_recodrd_log_timestamp",
+}
 #
 # each overriding function accepts a `data` argument;
 # generated from the base implementation of the doctype dashboard,
