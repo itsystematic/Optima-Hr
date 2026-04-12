@@ -1,7 +1,9 @@
-from datetime import timedelta
-
 import frappe
 from frappe.utils import get_datetime
+
+from datetime import timedelta
+
+from hrms.hr.doctype.shift_assignment.shift_assignment import get_actual_start_end_datetime_of_shift
 
 
 def sync_employee_checkins():
@@ -12,7 +14,7 @@ def sync_employee_checkins():
         SELECT name, employee, time AS timestamp, type AS log_type, device
         FROM `tabMachine Log`
         WHERE employee IS NOT NULL AND employee_check_in_created = 0
-        ORDER BY time ASC
+        ORDER BY time DESC
         LIMIT %(limit)s
         """,
         {"limit": limit_count},
@@ -20,12 +22,15 @@ def sync_employee_checkins():
     )
 
     if not machine_logs:
-        return
+        return "No pending machine logs were found."
 
     failed_logs = []
     processed_log_names = []
     shift_sync_updates = {}
     device_sync_updates = {}
+    skipped_no_shift_logs = []
+    created_count = 0
+    duplicate_count = 0
 
     for log in machine_logs:
         try:
@@ -39,6 +44,7 @@ def sync_employee_checkins():
             )
             if existing_checkin:
                 processed_log_names.append(log.name)
+                duplicate_count += 1
                 # Duplicate checkins should still retire their source machine log.
                 _track_device_last_sync(device_sync_updates, log.device, log.timestamp)
 
@@ -56,6 +62,13 @@ def sync_employee_checkins():
                     )
                 continue
 
+            # Missing historic shifts should not block newer valid logs in the same queue.
+            if not get_actual_start_end_datetime_of_shift(employee.name, get_datetime(log.timestamp), True):
+                skipped_no_shift_logs.append(
+                    f"[{log.name}] {employee.employee_name} @ {log.timestamp}"
+                )
+                continue
+
             checkin = frappe.new_doc("Employee Checkin")
             checkin.employee = employee.name
             checkin.employee_name = employee.employee_name
@@ -71,6 +84,7 @@ def sync_employee_checkins():
 
             # Machine logs are the source of truth for retry state, not Employee Checkin rows.
             processed_log_names.append(log.name)
+            created_count += 1
             _track_device_last_sync(device_sync_updates, log.device, log.timestamp)
             _track_shift_last_sync(shift_sync_updates, checkin.shift, checkin.shift_actual_end)
 
@@ -86,6 +100,19 @@ def sync_employee_checkins():
             title="Employee Checkin Creation Errors",
             message="Failed Logs:\n" + "\n".join(failed_logs),
         )
+
+    if skipped_no_shift_logs:
+        frappe.logger().info(
+            "[FINGERPRINT] Skipped logs without shift assignment:\n" + "\n".join(skipped_no_shift_logs)
+        )
+
+    return _build_sync_summary(
+        total_logs=len(machine_logs),
+        created_count=created_count,
+        duplicate_count=duplicate_count,
+        skipped_no_shift_count=len(skipped_no_shift_logs),
+        failed_count=len(failed_logs),
+    )
 
 
 def _mark_machine_logs_processed(processed_log_names):
@@ -149,3 +176,18 @@ def _update_fingerprint_machine_last_syncs(device_sync_updates):
                 frappe.db.set_value("Fingerprint Machine", device_id, "last_sync", max_timestamp)
         except Exception as e:
             frappe.log_error(f"Error updating machine sync for {device_id}: {str(e)}")
+
+
+def _build_sync_summary(total_logs, created_count, duplicate_count, skipped_no_shift_count, failed_count):
+    parts = [f"Processed {total_logs} logs."]
+
+    if created_count:
+        parts.append(f"Created {created_count} check-ins.")
+    if duplicate_count:
+        parts.append(f"Marked {duplicate_count} duplicate logs as processed.")
+    if skipped_no_shift_count:
+        parts.append(f"Skipped {skipped_no_shift_count} logs with no shift assignment.")
+    if failed_count:
+        parts.append(f"{failed_count} logs still failed. Check Error Log for details.")
+
+    return "\n".join(parts)
