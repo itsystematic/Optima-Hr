@@ -2,7 +2,7 @@
  "actions": [],
  "allow_import": 1,
  "allow_rename": 1,
- "autoname": "format:{employee_project}-{month}",
+ "autoname": "format:PE{##}/{month}-{YY}",
  "creation": "2026-03-01 10:27:48.150070",
  "doctype": "DocType",
  "engine": "InnoDB",
@@ -51,8 +51,7 @@
    "in_list_view": 1,
    "label": "Employee Project",
    "options": "Employee Project",
-   "read_only": 1,
-   "reqd": 1
+   "read_only": 1
   },
   {
    "fieldname": "month",
@@ -84,7 +83,7 @@
  "index_web_pages_for_search": 1,
  "is_submittable": 1,
  "links": [],
- "modified": "2026-03-08 10:26:02.175056",
+ "modified": "2026-03-29 16:33:34.317424",
  "modified_by": "Administrator",
  "module": "Optima Hr",
  "name": "Project Monthly Effects",

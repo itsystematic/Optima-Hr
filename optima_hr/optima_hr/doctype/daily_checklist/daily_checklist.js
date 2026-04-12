@@ -6,6 +6,17 @@ frappe.ui.form.on("Daily Checklist", {
 
 	},
 
+	before_save(frm) {
+		// Loop through table rows and clear overtime/deduction for absent employees
+		frm.doc.table_chlk.forEach(function(row) {
+			if (row.present == 0) {
+				row.overtime = "";
+				row.deduction = "";
+			}
+		});
+		frm.refresh_field("table_chlk");
+	},
+
 	get_employee(frm) {
 		if (!frm.doc.date) {
 			frappe.msgprint(__("Please select a date first"));

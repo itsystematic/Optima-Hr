@@ -12,23 +12,19 @@ class DailyChecklist(Document):
 		"""
 		Create or update Project Monthly Effects records when Daily Checklist is submitted
 		"""
-		try:
-			self.process_project_monthly_effects()
-			self.create_attendance()
-		except Exception as e:
-			frappe.log_error(f"Error in on_submit: {str(e)}", "Daily Checklist on_submit")
-			frappe.throw(f"Error processing Project Monthly Effects: {str(e)}")
+  
+		self.process_project_monthly_effects()
+		self.create_attendance()
+
 	
 	def on_cancel(self):
 		"""
 		Reverse Project Monthly Effects records when Daily Checklist is cancelled
 		"""
-		try:
-			self.reverse_project_monthly_effects()
-			self.cancel_attendance()
-		except Exception as e:
-			frappe.log_error(f"Error in on_cancel: {str(e)}", "Daily Checklist on_cancel")
-			frappe.throw(f"Error reversing Project Monthly Effects: {str(e)}")
+  
+		self.reverse_project_monthly_effects()
+		self.cancel_attendance()
+
 	
 	def process_project_monthly_effects(self):
 		"""
@@ -41,45 +37,36 @@ class DailyChecklist(Document):
 				return
 			
 			month_info = self._get_month_info()
+
+			# Validate that no submitted record exists for the month before proceeding
+			self._validate_no_submitted_record(month_info)
 			
-			# Group rows by employee_project for efficient processing
-			projects_data = {}
+			# Check if monthly record exists
+			existing_record = self._get_existing_record(month_info)
+			
+			if existing_record:
+				# Update existing monthly record
+				pme_doc = frappe.get_doc("Project Monthly Effects", existing_record.name)
+			else:
+				# Create new monthly record
+				pme_doc = self._create_pme_doc(month_info)
+			
+			# Process each row individually
 			for row in self.table_chlk:
 				if not row.employee_project or not row.employee:
 					frappe.log_error(f"Missing employee_project or employee in row: {row.idx}", "Daily Checklist")
 					continue
 				
-				if row.employee_project not in projects_data:
-					projects_data[row.employee_project] = []
-				projects_data[row.employee_project].append(row)
+				# Validate employee_project exists
+				if not self._validate_employee_project(row.employee_project):
+					frappe.log_error(f"Employee Project '{row.employee_project}' not found for row {row.idx}", "Daily Checklist")
+					continue
+				
+				frappe.msgprint(f"Processing Employee: {row.employee} in Project: {row.employee_project}")
+				self._add_or_update_employee(pme_doc, row)
 			
-			# Process each project
-			for employee_project, rows in projects_data.items():
-				try:
-					existing_record = self._get_existing_record(employee_project, month_info)
-					
-					if existing_record:
-						# Update existing record
-						pme_doc = frappe.get_doc("Project Monthly Effects", existing_record.name)
-						for row in rows:
-							self._add_or_update_employee(pme_doc, row)
-						self._save_pme(pme_doc, month_info, employee_project, is_new=False)
-					else:
-						# Create new record for first row of this project
-						pme_doc = self._create_pme_doc(employee_project, month_info, rows[0])
-						
-						# Add remaining rows
-						for row in rows[1:]:
-							pme_doc.append("table_iogy", {
-								"employee": row.employee,
-								"total_overtime": float(row.overtime) if row.overtime else 0.0,
-								"total_deduction": float(row.deduction) if row.deduction else 0.0
-							})
-						
-						self._save_pme(pme_doc, month_info, employee_project, is_new=True)
-				except Exception as e:
-					frappe.log_error(f"Error processing project {employee_project}: {str(e)}", "Daily Checklist")
-					continue  # Continue with other projects even if one fails
+			# Save the monthly record
+			self._save_pme(pme_doc, month_info, is_new=(not existing_record))
 		
 		except Exception as e:
 			frappe.log_error(f"Error in process_project_monthly_effects: {str(e)}", "Daily Checklist")
@@ -90,39 +77,33 @@ class DailyChecklist(Document):
 		Reverse the Project Monthly Effects by subtracting values when canceling.
 		"""
 		try:
-			if not self.date or not self.table_chlk:
+			if not self.date or not self.table_chlk:  
 				frappe.log_error("Missing date or table_chlk in Daily Checklist", "Daily Checklist")
 				return
 			
 			month_info = self._get_month_info()
 			
-			# Group rows by employee_project for efficient processing
-			projects_data = {}
+			# Get existing record
+			existing_record = self._get_existing_record(month_info)
+			
+			if not existing_record:
+				frappe.log_error(f"No existing Project Monthly Effects record found to reverse for {month_info['month_name']}", "Daily Checklist")
+				return
+				
+			# Get the PME document
+			pme_doc = frappe.get_doc("Project Monthly Effects", existing_record.name)
+			
+			# Map daily checklist rows with PME doc rows and subtract values
 			for row in self.table_chlk:
 				if not row.employee_project or not row.employee:
 					frappe.log_error(f"Missing employee_project or employee in row: {row.idx}", "Daily Checklist")
 					continue
-				
-				if row.employee_project not in projects_data:
-					projects_data[row.employee_project] = []
-				projects_data[row.employee_project].append(row)
-			
-			# Process each project
-			for employee_project, rows in projects_data.items():
-				try:
-					existing_record = self._get_existing_record(employee_project, month_info)
 					
-					if existing_record:
-						# Update existing record by subtracting values
-						pme_doc = frappe.get_doc("Project Monthly Effects", existing_record.name)
-						for row in rows:
-							self._subtract_employee_values(pme_doc, row)
-						self._save_pme(pme_doc, month_info, employee_project, is_new=False, action_type="reversed")
-					else:
-						frappe.log_error(f"No existing Project Monthly Effects record found to reverse for project {employee_project}", "Daily Checklist")
-				except Exception as e:
-					frappe.log_error(f"Error reversing project {employee_project}: {str(e)}", "Daily Checklist")
-					continue  # Continue with other projects even if one fails
+				# Use dedicated method for subtraction
+				self._subtract_employee_values(pme_doc, row)
+			
+			# Save the PME record
+			self._save_pme(pme_doc, month_info, is_new=False, action_type="reversed")
 		
 		except Exception as e:
 			frappe.log_error(f"Error in reverse_project_monthly_effects: {str(e)}", "Daily Checklist")
@@ -234,24 +215,40 @@ class DailyChecklist(Document):
 			# Batch check existing attendance for all employees
 			existing_employees = self._get_existing_attendance_employees(employees)
 			
-			# Prepare attendance records for bulk creation
+			# Prepare attendance records for bulk creation with unique employees
+			employee_status = {}  # Track unique employees and their status + employee_project
 			attendance_records = []
 			skipped_count = 0
 			
+			# Group employees and determine status (Present if any row is present)
 			for row in self.table_chlk:
 				if not row.employee:
 					continue
 				
 				if row.employee in existing_employees:
-					skipped_count += 1
+					if row.employee not in employee_status:  # Count skipped only once per employee
+						skipped_count += 1
+						employee_status[row.employee] = {"status": "skipped", "employee_project": row.employee_project}
 					continue
 				
-				attendance_records.append({
-					"doctype": "Attendance",
-					"employee": row.employee,
-					"attendance_date": self.date,
-					"status": "Present" if row.present else "Absent"
-				})
+				# If employee not processed yet, initialize as absent
+				if row.employee not in employee_status:
+					employee_status[row.employee] = {"status": "Absent", "employee_project": row.employee_project}
+				
+				# If any row shows present, override to Present (keep original employee_project)
+				if row.present and employee_status[row.employee]["status"] != "skipped":
+					employee_status[row.employee]["status"] = "Present"
+			
+			# Create unique attendance records
+			for employee, data in employee_status.items():
+				if data["status"] != "skipped":
+					attendance_records.append({
+						"doctype": "Attendance",
+						"employee": employee,
+						"attendance_date": self.date,
+						"status": data["status"],
+						"custom_employee_project": data["employee_project"]  # Use employee_project from row
+					})
 			
 			# Bulk create and submit attendance records
 			created_count = self._bulk_create_attendance(attendance_records)
@@ -356,45 +353,60 @@ class DailyChecklist(Document):
 			frappe.log_error(f"Error in _get_month_info: {str(e)}", "Daily Checklist")
 			raise e
 	
-	def _get_existing_record(self, employee_project, month_info):
+	def _get_existing_record(self, month_info):
 		"""
 		Query and return an existing Project Monthly Effects record.
 		Returns the record if found, None otherwise.
 		"""
-		try:
-			existing = frappe.get_list(
-				"Project Monthly Effects",
-				filters={
-					"employee_project": employee_project,
-					"month": month_info["month_name"],
-					"start_date": month_info["start_date"],
-					"end_date": month_info["end_date"]
-				},
-				limit=1
-			)
-			return existing[0] if existing else None
-		except Exception as e:
-			frappe.log_error(f"Error in _get_existing_record: {str(e)}", "Daily Checklist")
-			return None
+		
+		# Now check for draft records
+		existing = frappe.get_list(
+			"Project Monthly Effects",
+			filters={
+				"month": month_info["month_name"],
+				"start_date": month_info["start_date"],
+				"end_date": month_info["end_date"],
+				"docstatus": 0
+			},
+			limit=1
+		)
+		return existing[0] if existing else None
 	
-	def _create_pme_doc(self, employee_project, month_info, row):
+	def _validate_no_submitted_record(self, month_info):
+		"""
+		Check if a submitted Project Monthly Effects record already exists.
+		Throws an error if a submitted record is found.
+		"""
+		submitted_records = frappe.get_list(
+			"Project Monthly Effects",
+			filters={
+				"month": month_info["month_name"],
+				"start_date": month_info["start_date"],
+				"end_date": month_info["end_date"],
+				"docstatus": 1
+			},
+			limit=1
+		)
+		if submitted_records:
+			frappe.throw(f"A submitted Effects already exists for {month_info['month_name']} {month_info['year']} , It cannot have a retroactive effect.")
+	
+	def _create_pme_doc(self, month_info):
 		"""
 		Create a new Project Monthly Effects document with initial data.
 		"""
 		try:
 			pme_doc = frappe.get_doc({
 				"doctype": "Project Monthly Effects",
-				"employee_project": employee_project,
 				"start_date": month_info["start_date"],
 				"end_date": month_info["end_date"],
 				"month": month_info["month_name"]
 			})
 			
-			pme_doc.append("table_iogy", {
-				"employee": row.employee,
-				"total_overtime": float(row.overtime) if row.overtime else 0.0,
-				"total_deduction": float(row.deduction) if row.deduction else 0.0
-			})
+			# pme_doc.append("table_iogy", {
+			# 	"employee": row.employee,
+			# 	"total_overtime": float(row.overtime) if row.overtime else 0.0,
+			# 	"total_deduction": float(row.deduction) if row.deduction else 0.0
+			# })
 			
 			return pme_doc
 		except Exception as e:
@@ -407,7 +419,8 @@ class DailyChecklist(Document):
 		"""
 		try:
 			for table_row in pme_doc.table_iogy:
-				if table_row.employee == row.employee:
+				if table_row.employee == row.employee and table_row.employee_project == row.employee_project:
+					frappe.msgprint(f"Updating existing entry for Employee: {row.employee} in Project: {row.employee_project}")
 					# Make it cumulative - add to existing values
 					table_row.total_overtime += float(row.overtime) if row.overtime else 0.0
 					table_row.total_deduction += float(row.deduction) if row.deduction else 0.0
@@ -416,6 +429,7 @@ class DailyChecklist(Document):
 			# Employee not found, add new row
 			pme_doc.append("table_iogy", {
 				"employee": row.employee,
+				"employee_project": row.employee_project,	
 				"total_overtime": float(row.overtime) if row.overtime else 0.0,
 				"total_deduction": float(row.deduction) if row.deduction else 0.0
 			})
@@ -427,11 +441,15 @@ class DailyChecklist(Document):
 	def _subtract_employee_values(self, pme_doc, row):
 		"""
 		Subtract employee values from existing records (for cancellation).
+		Improved performance with better matching logic.
 		"""
 		try:
 			rows_to_remove = []
+			matched = False
+			
+			# Find matching row by employee and employee_project
 			for idx, table_row in enumerate(pme_doc.table_iogy):
-				if table_row.employee == row.employee:
+				if table_row.employee == row.employee and table_row.employee_project == row.employee_project:
 					# Subtract values
 					table_row.total_overtime -= float(row.overtime) if row.overtime else 0.0
 					table_row.total_deduction -= float(row.deduction) if row.deduction else 0.0
@@ -444,18 +462,35 @@ class DailyChecklist(Document):
 					if table_row.total_overtime == 0.0 and table_row.total_deduction == 0.0:
 						rows_to_remove.append(idx)
 					
-					return True
+					matched = True
+					break  # Early exit for performance
 			
 			# Remove rows with zero values (in reverse order to maintain indices)
 			for idx in reversed(rows_to_remove):
 				pme_doc.table_iogy.pop(idx)
 			
-			return False  # Employee not found
+			return matched
 		except Exception as e:
 			frappe.log_error(f"Error in _subtract_employee_values: {str(e)}", "Daily Checklist")
 			raise e
 	
-	def _save_pme(self, pme_doc, month_info, employee_project, is_new=False, action_type="updated"):
+	def _validate_employee_project(self, employee_project):
+		"""
+		Validate that employee_project exists.
+		Returns True if valid, False otherwise.
+		"""
+		try:
+			# Check if employee_project exists (adjust doctype name as needed)
+			exists = frappe.db.exists("Employee Project", employee_project)
+			if not exists:
+				# Try alternative doctype names
+				exists = frappe.db.exists("Project", employee_project)
+			return bool(exists)
+		except Exception as e:
+			frappe.log_error(f"Error validating employee_project {employee_project}: {str(e)}", "Daily Checklist")
+			return False
+	
+	def _save_pme(self, pme_doc, month_info, is_new=False, action_type="updated"):
 		"""
 		Save the Project Monthly Effects document and handle errors.
 		"""
@@ -469,12 +504,17 @@ class DailyChecklist(Document):
 			
 			frappe.msgprint(
 				f"✅ Project Monthly Effects record {action} for {month_info['month_name']} "
-				f"{month_info['year']} - Project: {employee_project}"
+				f"{month_info['year']} "
 			)
 			return True
 		except Exception as e:
-			frappe.log_error(f"Error saving Project Monthly Effects: {str(e)}", "Daily Checklist")
-			frappe.msgprint(f"Warning: Could not save Project Monthly Effects record. Error: {str(e)}", alert=True)
+			error_msg = str(e)
+			# Truncate error message to avoid log title length issues
+			if len(error_msg) > 100:
+				error_msg = error_msg[:97] + "..."
+				
+			frappe.log_error(f"PME save error: {error_msg}", "Daily Checklist PME Save")
+			frappe.msgprint(f"Warning: Could not save PME record. Check error logs.", alert=True)
 			return False
 
 
@@ -494,7 +534,8 @@ def get_filtered_employees(date, department=None, designation=None, employee_pro
 		List of employee records matching the criteria
 	"""
 	try:
-		filters = {"status": "Active"}
+		 # Only active employees with a project assigned should be fetched
+		filters = {"status": "Active", "custom_employee_project" : ["!=", ""]} 
 		
 		if department:
 			filters["department"] = department

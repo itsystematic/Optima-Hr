@@ -230,6 +230,7 @@ class OptimaPayrollEntry(PayrollEntry):
             "exchange_rate": flt(exchange_rate),
             "cost_center": cost_center,
             "project": self.project,
+            "posting_date": self.posting_date,  # Add missing posting_date field
         }
 
         if entry_type == "debit":
@@ -307,6 +308,10 @@ class OptimaPayrollEntry(PayrollEntry):
         journal_entry.cheque_no = self.name
         journal_entry.cheque_date = self.posting_date
         journal_entry.party_not_required = True if not employee_wise_accounting_enabled else False
+
+        # Set posting_date directly on all accounts for better performance
+        for account in accounts:
+            account['posting_date'] = self.posting_date
 
         journal_entry.set("accounts", accounts)
         journal_entry.multi_currency = multi_currency

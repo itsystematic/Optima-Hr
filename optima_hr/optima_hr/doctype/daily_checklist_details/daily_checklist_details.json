@@ -7,10 +7,10 @@
  "engine": "InnoDB",
  "field_order": [
   "employee",
+  "employee_project",
   "present",
   "overtime",
-  "deduction",
-  "employee_project"
+  "deduction"
  ],
  "fields": [
   {
@@ -46,11 +46,13 @@
   },
   {
    "fetch_from": "employee.custom_employee_project",
+   "fetch_if_empty": 1,
    "fieldname": "employee_project",
    "fieldtype": "Link",
-   "label": "Employee Project",
+   "in_list_view": 1,
+   "in_standard_filter": 1,
+   "label": "Project",
    "options": "Employee Project",
-   "read_only": 1,
    "reqd": 1
   }
  ],
@@ -58,7 +60,7 @@
  "index_web_pages_for_search": 1,
  "istable": 1,
  "links": [],
- "modified": "2026-03-06 17:50:14.704746",
+ "modified": "2026-03-11 05:40:53.082747",
  "modified_by": "Administrator",
  "module": "Optima Hr",
  "name": "Daily Checklist Details",
