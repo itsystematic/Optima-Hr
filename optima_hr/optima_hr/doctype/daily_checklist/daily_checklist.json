@@ -1,7 +1,7 @@
 {
  "actions": [],
  "allow_import": 1,
- "autoname": "format:{date}-{employee_project}",
+ "autoname": "format:DC{####}/{date}",
  "creation": "2026-03-01 09:49:26.850338",
  "doctype": "DocType",
  "engine": "InnoDB",
@@ -58,8 +58,7 @@
    "fieldname": "employee_project",
    "fieldtype": "Link",
    "label": "Employee Project",
-   "options": "Employee Project",
-   "reqd": 1
+   "options": "Employee Project"
   },
   {
    "fieldname": "designation",
@@ -101,7 +100,7 @@
  "index_web_pages_for_search": 1,
  "is_submittable": 1,
  "links": [],
- "modified": "2026-03-08 10:27:24.049164",
+ "modified": "2026-03-29 16:26:42.079442",
  "modified_by": "Administrator",
  "module": "Optima Hr",
  "name": "Daily Checklist",
