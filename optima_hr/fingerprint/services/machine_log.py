@@ -1,12 +1,22 @@
+from __future__ import annotations
+
 import hashlib
 import json
+from typing import Any
 
 import frappe
 from frappe.utils import get_datetime, getdate
 
 
-def create_machine_log(enroll_no, timestamp, device_id, punch_code, batch_id=None, force_create=False):
-    """Create a Machine Log row from a device payload."""
+def create_machine_log(
+    enroll_no: str,
+    timestamp: str,
+    device_id: str,
+    punch_code: str,
+    batch_id: str | None = None,
+    force_create: bool = False,
+) -> tuple[int, dict[str, Any]]:
+    """Create one machine log so device data lands in a single consistent shape."""
     try:
         log_id = _generate_machine_log_id(enroll_no, timestamp, device_id, punch_code)
 
@@ -57,8 +67,8 @@ def create_machine_log(enroll_no, timestamp, device_id, punch_code, batch_id=Non
         return 500, {"status": "error", "message": str(e), "data": None}
 
 
-def create_bulk_machine_logs(logs_data):
-    """Create multiple Machine Log rows from one device batch."""
+def create_bulk_machine_logs(logs_data: str | list[dict[str, Any]]) -> dict[str, Any]:
+    """Create machine logs in batches so device uploads avoid one transaction per row."""
     try:
         logs = json.loads(logs_data) if isinstance(logs_data, str) else logs_data
         batch_id = frappe.generate_hash(length=12)
@@ -104,7 +114,10 @@ def create_bulk_machine_logs(logs_data):
         return {"status": "error", "message": f"Bulk operation failed: {str(e)}"}
 
 
-def update_lastsynced_record_log_timestamp(device_id, last_synced_record_datetime):
+def update_lastsynced_record_log_timestamp(
+    device_id: str, last_synced_record_datetime: str
+) -> tuple[int, dict[str, str]] | None:
+    """Store the last imported device timestamp so client pulls can continue from the right point."""
     try:
         frappe.db.sql(
             """
@@ -123,12 +136,14 @@ def update_lastsynced_record_log_timestamp(device_id, last_synced_record_datetim
         return 500, {"status": "error", "message": str(e)}
 
 
-def _generate_machine_log_id(enroll_no, timestamp, device_id, punch_code):
+def _generate_machine_log_id(enroll_no: str, timestamp: str, device_id: str, punch_code: str) -> str:
+    """Build a stable log id so repeated device submissions collapse into one record."""
     data_string = f"{enroll_no}_{timestamp}_{device_id}_{punch_code}"
     return hashlib.md5(data_string.encode()).hexdigest()[:16].upper()
 
 
-def _resolve_employee_from_enroll_no(enroll_no):
+def _resolve_employee_from_enroll_no(enroll_no: str) -> dict[str, Any] | None:
+    """Resolve the employee once at ingest time so later sync runs can stay lightweight."""
     try:
         return frappe.db.get_value(
             "Employee",
@@ -140,7 +155,8 @@ def _resolve_employee_from_enroll_no(enroll_no):
         return None
 
 
-def _determine_punch_type(punch_code, device_id=None):
+def _determine_punch_type(punch_code: str, device_id: str | None = None) -> str | None:
+    """Map raw punch codes to IN/OUT so attendance rules can use normalized values."""
     device_config = _get_device_config(device_id)
     punch_code = int(punch_code) if str(punch_code).isdigit() else punch_code
 
@@ -158,7 +174,8 @@ def _determine_punch_type(punch_code, device_id=None):
     return None
 
 
-def _get_device_config(device_id):
+def _get_device_config(device_id: str | None) -> dict[str, list[int]] | None:
+    """Read per-device punch configuration so different machines can interpret codes safely."""
     if not device_id:
         return None
 
