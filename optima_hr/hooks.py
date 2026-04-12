@@ -168,7 +168,7 @@ doc_events = {
 scheduler_events = {
     "cron": {
         "*/15 * * * *": [ # Every 15 minutes, to keep up with frequent check-ins and avoid long syncs.
-            "optima_hr.fingerprint.api.create_employee_checkin",
+            "optima_hr.fingerprint.services.checkin_sync.sync_employee_checkins",
         ],
         "1 0 * * *": [
             "optima_hr.tasks.daily.daily_allocate_earned_leaves",
