@@ -6,4 +6,4 @@ tags
 node_modules
 __pycache__
 
-optima_hr/public
+optima_hr/public/node_modules
