@@ -45,9 +45,11 @@ app_include_css = "/assets/optima_hr/css/css-rtl/almarai.css"
 
 # include js in doctype views
 doctype_js = {
+    "Bank": "public/js/bank.js",
     "Leave Application" : "public/js/leave_application.js" ,
     "Employee Advance" : "public/js/employee_advance.js" ,
-    "Bank": "public/js/bank.js"
+    "Expense Claim": "public/js/expense_claim.js",
+    "Expense Claim Type" : "public/js/expense_claim_type.js",
 }
 doctype_list_js = {
     "Attendance" : "public/js/list/attendance_list.js" ,
