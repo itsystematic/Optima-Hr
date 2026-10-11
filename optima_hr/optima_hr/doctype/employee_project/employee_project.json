@@ -28,13 +28,14 @@
    "in_list_view": 1,
    "label": "Cost Center",
    "options": "Cost Center",
-   "reqd": 1
+   "reqd": 1,
+   "unique": 1
   }
  ],
  "grid_page_length": 50,
  "index_web_pages_for_search": 1,
  "links": [],
- "modified": "2026-04-07 10:50:20.175029",
+ "modified": "2026-09-14 20:03:27.796032",
  "modified_by": "Administrator",
  "module": "Optima Hr",
  "name": "Employee Project",

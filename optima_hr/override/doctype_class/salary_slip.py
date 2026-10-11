@@ -278,7 +278,18 @@ class CustomSalarySlip(SalarySlip):
             additional_amount = rounded(additional_amount or 0)
         
         return amount, additional_amount
-    
+
+    @allow_edit_salary_slip
+    def get_component_totals(self, component_type, depends_on_payment_days=0):
+        # The overridden get_amount_based_on_payment_days prorates row.amount, which
+        # already holds the prorated (or hand-edited) value, so HRMS's second call
+        # here would prorate twice — 2000 at 15/30 became 1000 on the row but 500 in gross pay.
+        return sum(
+            flt(row.amount, row.precision("amount"))
+            for row in self.get(component_type)
+            if not row.do_not_include_in_total
+        )
+
     @frappe.whitelist()
     @allow_edit_salary_slip
     def calculate_custom_cost_to_company_ctc(self) :
