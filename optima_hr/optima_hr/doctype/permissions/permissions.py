@@ -2,16 +2,18 @@
 # For license information, please see license.txt
 
 import frappe
-from frappe.model.document import Document
 from frappe import _
+from frappe.model.document import Document
+from frappe.utils import  time_diff  ,getdate , today , to_timedelta
+
+import datetime
+
 from optima_hr.optima_hr.utils import (
     create_additional_salary ,
     get_total_amount_for_salary_structure_assignment ,
     get_fields_for_leave_dues,
-    get_employee_salary
 )
-from frappe.utils import  time_diff  ,getdate , today 
-import datetime
+
 
 class Permissions(Document):
     
@@ -45,7 +47,7 @@ class Permissions(Document):
         self.create_additional_salary()
 
     def validate_difference_time_calculation(self):
-        if self.from_time > self.to_time :
+        if to_timedelta(self.from_time) >= to_timedelta(self.to_time) :
             frappe.throw(_("To Time Must be Greater Than From Time"))
     
     def validate_remaining_hours(self):
@@ -64,7 +66,6 @@ class Permissions(Document):
             frappe.throw(_("Salary Component in Setting is required"))
 
     def vaildate_employee_daily_permission(self):
-        # if frappe.db.exists("Permissions", {"date" : self.date , "employee_name" : self.employee_name , "docstatus" : 1 , 'type' : "Exit"}, cache=True):
         if self.type =="Exit":
             filters = {
             'date': ['>=',frappe.utils.getdate(self.date)] ,
@@ -105,7 +106,7 @@ class Permissions(Document):
     @frappe.whitelist()
     def set_time_difference(self):
         if self.from_time and self.to_time:
-            self.time_difference = time_diff( self.to_time , self.from_time)
+            self.time_difference = to_timedelta(self.to_time) - to_timedelta(self.from_time)
 
     def before_submit(self):
         self.add_deduction_after_permission_hours_allowed()
