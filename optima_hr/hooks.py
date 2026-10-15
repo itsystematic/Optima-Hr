@@ -26,7 +26,7 @@ app_license = "mit"
 # ------------------
 
 # include js, css files in header of desk.html
-app_include_css = "/assets/optima_hr/css/css-rtl/almarai.css"
+# app_include_css = "/assets/optima_hr/css/optima_hr.css"
 # app_include_js = "/assets/optima_hr/js/optima_hr.js"
 
 # include js, css files in header of web template
