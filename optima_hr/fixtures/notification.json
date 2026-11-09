@@ -1,0 +1,51 @@
+[
+ {
+  "attach_files": "",
+  "attach_print": 0,
+  "channel": "System Notification",
+  "condition": null,
+  "condition_type": "Python",
+  "date_changed": "opf_iqama_expiry",
+  "datetime_changed": null,
+  "datetime_last_run": null,
+  "days_in_advance": 30,
+  "docstatus": 0,
+  "doctype": "Notification",
+  "document_type": "Employee",
+  "email_template": null,
+  "enabled": 0,
+  "event": "Days Before",
+  "filters": null,
+  "from_attach_field": null,
+  "is_standard": 0,
+  "message": "<p>{{ _(\"Iqama of employee {0} ({1}) expires on {2}. Please start the renewal process.\").format(doc.employee_name, doc.name, doc.opf_iqama_expiry) }}</p>",
+  "message_type": "Markdown",
+  "method": null,
+  "minutes_offset": 0,
+  "modified": "2026-11-07 15:25:38.547727",
+  "module": "Optima Hr",
+  "name": "Iqama Expiry - 30 Days",
+  "notification_message": null,
+  "notification_title": null,
+  "notification_type": "Alert",
+  "print_format": null,
+  "property_value": null,
+  "recipients": [
+   {
+    "bcc": null,
+    "cc": null,
+    "condition": null,
+    "receiver_by_document_field": null,
+    "receiver_by_role": "HR Manager"
+   }
+  ],
+  "send_system_notification": 0,
+  "send_to_all_assignees": 0,
+  "sender": null,
+  "sender_email": null,
+  "set_property_after_alert": null,
+  "slack_webhook_url": null,
+  "subject": "{{ _(\"Alert: Iqama of {0} expires on {1}\").format(doc.employee_name, doc.opf_iqama_expiry) }}",
+  "value_changed": null
+ }
+]

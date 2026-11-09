@@ -72,7 +72,7 @@ class Permissions(Document):
             'employee_name' : self.employee_name ,
             'type' : "Exit"
             }
-            number_of_permission = frappe.db.get_list('Permissions', filters=filters,  fields=["COUNT(name) as name"])
+            number_of_permission = frappe.db.get_list('Permissions', filters=filters,  fields=[{"COUNT": "name", "as": "name"}])
             if number_of_permission[0].get("name") >= self.get_settings().get("default_permissions_per_day") :
                 frappe.throw(_(f"Employee Must Have {self.get_settings().default_permissions_per_day} Permission Per Day"))
     
@@ -95,7 +95,7 @@ class Permissions(Document):
                     'employee_name' : self.employee_name ,
                     'type' : "Exit"
                 }
-                number_of_permission = frappe.db.get_list('Permissions', filters=filters,  fields=["COUNT(name) as name"])
+                number_of_permission = frappe.db.get_list('Permissions', filters=filters,  fields=[{"COUNT": "name", "as": "name"}])
                 
                 if number_of_permission[0].get("name") != None:
                 

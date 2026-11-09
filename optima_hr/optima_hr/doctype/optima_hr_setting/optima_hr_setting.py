@@ -14,6 +14,7 @@ from frappe.core.doctype.data_import.data_import import import_doc
 import click
 import os
 from frappe.utils import get_first_day , nowdate
+from optima_hr import features
 
 class OptimaHRSetting(Document):
     def before_save(self) :
@@ -22,6 +23,12 @@ class OptimaHRSetting(Document):
             
         if self.enable_calculate_permission_by_hours == 1 :
             self.enable_add_deduction_after_permissions__number_allowed = 0
+
+    def on_update(self):
+        features.apply()
+
+    def after_delete(self):
+        features.apply()
 
 
 

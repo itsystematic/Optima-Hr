@@ -81,7 +81,23 @@
   "salary_effect_tab",
   "effect_in_salary_in_journal_entry",
   "effect_in_salary_in_additional_salary",
-  "credit_account_in_journal_entry"
+  "credit_account_in_journal_entry",
+  "feed_hr_tab",
+  "feed_services_section",
+  "enable_iqama_renewal",
+  "enable_overtime_request",
+  "feed_services_cb",
+  "enable_staff_housing",
+  "enable_employee_ksa_fields",
+  "feed_fields_section",
+  "enable_feed_penalty_fields",
+  "enable_feed_letter_fields",
+  "feed_fields_cb",
+  "enable_feed_eos_fields",
+  "feed_workflows_section",
+  "enable_permission_workflow",
+  "feed_workflows_cb",
+  "enable_eos_workflow"
  ],
  "fields": [
   {
@@ -554,6 +570,101 @@
    "label": "Credit Account in Journal Entry",
    "mandatory_depends_on": "eval: doc.effect_in_salary_in_journal_entry",
    "options": "Account"
+  },
+  {
+   "fieldname": "feed_hr_tab",
+   "fieldtype": "Tab Break",
+   "label": "Feed HR Features"
+  },
+  {
+   "fieldname": "feed_services_section",
+   "fieldtype": "Section Break",
+   "label": "Employee Services"
+  },
+  {
+   "fieldname": "enable_iqama_renewal",
+   "fieldtype": "Check",
+   "label": "Iqama Renewal",
+   "default": "0",
+   "description": "Iqama Renewal, its approval workflow and the Iqama expiry alert."
+  },
+  {
+   "fieldname": "enable_overtime_request",
+   "fieldtype": "Check",
+   "label": "Overtime Request",
+   "default": "0",
+   "description": "Overtime Request and its approval workflow."
+  },
+  {
+   "fieldname": "feed_services_cb",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "enable_staff_housing",
+   "fieldtype": "Check",
+   "label": "Staff Housing",
+   "default": "0",
+   "description": "Housing Unit with its occupants."
+  },
+  {
+   "fieldname": "enable_employee_ksa_fields",
+   "fieldtype": "Check",
+   "label": "Employee KSA Fields",
+   "default": "0",
+   "description": "Iqama, GOSI, health insurance and contract sections on the Employee form."
+  },
+  {
+   "fieldname": "feed_fields_section",
+   "fieldtype": "Section Break",
+   "label": "Additional Fields"
+  },
+  {
+   "fieldname": "enable_feed_penalty_fields",
+   "fieldtype": "Check",
+   "label": "Penalty Deduction Fields",
+   "default": "0",
+   "description": "Deduction percent, amount and Additional Salary on Employee Penalty."
+  },
+  {
+   "fieldname": "enable_feed_letter_fields",
+   "fieldtype": "Check",
+   "label": "Letter Fields",
+   "default": "0",
+   "description": "Directed to, gross salary, date and Chamber attestation on HR Letter."
+  },
+  {
+   "fieldname": "feed_fields_cb",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "enable_feed_eos_fields",
+   "fieldtype": "Check",
+   "label": "End of Service Request Fields",
+   "default": "0",
+   "description": "Request type, reason and Gratuity on End of Service Benefits."
+  },
+  {
+   "fieldname": "feed_workflows_section",
+   "fieldtype": "Section Break",
+   "label": "Approval Workflows"
+  },
+  {
+   "fieldname": "enable_permission_workflow",
+   "fieldtype": "Check",
+   "label": "Permissions Approval",
+   "default": "0",
+   "description": "Approval workflow on Permissions."
+  },
+  {
+   "fieldname": "feed_workflows_cb",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "enable_eos_workflow",
+   "fieldtype": "Check",
+   "label": "End of Service Approval",
+   "default": "0",
+   "description": "Approval workflow on End of Service Benefits."
   }
  ],
  "index_web_pages_for_search": 1,

@@ -282,6 +282,40 @@ override_whitelisted_methods = {
 #    }
 #]
 
+# ------------------------------------------------------------------ optional HR features
+# Switched on from Optima HR Setting, all OFF by default; see optima_hr/features.py.
+_FEATURE_DOCTYPES = ["Iqama Renewal", "Overtime Request", "Housing Unit"]
+has_permission = {dt: "optima_hr.features.has_permission" for dt in _FEATURE_DOCTYPES}
+permission_query_conditions = {dt: "optima_hr.features.query_conditions" for dt in _FEATURE_DOCTYPES}
+
+_FEATURE_CUSTOM_FIELDS = {
+    "Employee": [
+        "opf_ksa_sb", "opf_full_name_ar", "opf_ksa_cb1", "opf_id_iqama", "opf_iqama_expiry", "opf_ksa_cb2",
+        "opf_gosi_salary", "opf_gosi_date", "opf_health_class", "opf_health_expiry", "opf_contract_sb",
+        "opf_contract_type", "opf_contract_end", "opf_probation_days", "opf_contract_cb",
+        "opf_annual_leave_days", "opf_driving_license", "opf_driving_license_expiry",
+    ],
+    "Employee Penalty": [
+        "feed_deduction_section", "deduction_percent", "deduction_amount", "feed_deduction_cb", "additional_salary",
+    ],
+    "End of Service Benefits": [
+        "workflow_state", "feed_request_section", "request_type", "feed_request_cb", "gratuity",
+        "feed_reason_section", "reason",
+    ],
+    "HR Letter": [
+        "feed_letter_section", "directed_to", "gross_salary", "feed_letter_cb", "posting_date", "chamber_attestation",
+    ],
+    "Permissions": ["workflow_state"],
+}
+
+fixtures = [
+    {"dt": "Custom Field", "filters": [["name", "in", [f"{dt}-{field}" for dt, fields in _FEATURE_CUSTOM_FIELDS.items() for field in fields]]]},
+    {"dt": "Notification", "filters": [["name", "in", ["Iqama Expiry - 30 Days"]]]},
+    {"dt": "Workflow State", "filters": [["name", "in", ["Draft", "Approved", "Rejected", "Pending Line Manager Approval", "Pending HR Approval"]]]},
+    {"dt": "Workflow Action Master", "filters": [["name", "in", ["Submit for Approval", "Approve", "Reject"]]]},
+    {"dt": "Workflow", "filters": [["name", "in", ["Iqama Renewal Approval", "Overtime Request Approval", "Permissions Approval", "End of Service Benefits Approval"]]]},
+]
+
 after_migrate = "optima_hr.migrate.after_migrate"
 advance_payment_doctypes = ["Leave Dues", "End of Service Benefits" , "Employee Advance"]
 website_route_rules = [{'from_route': '/attendance_log/<path:app_path>', 'to_route': 'attendance_log'}, {'from_route': '/attendance_log/<path:app_path>', 'to_route': 'attendance_log'},]
