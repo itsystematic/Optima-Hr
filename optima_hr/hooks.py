@@ -3,7 +3,7 @@ app_title = "Optima Hr KSA"
 app_publisher = "IT Systematic Company"
 app_description = "App For Customization of Hr KSA's projects"
 app_email = "sales@itsystematic.com"
-required_apps = ["frappe", "erpnext", "hrms"]
+required_apps = ["frappe", "erpnext", "hrms", "daad"]
 app_license = "mit"
 
 # Apps
