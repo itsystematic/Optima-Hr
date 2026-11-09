@@ -1,9 +1,12 @@
 import frappe 
 from frappe import _
 
+from optima_hr import features
+
 
 def after_migrate():
     add_meta_data_in_leave_type()
+    features.apply()
 
 
 def add_meta_data_in_leave_type():

@@ -182,3 +182,110 @@ Salary Currency
 Cost to Company (CTC)
 Company Details
 'This Doctype is Secondary, It Depends on a Valid Leave, Please Create It from The Leave Application',هذا المستند ثانوي انه يعتمد علي اجازة صالحة ، الرجاء قم بانشاءه من طلب الاجازة
+1 Year,سنة
+3 Months,3 أشهر
+6 Months,6 أشهر
+9 Months,9 أشهر
+Absence Without Excuse,غياب بدون عذر
+Additional Fields,حقول إضافية
+Alert: Iqama of {0} expires on {1},تنبيه: إقامة {0} تنتهي في {1}
+Amount Paid by Employee,المبلغ على الموظف
+Annual Leave Balance per Contract,رصيد الإجازة السنوية حسب العقد
+Annual Rent,الإيجار السنوي
+Approval Workflows,مسارات الاعتماد
+Approval workflow on End of Service Benefits.,مسار اعتماد مكافأة نهاية الخدمة.
+Approval workflow on Permissions.,مسار اعتماد الاستئذان.
+Basic Hourly Rate,أجر الساعة الأساسي
+Capacity (Persons),السعة (فرد)
+Chamber Attestation,تصديق الغرفة التجارية
+Contract Type,نوع العقد
+Current Expiry Date,تاريخ الانتهاء الحالي
+Deduction Amount,مبلغ الخصم
+Deduction Details,تفاصيل الخصم
+Deduction Percent,نسبة الخصم
+"Deduction percent, amount and Additional Salary on Employee Penalty.",نسبة الخصم ومبلغه والراتب الإضافي في جزاء الموظف.
+Dependents Fees,رسوم المرافقين
+Directed To,موجه إلى
+"Directed to, gross salary, date and Chamber attestation on HR Letter.",الجهة الموجه إليها وإجمالي الراتب والتاريخ وتصديق الغرفة في خطاب الموارد البشرية.
+Dismissal,فصل
+Drivers Housing,سكن سائقين
+Driving License Expiry,انتهاء رخصة القيادة
+Driving License No.,رقم رخصة القيادة
+Early Leave,خروج مبكر
+Employee KSA Fields,بيانات الموظف النظامية السعودية
+Employee Services,خدمات الموظفين
+End of Contract,انتهاء عقد
+End of Service Approval,اعتماد نهاية الخدمة
+End of Service Benefits Approval,اعتماد مكافأة نهاية الخدمة
+End of Service Request Fields,حقول طلب نهاية الخدمة
+Feed HR Features,مزايا الموارد البشرية للأعلاف
+Fixed Term,محدد المدة
+Full Name (Arabic),الاسم الكامل بالعربي
+GOSI Registration Date,تاريخ التسجيل في التأمينات
+GOSI Salary,الراتب الخاضع للتأمينات
+Housing Name,اسم السكن
+Housing Occupant,ساكن
+Housing Unit,سكن العمال
+Housing Unit with its occupants.,وحدات السكن وساكنوها.
+Indefinite,غير محدد المدة
+Iqama,الإقامة
+Iqama / ID Expiry Date,تاريخ انتهاء الإقامة / الهوية
+Iqama Expiry - 30 Days,تنبيه انتهاء الإقامة قبل 30 يوم
+Iqama Fees,رسوم الإقامة
+Iqama No.,رقم الإقامة
+Iqama Renewal,تجديد إقامة
+Iqama Renewal Approval,اعتماد تجديد إقامة
+"Iqama Renewal, its approval workflow and the Iqama expiry alert.",تجديد الإقامة ومسار اعتماده وتنبيه انتهاء الإقامة.
+Iqama Renewals,تجديد الإقامات
+Iqama of employee {0} ({1}) expires on {2}. Please start the renewal process.,إقامة الموظف {0} ({1}) تنتهي بتاريخ {2}. يرجى بدء إجراءات التجديد.
+"Iqama, GOSI, health insurance and contract sections on the Employee form.",أقسام الإقامة والتأمينات والتأمين الطبي والعقد في ملف الموظف.
+KSA HR Services,خدمات الموارد البشرية السعودية
+Landlord,المؤجر
+Late Arrival,تأخير عن الدوام
+Lease,عقد الإيجار
+Lease End Date,انتهاء عقد الإيجار
+Letter Details,تفاصيل الخطاب
+Letter Fields,حقول الخطاب
+Linked Additional Salary,الراتب الإضافي المرتبط
+Medical Appointment,مراجعة طبية
+Medical Insurance Class,فئة التأمين الطبي
+Medical Insurance Expiry,انتهاء التأمين الطبي
+National ID / Iqama No.,رقم الهوية / الإقامة
+New Expiry Date,تاريخ الانتهاء الجديد
+Occupants,الساكنون
+Occupied,المشغول
+Outsourced Labour,عمالة مستأجرة
+Overtime Amount,قيمة العمل الإضافي
+Overtime Date,تاريخ العمل الإضافي
+Overtime Reason,سبب العمل الإضافي
+Overtime Request,طلب عمل إضافي
+Overtime Request Approval,اعتماد طلب عمل إضافي
+Overtime Request and its approval workflow.,طلب العمل الإضافي ومسار اعتماده.
+Overtime Requests,العمل الإضافي
+Paid With Salary Of,يصرف مع راتب
+Penalty Deduction Fields,حقول خصم الجزاء
+Pending HR Approval,بانتظار اعتماد الموارد البشرية
+Pending Line Manager Approval,بانتظار اعتماد المدير المباشر
+Permissions Approval,اعتماد الاستئذان
+Personal Permission,استئذان شخصي
+Probation Period (Days),فترة التجربة (يوم)
+Rate Multiplier,معامل الأجر
+Renewal Period,مدة التجديد
+Request Details,تفاصيل الطلب
+"Request type, reason and Gratuity on End of Service Benefits.",نوع الطلب والسبب والمكافأة في مكافأة نهاية الخدمة.
+Retirement,تقاعد
+Room No.,رقم الغرفة
+Safety Instructions Violation,مخالفة تعليمات السلامة
+Salary Certificate for Bank,تعريف بالراتب للبنك
+Salary Deduction,خصم من الراتب
+Staff Housing,سكن الموظفين
+Statutory Details (Saudi Arabia),بيانات نظامية (السعودية)
+Supervisors Housing,سكن مشرفين
+Suspension,إيقاف عن العمل
+Termination by Company,إنهاء من الشركة
+To Whom It May Concern,خطاب لمن يهمه الأمر
+Work Assignment,مهمة عمل
+Work Permit Fees (Expat Levy),رسوم رخصة العمل (المقابل المالي)
+Work Regulations,تنظيم العمل
+Workers Housing,سكن عمال
+Written Warning,إنذار كتابي
