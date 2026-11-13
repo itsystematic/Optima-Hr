@@ -11,10 +11,9 @@
     font-family: -apple-system, BlinkMacSystemFont, "Almarai", "Segoe UI", "Roboto", "Oxygen", "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue", sans-serif;
 }
 
-:root,
-[data-theme="light"] {
-    --font-stack: "Inter", "-apple-system", "BlinkMacSystemFont", "Almarai", "Segoe UI", "Roboto", "Oxygen", "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue", sans-serif;
-}
+/* --font-stack is owned by optima_zatca (desk_fonts.bundle.css): Claudion for the Riyal sign,
+   then Inter, then Almarai for Arabic. Setting it here would drop the Riyal sign whenever this
+   file loads after optima_zatca's. */
 
 :root {
     --font-family-sans-serif: -apple-system, BlinkMacSystemFont, "Almarai", "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
